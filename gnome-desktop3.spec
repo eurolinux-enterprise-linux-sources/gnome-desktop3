@@ -8,10 +8,11 @@
 Summary: Shared code among gnome-panel, gnome-session, nautilus, etc
 Name: gnome-desktop3
 Version: 3.8.4
-Release: 1%{?dist}
+Release: 4%{?dist}
 URL: http://www.gnome.org
 Source0: http://download.gnome.org/sources/gnome-desktop/3.8/gnome-desktop-%{version}.tar.xz
 Patch0: 0001-default-input-sources-Switch-ja_JP-default-to-ibus-k.patch
+Patch1: dont-use-locale-archive.patch
 
 License: GPLv2+ and LGPLv2+
 Group: System Environment/Libraries
@@ -68,6 +69,7 @@ libgnomedesktop.
 %prep
 %setup -q -n gnome-desktop-%{version}
 %patch0 -p1
+%patch1 -p1 -b .dont-use-locale-archive
 
 %build
 %configure --with-pnp-ids-path="/usr/share/hwdata/pnp.ids"
@@ -104,6 +106,16 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.a
 %doc %{_datadir}/gtk-doc/html/gnome-desktop3/
 
 %changelog
+* Fri Jan 31 2014 Ray Strode <rstrode@redhat.com> 3.8.4-4
+- Don't use glibc internal locale archive.
+  Resolves: #1045405
+
+* Fri Jan 24 2014 Daniel Mach <dmach@redhat.com> - 3.8.4-3
+- Mass rebuild 2014-01-24
+
+* Fri Dec 27 2013 Daniel Mach <dmach@redhat.com> - 3.8.4-2
+- Mass rebuild 2013-12-27
+
 * Wed Sep  4 2013 Rui Matos <rmatos@redhat.com> - 3.8.4-1
 - Update to 3.8.4
 

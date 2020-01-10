@@ -25,7 +25,6 @@
 #include "config.h"
 
 #include <glib/gi18n-lib.h>
-#include <langinfo.h>
 
 #define GNOME_DESKTOP_USE_UNSTABLE_API
 #include "gnome-wall-clock.h"
@@ -43,7 +42,6 @@ struct _GnomeWallClockPrivate {
 	GSettings    *desktop_settings;
 
 	gboolean time_only;
-	gboolean ampm_available;
 };
 
 enum {
@@ -70,7 +68,6 @@ static void
 gnome_wall_clock_init (GnomeWallClock *self)
 {
 	GFile *tz;
-	const char *ampm;
 
 	self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self, GNOME_TYPE_WALL_CLOCK, GnomeWallClockPrivate);
 
@@ -87,15 +84,11 @@ gnome_wall_clock_init (GnomeWallClock *self)
 	self->priv->desktop_settings = g_settings_new ("org.gnome.desktop.interface");
 	g_signal_connect (self->priv->desktop_settings, "changed", G_CALLBACK (on_schema_change), self);
 
-	ampm = nl_langinfo (AM_STR);
-	if (ampm != NULL && *ampm != '\0')
-		self->priv->ampm_available = TRUE;
-
 	update_clock (self);
 }
 
 static void
-gnome_wall_clock_dispose (GObject *object)
+gnome_wall_clock_finalize (GObject *object)
 {
 	GnomeWallClock *self = GNOME_WALL_CLOCK (object);
 
@@ -104,24 +97,8 @@ gnome_wall_clock_dispose (GObject *object)
 		self->priv->clock_update_id = 0;
 	}
 
-	if (self->priv->tz_monitor != NULL) {
-		g_object_unref (self->priv->tz_monitor);
-		self->priv->tz_monitor = NULL;
-	}
-
-	if (self->priv->desktop_settings != NULL) {
-		g_object_unref (self->priv->desktop_settings);
-		self->priv->desktop_settings = NULL;
-	}
-
-	G_OBJECT_CLASS (gnome_wall_clock_parent_class)->dispose (object);
-}
-
-static void
-gnome_wall_clock_finalize (GObject *object)
-{
-	GnomeWallClock *self = GNOME_WALL_CLOCK (object);
-
+	g_clear_object (&self->priv->tz_monitor);
+	g_clear_object (&self->priv->desktop_settings);
 	g_time_zone_unref (self->priv->timezone);
 	g_free (self->priv->clock_string);
 
@@ -183,7 +160,6 @@ gnome_wall_clock_class_init (GnomeWallClockClass *klass)
 
 	gobject_class->get_property = gnome_wall_clock_get_property;
 	gobject_class->set_property = gnome_wall_clock_set_property;
-	gobject_class->dispose = gnome_wall_clock_dispose;
 	gobject_class->finalize = gnome_wall_clock_finalize;
 
 	/**
@@ -291,8 +267,7 @@ gnome_wall_clock_string_for_datetime (GnomeWallClock      *self,
 {
 	const char *format_string;
 
-	if (clock_format == G_DESKTOP_CLOCK_FORMAT_24H ||
-	    self->priv->ampm_available == FALSE) {
+	if (clock_format == G_DESKTOP_CLOCK_FORMAT_24H) {
 		if (show_full_date) {
 			/* Translators: This is the time format with full date used
 			   in 24-hour mode. */
@@ -343,8 +318,8 @@ update_clock (gpointer data)
 	GDateTime *expiry;
 
 	clock_format = g_settings_get_enum (self->priv->desktop_settings, "clock-format");
-	show_weekday = !self->priv->time_only;
-	show_full_date = show_weekday && g_settings_get_boolean (self->priv->desktop_settings, "clock-show-date");
+	show_weekday = !self->priv->time_only && g_settings_get_boolean (self->priv->desktop_settings, "clock-show-weekday");
+	show_full_date = !self->priv->time_only && g_settings_get_boolean (self->priv->desktop_settings, "clock-show-date");
 	show_seconds = g_settings_get_boolean (self->priv->desktop_settings, "clock-show-seconds");
 
 	now = g_date_time_new_now (self->priv->timezone);
@@ -396,6 +371,12 @@ on_schema_change (GSettings *schema,
                   const char *key,
                   gpointer user_data)
 {
+	if (g_strcmp0 (key, "clock-format") != 0 &&
+	    g_strcmp0 (key, "clock-show-seconds") != 0 &&
+	    g_strcmp0 (key, "clock-show-date") != 0) {
+		return;
+	}
+
 	g_debug ("Updating clock because schema changed");
 	update_clock (user_data);
 }

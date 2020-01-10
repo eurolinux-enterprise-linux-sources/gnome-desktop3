@@ -1,8 +1,8 @@
 typedef struct
 {
-  const gchar const *locale;
-  const gchar const *type;
-  const gchar const *id;
+  const gchar *const locale;
+  const gchar *const type;
+  const gchar *const id;
 } DefaultInputSource;
 
 static DefaultInputSource default_input_sources[] =
@@ -26,6 +26,7 @@ static DefaultInputSource default_input_sources[] =
   { "es_ES",    "xkb",          "es" },
   { "es_GT",    "xkb",          "latam" },
   { "es_MX",    "xkb",          "latam" },
+  { "fr_BE",    "xkb",          "be" },
   { "fr_CH",    "xkb",          "ch+fr" },
   { "fr_FR",    "xkb",          "fr+oss" },
   { "gl_ES",    "xkb",          "es" },
@@ -33,7 +34,7 @@ static DefaultInputSource default_input_sources[] =
   { "he_IL",    "xkb",          "il" },
   { "hi_IN",    "ibus",         "m17n:hi:inscript" },
   { "it_IT",    "xkb",          "it" },
-  { "ja_JP",    "ibus",         "anthy" },
+  { "ja_JP",    "ibus",         "kkc" },
   { "kn_IN",    "ibus",         "m17n:kn:kgp" },
   { "ko_KR",    "ibus",         "hangul" },
   { "mai_IN",   "ibus",         "m17n:mai:inscript" },
@@ -53,6 +54,6 @@ static DefaultInputSource default_input_sources[] =
   { "ur_IN",    "ibus",         "m17n:ur:phonetic" },
   { "zh_CN",    "ibus",         "libpinyin" },
   { "zh_HK",    "ibus",         "cangjie" },
-  { "zh_TW",    "ibus",         "chewing" },
+  { "zh_TW",    "ibus",         "libzhuyin" },
   { NULL,       NULL,           NULL }
 };

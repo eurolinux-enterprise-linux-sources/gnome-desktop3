@@ -164,8 +164,7 @@ gnome_bg_slide_show_finalize (GObject *object)
 
         g_queue_free (self->priv->slides);
 
-        g_list_foreach (self->priv->stack->head, (GFunc) g_free, NULL);
-        g_queue_free (self->priv->stack);
+        g_queue_free_full (self->priv->stack, g_free);
 
         g_free (self->priv->filename);
 }
@@ -673,23 +672,23 @@ parse_file_contents (GnomeBGSlideShow  *self,
         g_markup_parse_context_free (context);
 
         if (!failed) {
-                int len;
+                guint queue_length;
 
                 t = mktime (&self->priv->start_tm);
 
                 self->priv->start_time = (double)t;
 
-                len = g_queue_get_length (self->priv->slides);
+                queue_length = g_queue_get_length (self->priv->slides);
 
                 /* no slides, that's not a slideshow */
-                if (len == 0) {
+                if (queue_length == 0) {
                         g_set_error_literal (error,
                                              G_MARKUP_ERROR,
                                              G_MARKUP_ERROR_INVALID_CONTENT,
                                              "file is not a slide show since it has no slides");
                         failed = TRUE;
                 /* one slide, there's no transition */
-                } else if (len == 1) {
+                } else if (queue_length == 1) {
                         Slide *slide = self->priv->slides->head->data;
                         slide->duration = self->priv->total_duration = G_MAXUINT;
                 }
@@ -742,17 +741,20 @@ on_file_loaded (GFile        *file,
 
     if (!loaded) {
             g_task_return_error (task, error);
+            g_object_unref (task);
             return;
     }
 
     if (!parse_file_contents (g_task_get_source_object (task), contents, length, &error)) {
             g_task_return_error (task, error);
+            g_object_unref (task);
             g_free (contents);
             return;
     }
     g_free (contents);
 
     g_task_return_boolean (task, TRUE);
+    g_object_unref (task);
 }
 
 /**

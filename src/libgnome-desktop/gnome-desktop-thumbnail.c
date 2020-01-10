@@ -55,18 +55,12 @@
  * Each is in a simple key-file format:
  * <informalexample><programlisting>
  * [Thumbnailer Entry]
- * TryExec=evince-thumbnailer
  * Exec=evince-thumbnailer -s %s %u %o
  * MimeType=application/pdf;application/x-bzpdf;application/x-gzpdf;
  * </programlisting></informalexample>
  *
  * The <filename>.thumbnailer</filename> format supports three keys:
  * <variablelist>
- * <varlistentry><term><code>TryExec</code></term><listitem><para>
- * Optional. The name of the the thumbnailer program in the current
- * <envar>$PATH</envar>. This allows the calling code to quickly check whether
- * the thumbnailer exists before trying to execute it.
- * </para></listitem></varlistentry>
  * <varlistentry><term><code>Exec</code></term><listitem><para>
  * Required. The command to execute the thumbnailer. It supports a few different
  * parameters which are replaced before calling the thumbnailer:
@@ -127,26 +121,18 @@
  */
 
 #include <config.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/time.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <dirent.h>
-#include <time.h>
-#include <math.h>
-#include <string.h>
-#include <glib.h>
-#include <stdio.h>
 
-#define GDK_PIXBUF_ENABLE_BACKEND
+#include <glib.h>
+#include <glib/gstdio.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
+#include <string.h>
+#include <stdlib.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 #define GNOME_DESKTOP_USE_UNSTABLE_API
 #include "gnome-desktop-thumbnail.h"
-#include <glib/gstdio.h>
-
-#define SECONDS_BETWEEN_STATS 10
+#include "gnome-desktop-thumbnail-script.h"
 
 static void
 thumbnailers_directory_changed (GFileMonitor                 *monitor,
@@ -180,16 +166,6 @@ G_DEFINE_TYPE (GnomeDesktopThumbnailFactory,
 #define GNOME_DESKTOP_THUMBNAIL_FACTORY_GET_PRIVATE(object) \
   (G_TYPE_INSTANCE_GET_PRIVATE ((object), GNOME_DESKTOP_TYPE_THUMBNAIL_FACTORY, GnomeDesktopThumbnailFactoryPrivate))
 
-typedef struct {
-    gint width;
-    gint height;
-    gint input_width;
-    gint input_height;
-    gboolean preserve_aspect_ratio;
-} SizePrepareContext;
-
-#define LOAD_BUFFER_SIZE 4096
-
 #define THUMBNAILER_ENTRY_GROUP "Thumbnailer Entry"
 #define THUMBNAILER_EXTENSION   ".thumbnailer"
 
@@ -198,7 +174,6 @@ typedef struct {
 
     gchar *path;
 
-    gchar  *try_exec;
     gchar  *command;
     gchar **mime_types;
 } Thumbnailer;
@@ -222,7 +197,6 @@ thumbnailer_unref (Thumbnailer *thumb)
   if (g_atomic_int_dec_and_test (&thumb->ref_count))
     {
       g_free (thumb->path);
-      g_free (thumb->try_exec);
       g_free (thumb->command);
       g_strfreev (thumb->mime_types);
 
@@ -276,8 +250,6 @@ thumbnailer_load (Thumbnailer *thumb)
       return NULL;
     }
 
-  thumb->try_exec = g_key_file_get_string (key_file, THUMBNAILER_ENTRY_GROUP, "TryExec", NULL);
-
   g_key_file_free (key_file);
 
   return thumb;
@@ -292,8 +264,6 @@ thumbnailer_reload (Thumbnailer *thumb)
   thumb->command = NULL;
   g_strfreev (thumb->mime_types);
   thumb->mime_types = NULL;
-  g_free (thumb->try_exec);
-  thumb->try_exec = NULL;
 
   return thumbnailer_load (thumb);
 }
@@ -310,45 +280,22 @@ thumbnailer_new (const gchar *path)
   return thumbnailer_load (thumb);
 }
 
-static gboolean
-thumbnailer_try_exec (Thumbnailer *thumb)
-{
-  gchar *path;
-  gboolean retval;
-
-  if (G_UNLIKELY (!thumb))
-    return FALSE;
-
-  /* TryExec is optinal, but Exec isn't, so we assume
-   * the thumbnailer can be run when TryExec is not present
-   */
-  if (!thumb->try_exec)
-    return TRUE;
-
-  path = g_find_program_in_path (thumb->try_exec);
-  retval = path != NULL;
-  g_free (path);
-
-  return retval;
-}
-
 static gpointer
 init_thumbnailers_dirs (gpointer data)
 {
   const gchar * const *data_dirs;
-  gchar **thumbs_dirs;
-  guint i, length;
+  GPtrArray *thumbs_dirs;
+  guint i;
 
   data_dirs = g_get_system_data_dirs ();
-  length = g_strv_length ((char **) data_dirs);
+  thumbs_dirs = g_ptr_array_new ();
 
-  thumbs_dirs = g_new (gchar *, length + 2);
-  thumbs_dirs[0] = g_build_filename (g_get_user_data_dir (), "thumbnailers", NULL);
-  for (i = 0; i < length; i++)
-    thumbs_dirs[i + 1] = g_build_filename (data_dirs[i], "thumbnailers", NULL);
-  thumbs_dirs[length + 1] = NULL;
+  g_ptr_array_add (thumbs_dirs, g_build_filename (g_get_user_data_dir (), "thumbnailers", NULL));
+  for (i = 0; data_dirs[i] != NULL; i++)
+    g_ptr_array_add (thumbs_dirs, g_build_filename (data_dirs[i], "thumbnailers", NULL));
+  g_ptr_array_add (thumbs_dirs, NULL);
 
-  return thumbs_dirs;
+  return g_ptr_array_free (thumbs_dirs, FALSE);
 }
 
 static const gchar * const *
@@ -356,229 +303,6 @@ get_thumbnailers_dirs (void)
 {
   static GOnce once_init = G_ONCE_INIT;
   return g_once (&once_init, init_thumbnailers_dirs, NULL);
-}
-
-static void
-size_prepared_cb (GdkPixbufLoader *loader, 
-		  int              width,
-		  int              height,
-		  gpointer         data)
-{
-  SizePrepareContext *info = data;
-  
-  g_return_if_fail (width > 0 && height > 0);
-  
-  info->input_width = width;
-  info->input_height = height;
-  
-  if (width < info->width && height < info->height) return;
-  
-  if (info->preserve_aspect_ratio && 
-      (info->width > 0 || info->height > 0)) {
-    if (info->width < 0)
-      {
-	width = width * (double)info->height/(double)height;
-	height = info->height;
-      }
-    else if (info->height < 0)
-      {
-	height = height * (double)info->width/(double)width;
-	width = info->width;
-      }
-    else if ((double)height * (double)info->width >
-	     (double)width * (double)info->height) {
-      width = 0.5 + (double)width * (double)info->height / (double)height;
-      height = info->height;
-    } else {
-      height = 0.5 + (double)height * (double)info->width / (double)width;
-      width = info->width;
-    }
-  } else {
-    if (info->width > 0)
-      width = info->width;
-    if (info->height > 0)
-      height = info->height;
-  }
-  
-  gdk_pixbuf_loader_set_size (loader, width, height);
-}
-
-static GdkPixbufLoader *
-create_loader (GFile        *file,
-               const guchar *data,
-               gsize         size)
-{
-  GdkPixbufLoader *loader;
-  GError *error = NULL;
-  char *mime_type;
-  char *filename;
-
-  loader = NULL;
-
-  /* need to specify the type here because the gdk_pixbuf_loader_write
-     doesn't have access to the filename in order to correct detect
-     the image type. */
-  filename = g_file_get_basename (file);
-  mime_type = g_content_type_guess (filename, data, size, NULL);
-  g_free (filename);
-
-  if (mime_type != NULL) {
-    loader = gdk_pixbuf_loader_new_with_mime_type (mime_type, &error);
-  }
-
-  if (loader == NULL) {
-    g_debug ("Unable to create loader for mime type %s: %s", mime_type, error->message);
-    g_clear_error (&error);
-    loader = gdk_pixbuf_loader_new ();
-  }
-  g_free (mime_type);
-
-  return loader;
-}
-
-static GdkPixbuf *
-_gdk_pixbuf_new_from_uri_at_scale (const char *uri,
-				   gint        width,
-				   gint        height,
-				   gboolean    preserve_aspect_ratio)
-{
-    gboolean result;
-    guchar buffer[LOAD_BUFFER_SIZE];
-    gssize bytes_read;
-    GdkPixbufLoader *loader = NULL;
-    GdkPixbuf *pixbuf;	
-    GdkPixbufAnimation *animation;
-    GdkPixbufAnimationIter *iter;
-    gboolean has_frame;
-    SizePrepareContext info;
-    GFile *file;
-    GFileInfo *file_info;
-    GInputStream *input_stream;
-    GError *error = NULL;
-
-    g_return_val_if_fail (uri != NULL, NULL);
-
-    input_stream = NULL;
-
-    file = g_file_new_for_uri (uri);
-
-    /* First see if we can get an input stream via preview::icon  */
-    file_info = g_file_query_info (file,
-                                   G_FILE_ATTRIBUTE_PREVIEW_ICON,
-                                   G_FILE_QUERY_INFO_NONE,
-                                   NULL,  /* GCancellable */
-                                   NULL); /* return location for GError */
-    if (file_info != NULL) {
-        GObject *object;
-
-        object = g_file_info_get_attribute_object (file_info,
-                                                   G_FILE_ATTRIBUTE_PREVIEW_ICON);
-        if (object != NULL && G_IS_LOADABLE_ICON (object)) {
-            input_stream = g_loadable_icon_load (G_LOADABLE_ICON (object),
-                                                 0,     /* size */
-                                                 NULL,  /* return location for type */
-                                                 NULL,  /* GCancellable */
-                                                 NULL); /* return location for GError */
-        }
-        g_object_unref (file_info);
-    }
-
-    if (input_stream == NULL) {
-	    input_stream = G_INPUT_STREAM (g_file_read (file, NULL, &error));
-	    if (input_stream == NULL) {
-		    g_warning ("Unable to create an input stream for %s: %s", uri, error->message);
-		    g_clear_error (&error);
-		    g_object_unref (file);
-		    return NULL;
-	    }
-    }
-
-    has_frame = FALSE;
-
-    result = FALSE;
-    while (!has_frame) {
-
-	bytes_read = g_input_stream_read (input_stream,
-					  buffer,
-					  sizeof (buffer),
-					  NULL,
-					  &error);
-        if (bytes_read == -1) {
-            g_warning ("Error reading from %s: %s", uri, error->message);
-            g_clear_error (&error);
-            break;
-        }
-	result = TRUE;
-	if (bytes_read == 0) {
-	    break;
-	}
-
-        if (loader == NULL) {
-            loader = create_loader (file, buffer, bytes_read);
-            if (1 <= width || 1 <= height) {
-              info.width = width;
-              info.height = height;
-              info.input_width = info.input_height = 0;
-              info.preserve_aspect_ratio = preserve_aspect_ratio;
-              g_signal_connect (loader, "size-prepared", G_CALLBACK (size_prepared_cb), &info);
-            }
-            g_assert (loader != NULL);
-        }
-
-	if (!gdk_pixbuf_loader_write (loader,
-				      (unsigned char *)buffer,
-				      bytes_read,
-				      &error)) {
-            g_warning ("Error creating thumbnail for %s: %s", uri, error->message);
-            g_clear_error (&error);
-	    result = FALSE;
-	    break;
-	}
-
-	animation = gdk_pixbuf_loader_get_animation (loader);
-	if (animation) {
-		iter = gdk_pixbuf_animation_get_iter (animation, NULL);
-		if (!gdk_pixbuf_animation_iter_on_currently_loading_frame (iter)) {
-			has_frame = TRUE;
-		}
-		g_object_unref (iter);
-	}
-    }
-
-    if (loader == NULL) {
-        /* This can happen if the above loop was exited due to the
-         * g_input_stream_read() call failing. */
-        result = FALSE;
-    } else if (gdk_pixbuf_loader_close (loader, &error) == FALSE &&
-               !g_error_matches (error, GDK_PIXBUF_ERROR, GDK_PIXBUF_ERROR_INCOMPLETE_ANIMATION)) {
-        g_warning ("Error creating thumbnail for %s: %s", uri, error->message);
-        result = FALSE;
-    }
-    g_clear_error (&error);
-
-    if (!result) {
-        g_clear_object (&loader);
-	g_input_stream_close (input_stream, NULL, NULL);
-	g_object_unref (input_stream);
-	g_object_unref (file);
-	return NULL;
-    }
-
-    g_input_stream_close (input_stream, NULL, NULL);
-    g_object_unref (input_stream);
-    g_object_unref (file);
-
-    pixbuf = gdk_pixbuf_loader_get_pixbuf (loader);
-    if (pixbuf != NULL) {
-	g_object_ref (G_OBJECT (pixbuf));
-	g_object_set_data (G_OBJECT (pixbuf), "gnome-original-width",
-			   GINT_TO_POINTER (info.input_width));
-	g_object_set_data (G_OBJECT (pixbuf), "gnome-original-height",
-			   GINT_TO_POINTER (info.input_height));
-    }
-    g_object_unref (G_OBJECT (loader));
-
-    return pixbuf;
 }
 
 /* These should be called with the lock held */
@@ -637,7 +361,6 @@ remove_thumbnailer_from_mime_type_map (gchar       *key,
 {
   return (strcmp (value->path, path) == 0);
 }
-
 
 static void
 update_or_create_thumbnailer (GnomeDesktopThumbnailFactory *factory,
@@ -831,6 +554,9 @@ thumbnailers_directory_changed (GFileMonitor                 *monitor,
     case G_FILE_MONITOR_EVENT_CHANGES_DONE_HINT:
     case G_FILE_MONITOR_EVENT_ATTRIBUTE_CHANGED:
     case G_FILE_MONITOR_EVENT_PRE_UNMOUNT:
+    case G_FILE_MONITOR_EVENT_RENAMED:
+    case G_FILE_MONITOR_EVENT_MOVED_IN:
+    case G_FILE_MONITOR_EVENT_MOVED_OUT:
     default:
       break;
     }
@@ -901,18 +627,18 @@ static void
 gnome_desktop_thumbnail_factory_init (GnomeDesktopThumbnailFactory *factory)
 {
   GnomeDesktopThumbnailFactoryPrivate *priv;
-  
+
   factory->priv = GNOME_DESKTOP_THUMBNAIL_FACTORY_GET_PRIVATE (factory);
 
   priv = factory->priv;
 
   priv->size = GNOME_DESKTOP_THUMBNAIL_SIZE_NORMAL;
-  
+
   priv->mime_types_map = g_hash_table_new_full (g_str_hash,
                                                 g_str_equal,
                                                 (GDestroyNotify)g_free,
                                                 (GDestroyNotify)thumbnailer_unref);
-  
+
   g_mutex_init (&priv->lock);
 
   priv->settings = g_settings_new ("org.gnome.desktop.thumbnailers");
@@ -935,7 +661,7 @@ gnome_desktop_thumbnail_factory_finalize (GObject *object)
 {
   GnomeDesktopThumbnailFactory *factory;
   GnomeDesktopThumbnailFactoryPrivate *priv;
-  
+
   factory = GNOME_DESKTOP_THUMBNAIL_FACTORY (object);
 
   priv = factory->priv;
@@ -979,7 +705,7 @@ gnome_desktop_thumbnail_factory_class_init (GnomeDesktopThumbnailFactoryClass *c
   GObjectClass *gobject_class;
 
   gobject_class = G_OBJECT_CLASS (class);
-	
+
   gobject_class->finalize = gnome_desktop_thumbnail_factory_finalize;
 
   g_type_class_add_private (class, sizeof (GnomeDesktopThumbnailFactoryPrivate));
@@ -991,8 +717,8 @@ gnome_desktop_thumbnail_factory_class_init (GnomeDesktopThumbnailFactoryClass *c
  *
  * Creates a new #GnomeDesktopThumbnailFactory.
  *
- * This function must be called on the main thread.
- * 
+ * This function must be called on the main thread and is non-blocking.
+ *
  * Return value: a new #GnomeDesktopThumbnailFactory
  *
  * Since: 2.2
@@ -1001,11 +727,11 @@ GnomeDesktopThumbnailFactory *
 gnome_desktop_thumbnail_factory_new (GnomeDesktopThumbnailSize size)
 {
   GnomeDesktopThumbnailFactory *factory;
-  
+
   factory = g_object_new (GNOME_DESKTOP_TYPE_THUMBNAIL_FACTORY, NULL);
-  
+
   factory->priv->size = size;
-  
+
   return factory;
 }
 
@@ -1109,7 +835,7 @@ lookup_failed_thumbnail_path (const char                *uri,
  *
  * Tries to locate an existing thumbnail for the file specified.
  *
- * Usage of this function is threadsafe.
+ * Usage of this function is threadsafe and does blocking I/O.
  *
  * Return value: The absolute path of the thumbnail, or %NULL if none exist.
  *
@@ -1137,7 +863,7 @@ gnome_desktop_thumbnail_factory_lookup (GnomeDesktopThumbnailFactory *factory,
  * and looking for failed thumbnails is important to avoid to try to
  * thumbnail e.g. broken images several times.
  *
- * Usage of this function is threadsafe.
+ * Usage of this function is threadsafe and does blocking I/O.
  *
  * Return value: TRUE if there is a failed thumbnail for the file.
  *
@@ -1161,54 +887,6 @@ gnome_desktop_thumbnail_factory_has_valid_failed_thumbnail (GnomeDesktopThumbnai
   return TRUE;
 }
 
-static gboolean
-mimetype_supported_by_gdk_pixbuf (const char *mime_type)
-{
-        guint i;
-        static gsize formats_hash = 0;
-        gchar *key;
-        gboolean result;
-
-	if (g_once_init_enter (&formats_hash)) {
-                GSList *formats, *list;
-		GHashTable *hash;
-
-                hash = g_hash_table_new_full (g_str_hash,
-					      (GEqualFunc) g_content_type_equals,
-					      g_free, NULL);
-
-                formats = gdk_pixbuf_get_formats ();
-                list = formats;
-
-                while (list) {
-                        GdkPixbufFormat *format = list->data;
-                        gchar **mime_types;
-
-                        mime_types = gdk_pixbuf_format_get_mime_types (format);
-
-                        for (i = 0; mime_types[i] != NULL; i++)
-                                g_hash_table_insert (hash,
-                                                     (gpointer) g_content_type_from_mime_type (mime_types[i]),
-                                                     GUINT_TO_POINTER (1));	
-
-                        g_strfreev (mime_types);
-                        list = list->next;
-                }
-                g_slist_free (formats);
-
-		g_once_init_leave (&formats_hash, (gsize) hash);
-        }
-
-        key = g_content_type_from_mime_type (mime_type);
-        if (g_hash_table_lookup ((void*)formats_hash, key))
-                result = TRUE;
-        else
-                result = FALSE;
-        g_free (key);
-
-        return result;
-}
-
 /**
  * gnome_desktop_thumbnail_factory_can_thumbnail:
  * @factory: a #GnomeDesktopThumbnailFactory
@@ -1216,10 +894,10 @@ mimetype_supported_by_gdk_pixbuf (const char *mime_type)
  * @mime_type: the mime type of the file
  * @mtime: the mtime of the file
  *
- * Returns TRUE if this GnomeIconFactory can (at least try) to thumbnail
+ * Returns TRUE if this GnomeDesktopThumbnailFactory can (at least try) to thumbnail
  * this file. Thumbnails or files with failed thumbnails won't be thumbnailed.
  *
- * Usage of this function is threadsafe.
+ * Usage of this function is threadsafe and does blocking I/O.
  *
  * Return value: TRUE if the file can be thumbnailed.
  *
@@ -1238,7 +916,7 @@ gnome_desktop_thumbnail_factory_can_thumbnail (GnomeDesktopThumbnailFactory *fac
       strncmp (uri, "file:/", 6) == 0 &&
       strstr (uri, "/thumbnails/") != NULL)
     return FALSE;
-  
+
   if (!mime_type)
     return FALSE;
 
@@ -1248,87 +926,98 @@ gnome_desktop_thumbnail_factory_can_thumbnail (GnomeDesktopThumbnailFactory *fac
       Thumbnailer *thumb;
 
       thumb = g_hash_table_lookup (factory->priv->mime_types_map, mime_type);
-      have_script = thumbnailer_try_exec (thumb);
+      have_script = (thumb != NULL);
     }
   g_mutex_unlock (&factory->priv->lock);
 
-  if (have_script || mimetype_supported_by_gdk_pixbuf (mime_type))
+  if (have_script)
     {
       return !gnome_desktop_thumbnail_factory_has_valid_failed_thumbnail (factory,
                                                                           uri,
                                                                           mtime);
     }
-  
+
   return FALSE;
 }
 
-static char *
-expand_thumbnailing_script (const char *script,
-			    const int   size, 
-			    const char *inuri,
-			    const char *outfile)
+static GdkPixbuf *
+get_preview_thumbnail (const char *uri,
+                       int         size)
 {
-  GString *str;
-  const char *p, *last;
-  char *localfile, *quoted;
-  gboolean got_in;
+    GdkPixbuf *pixbuf;
+    GFile *file;
+    GFileInfo *file_info;
+    GInputStream *input_stream;
+    GObject *object;
 
-  str = g_string_new (NULL);
-  
-  got_in = FALSE;
-  last = script;
-  while ((p = strchr (last, '%')) != NULL)
-    {
-      g_string_append_len (str, last, p - last);
-      p++;
+    g_return_val_if_fail (uri != NULL, NULL);
 
-      switch (*p) {
-      case 'u':
-	quoted = g_shell_quote (inuri);
-	g_string_append (str, quoted);
-	g_free (quoted);
-	got_in = TRUE;
-	p++;
-	break;
-      case 'i':
-	localfile = g_filename_from_uri (inuri, NULL, NULL);
-	if (localfile)
-	  {
-	    quoted = g_shell_quote (localfile);
-	    g_string_append (str, quoted);
-	    got_in = TRUE;
-	    g_free (quoted);
-	    g_free (localfile);
-	  }
-	p++;
-	break;
-      case 'o':
-	quoted = g_shell_quote (outfile);
-	g_string_append (str, quoted);
-	g_free (quoted);
-	p++;
-	break;
-      case 's':
-	g_string_append_printf (str, "%d", size);
-	p++;
-	break;
-      case '%':
-	g_string_append_c (str, '%');
-	p++;
-	break;
-      case 0:
-      default:
-	break;
-      }
-      last = p;
+    input_stream = NULL;
+
+    file = g_file_new_for_uri (uri);
+
+    /* First see if we can get an input stream via preview::icon  */
+    file_info = g_file_query_info (file,
+                                   G_FILE_ATTRIBUTE_PREVIEW_ICON,
+                                   G_FILE_QUERY_INFO_NONE,
+                                   NULL,  /* GCancellable */
+                                   NULL); /* return location for GError */
+    g_object_unref (file);
+
+    if (file_info == NULL)
+      return NULL;
+
+    object = g_file_info_get_attribute_object (file_info,
+                                               G_FILE_ATTRIBUTE_PREVIEW_ICON);
+    g_object_unref (file_info);
+
+    if (!object)
+      return NULL;
+    if (!G_IS_LOADABLE_ICON (object)) {
+      g_object_unref (object);
+      return NULL;
     }
-  g_string_append (str, last);
 
-  if (got_in)
-    return g_string_free (str, FALSE);
+    input_stream = g_loadable_icon_load (G_LOADABLE_ICON (object),
+                                         0,     /* size */
+                                         NULL,  /* return location for type */
+                                         NULL,  /* GCancellable */
+                                         NULL); /* return location for GError */
+    g_object_unref (object);
 
-  g_string_free (str, TRUE);
-  return NULL;
+    if (!input_stream)
+      return NULL;
+
+    pixbuf = gdk_pixbuf_new_from_stream_at_scale (input_stream,
+                                                  size, size,
+                                                  TRUE, NULL, NULL);
+    g_object_unref (input_stream);
+
+    return pixbuf;
+}
+
+static GdkPixbuf *
+pixbuf_new_from_bytes (GBytes  *bytes,
+		       GError **error)
+{
+  g_autoptr(GdkPixbufLoader) loader = NULL;
+
+  loader = gdk_pixbuf_loader_new_with_mime_type ("image/png", error);
+  if (!loader)
+    return NULL;
+
+  if (!gdk_pixbuf_loader_write (loader,
+				g_bytes_get_data (bytes, NULL),
+				g_bytes_get_size (bytes),
+				error))
+    {
+      return NULL;
+    }
+
+  if (!gdk_pixbuf_loader_close (loader, error))
+    return NULL;
+
+  return g_object_ref (gdk_pixbuf_loader_get_pixbuf (loader));
 }
 
 /**
@@ -1340,7 +1029,7 @@ expand_thumbnailing_script (const char *script,
  * Tries to generate a thumbnail for the specified file. If it succeeds
  * it returns a pixbuf that can be used as a thumbnail.
  *
- * Usage of this function is threadsafe.
+ * Usage of this function is threadsafe and does blocking I/O.
  *
  * Return value: (transfer full): thumbnail pixbuf if thumbnailing succeeded, %NULL otherwise.
  *
@@ -1351,26 +1040,22 @@ gnome_desktop_thumbnail_factory_generate_thumbnail (GnomeDesktopThumbnailFactory
 						    const char            *uri,
 						    const char            *mime_type)
 {
-  GdkPixbuf *pixbuf, *scaled, *tmp_pixbuf;
-  char *script, *expanded_script;
-  int width, height, size;
-  int original_width = 0;
-  int original_height = 0;
-  char dimension[12];
-  double scale;
-  int exit_status;
-  char *tmpname;
+  GdkPixbuf *pixbuf;
+  char *script;
+  int size;
 
   g_return_val_if_fail (uri != NULL, NULL);
   g_return_val_if_fail (mime_type != NULL, NULL);
 
   /* Doesn't access any volatile fields in factory, so it's threadsafe */
-  
+
   size = 128;
   if (factory->priv->size == GNOME_DESKTOP_THUMBNAIL_SIZE_LARGE)
     size = 256;
 
-  pixbuf = NULL;
+  pixbuf = get_preview_thumbnail (uri, size);
+  if (pixbuf != NULL)
+    return pixbuf;
 
   script = NULL;
   g_mutex_lock (&factory->priv->lock);
@@ -1383,92 +1068,37 @@ gnome_desktop_thumbnail_factory_generate_thumbnail (GnomeDesktopThumbnailFactory
         script = g_strdup (thumb->command);
     }
   g_mutex_unlock (&factory->priv->lock);
-  
+
   if (script)
     {
-      int fd;
+      GBytes *data;
+      GError *error = NULL;
 
-      fd = g_file_open_tmp (".gnome_desktop_thumbnail.XXXXXX", &tmpname, NULL);
-
-      if (fd != -1)
-	{
-	  close (fd);
-
-	  expanded_script = expand_thumbnailing_script (script, size, uri, tmpname);
-	  if (expanded_script != NULL &&
-	      g_spawn_command_line_sync (expanded_script,
-					 NULL, NULL, &exit_status, NULL) &&
-	      exit_status == 0)
-	    {
-	      pixbuf = gdk_pixbuf_new_from_file (tmpname, NULL);
-	    }
-
-	  g_free (expanded_script);
-	  g_unlink (tmpname);
-	  g_free (tmpname);
-	}
-
-      g_free (script);
-    }
-
-  /* Fall back to gdk-pixbuf */
-  if (pixbuf == NULL)
-    {
-      pixbuf = _gdk_pixbuf_new_from_uri_at_scale (uri, size, size, TRUE);
-
-      if (pixbuf != NULL)
+      data = gnome_desktop_thumbnail_script_exec (script, size, uri, &error);
+      if (data)
         {
-          original_width = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (pixbuf),
-                                                               "gnome-original-width"));
-          original_height = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (pixbuf),
-                                                                "gnome-original-height"));
+          pixbuf = pixbuf_new_from_bytes (data, &error);
+          if (!pixbuf)
+            {
+              g_debug ("Could not load thumbnail pixbuf: %s", error->message);
+              g_error_free (error);
+            }
+          g_bytes_unref (data);
+        }
+      else
+        {
+          g_debug ("Thumbnail script ('%s') failed for '%s': %s",
+                   script, uri, error ? error->message : "no details");
+          g_clear_error (&error);
         }
     }
-      
-  if (pixbuf == NULL)
-    return NULL;
-
-  /* The pixbuf loader may attach an "orientation" option to the pixbuf,
-     if the tiff or exif jpeg file had an orientation tag. Rotate/flip
-     the pixbuf as specified by this tag, if present. */
-  tmp_pixbuf = gdk_pixbuf_apply_embedded_orientation (pixbuf);
-  g_object_unref (pixbuf);
-  pixbuf = tmp_pixbuf;
-
-  width = gdk_pixbuf_get_width (pixbuf);
-  height = gdk_pixbuf_get_height (pixbuf);
-  
-  if (width > size || height > size)
+  else
     {
-      const gchar *orig_width, *orig_height;
-      scale = (double)size / MAX (width, height);
-
-      scaled = gnome_desktop_thumbnail_scale_down_pixbuf (pixbuf,
-						  floor (width * scale + 0.5),
-						  floor (height * scale + 0.5));
-
-      orig_width = gdk_pixbuf_get_option (pixbuf, "tEXt::Thumb::Image::Width");
-      orig_height = gdk_pixbuf_get_option (pixbuf, "tEXt::Thumb::Image::Height");
-
-      if (orig_width != NULL) {
-	      gdk_pixbuf_set_option (scaled, "tEXt::Thumb::Image::Width", orig_width);
-      }
-      if (orig_height != NULL) {
-	      gdk_pixbuf_set_option (scaled, "tEXt::Thumb::Image::Height", orig_height);
-      }
-      
-      g_object_unref (pixbuf);
-      pixbuf = scaled;
+      g_debug ("Could not find thumbnailer for mime-type '%s'",
+               mime_type);
     }
-  
-  if (original_width > 0) {
-	  g_snprintf (dimension, sizeof (dimension), "%i", original_width);
-	  gdk_pixbuf_set_option (pixbuf, "tEXt::Thumb::Image::Width", dimension);
-  }
-  if (original_height > 0) {
-	  g_snprintf (dimension, sizeof (dimension), "%i", original_height);
-	  gdk_pixbuf_set_option (pixbuf, "tEXt::Thumb::Image::Height", dimension);
-  }
+
+  g_free (script);
 
   return pixbuf;
 }
@@ -1502,7 +1132,7 @@ save_thumbnail (GdkPixbuf  *pixbuf,
     goto out;
   close (tmp_fd);
 
-  g_snprintf (mtime_str, 21, "%ld",  mtime);
+  g_snprintf (mtime_str, 21, "%" G_GINT64_FORMAT, (gint64) mtime);
   width = gdk_pixbuf_get_option (pixbuf, "tEXt::Thumb::Image::Width");
   height = gdk_pixbuf_get_option (pixbuf, "tEXt::Thumb::Image::Height");
 
@@ -1547,7 +1177,11 @@ save_thumbnail (GdkPixbuf  *pixbuf,
 static GdkPixbuf *
 make_failed_thumbnail (void)
 {
-  return gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8, 1, 1);
+  GdkPixbuf *pixbuf;
+
+  pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8, 1, 1);
+  gdk_pixbuf_fill (pixbuf, 0x00000000);
+  return pixbuf;
 }
 
 /**
@@ -1560,7 +1194,7 @@ make_failed_thumbnail (void)
  * Saves @thumbnail at the right place. If the save fails a
  * failed thumbnail is written.
  *
- * Usage of this function is threadsafe.
+ * Usage of this function is threadsafe and does blocking I/O.
  *
  * Since: 2.2
  **/
@@ -1593,7 +1227,7 @@ gnome_desktop_thumbnail_factory_save_thumbnail (GnomeDesktopThumbnailFactory *fa
  * Creates a failed thumbnail for the file so that we don't try
  * to re-thumbnail the file later.
  *
- * Usage of this function is threadsafe.
+ * Usage of this function is threadsafe and does blocking I/O.
  *
  * Since: 2.2
  **/
@@ -1613,31 +1247,12 @@ gnome_desktop_thumbnail_factory_create_failed_thumbnail (GnomeDesktopThumbnailFa
 }
 
 /**
- * gnome_desktop_thumbnail_md5:
- * @uri: an uri
- *
- * Calculates the MD5 checksum of the uri. This can be useful
- * if you want to manually handle thumbnail files.
- *
- * Return value: A string with the MD5 digest of the uri string.
- *
- * Since: 2.2
- * Deprecated: 2.22: Use #GChecksum instead
- **/
-char *
-gnome_desktop_thumbnail_md5 (const char *uri)
-{
-  return g_compute_checksum_for_data (G_CHECKSUM_MD5,
-                                      (const guchar *) uri,
-                                      strlen (uri));
-}
-
-/**
  * gnome_desktop_thumbnail_path_for_uri:
  * @uri: an uri
  * @size: a thumbnail size
  *
  * Returns the filename that a thumbnail of size @size for @uri would have.
+ * This function is threadsafe and does no blocking I/O.
  *
  * Return value: an absolute filename
  *
@@ -1651,38 +1266,13 @@ gnome_desktop_thumbnail_path_for_uri (const char         *uri,
 }
 
 /**
- * gnome_desktop_thumbnail_has_uri:
- * @pixbuf: an loaded thumbnail pixbuf
- * @uri: a uri
- *
- * Returns whether the thumbnail has the correct uri embedded in the
- * Thumb::URI option in the png.
- *
- * Return value: TRUE if the thumbnail is for @uri
- *
- * Since: 2.2
- **/
-gboolean
-gnome_desktop_thumbnail_has_uri (GdkPixbuf          *pixbuf,
-				 const char         *uri)
-{
-  const char *thumb_uri;
-  
-  thumb_uri = gdk_pixbuf_get_option (pixbuf, "tEXt::Thumb::URI");
-  if (!thumb_uri)
-    return FALSE;
-
-  return strcmp (uri, thumb_uri) == 0;
-}
-
-/**
  * gnome_desktop_thumbnail_is_valid:
  * @pixbuf: an loaded thumbnail #GdkPixbuf
  * @uri: a uri
  * @mtime: the mtime
  *
  * Returns whether the thumbnail has the correct uri and mtime embedded in the
- * png options.
+ * png options. This function is threadsafe and does no blocking I/O.
  *
  * Return value: TRUE if the thumbnail has the right @uri and @mtime
  *
@@ -1695,19 +1285,17 @@ gnome_desktop_thumbnail_is_valid (GdkPixbuf          *pixbuf,
 {
   const char *thumb_uri, *thumb_mtime_str;
   time_t thumb_mtime;
-  
+
   thumb_uri = gdk_pixbuf_get_option (pixbuf, "tEXt::Thumb::URI");
-  if (!thumb_uri)
+  if (g_strcmp0 (uri, thumb_uri) != 0)
     return FALSE;
-  if (strcmp (uri, thumb_uri) != 0)
-    return FALSE;
-  
+
   thumb_mtime_str = gdk_pixbuf_get_option (pixbuf, "tEXt::Thumb::MTime");
   if (!thumb_mtime_str)
     return FALSE;
   thumb_mtime = atol (thumb_mtime_str);
   if (mtime != thumb_mtime)
     return FALSE;
-  
+
   return TRUE;
 }

@@ -1,41 +1,45 @@
-%global gdk_pixbuf2_version               2.33.0
+%global gdk_pixbuf2_version               2.36.5
 %global gtk3_version                      3.3.6
-%global glib2_version                     2.44.0
+%global glib2_version                     2.53.0
 %global gtk_doc_version                   1.14
-%global gsettings_desktop_schemas_version 3.5.91
+%global gsettings_desktop_schemas_version 3.27.0
 %global po_package                        gnome-desktop-3.0
 
 Name: gnome-desktop3
-Version: 3.22.2
+Version: 3.28.2
 Release: 2%{?dist}
 Summary: Shared code among gnome-panel, gnome-session, nautilus, etc
 
 License: GPLv2+ and LGPLv2+
 URL: http://www.gnome.org
-Source0: http://download.gnome.org/sources/gnome-desktop/3.22/gnome-desktop-%{version}.tar.xz
-Patch0: 0001-default-input-sources-Switch-ja_JP-default-to-ibus-k.patch
-Patch1: 0001-default-input-sources-Change-default-for-zh_TW-to-ib.patch
-Patch2: 0001-wallclock-Prevent-a-crash.patch
+Source0: http://download.gnome.org/sources/gnome-desktop/3.28/gnome-desktop-%{version}.tar.xz
 
-BuildRequires: gnome-common
 BuildRequires: pkgconfig(gdk-pixbuf-2.0) >= %{gdk_pixbuf2_version}
 BuildRequires: pkgconfig(gio-2.0) >= %{glib2_version}
+BuildRequires: pkgconfig(glib-2.0) >= %{glib2_version}
 BuildRequires: pkgconfig(gobject-introspection-1.0)
 BuildRequires: pkgconfig(gsettings-desktop-schemas) >= %{gsettings_desktop_schemas_version}
 BuildRequires: pkgconfig(gtk+-3.0) >= %{gtk3_version}
 BuildRequires: pkgconfig(iso-codes)
+BuildRequires: pkgconfig(libseccomp)
 BuildRequires: pkgconfig(libudev)
 BuildRequires: pkgconfig(xkeyboard-config)
 BuildRequires: gettext
 BuildRequires: gtk-doc >= %{gtk_doc_version}
-BuildRequires: automake autoconf libtool intltool
+BuildRequires: intltool
 BuildRequires: itstool
+BuildRequires: gnome-desktop3
 
 Requires: gdk-pixbuf2%{?_isa} >= %{gdk_pixbuf2_version}
+Requires: glib2%{?_isa} >= %{glib2_version}
 # Make sure that gnome-themes-standard gets pulled in for upgrades
 Requires: gnome-themes-standard
 # needed for GnomeWallClock
 Requires: gsettings-desktop-schemas >= %{gsettings_desktop_schemas_version}
+
+# Replace standalone bwrap with flatpak's
+Requires: flatpak
+Patch0: 0001-Use-flatpak-s-bwrap.patch
 
 # GnomeIdleMonitor API change breaks older gnome-shell versions
 Conflicts: gnome-shell < 3.7.90
@@ -70,10 +74,7 @@ The %{name}-tests package contains tests that can be used to verify
 the functionality of the installed %{name} package.
 
 %prep
-%setup -q -n gnome-desktop-%{version}
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%autosetup -p1 -n gnome-desktop-%{version}
 
 %build
 %configure --enable-installed-tests
@@ -84,6 +85,9 @@ make %{?_smp_mflags}
 
 # stuff we don't want
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
+
+# copy over previous soname for temporary ABI compat
+cp -a %{_libdir}/libgnome-desktop-3.so.12* $RPM_BUILD_ROOT%{_libdir}
 
 %find_lang %{po_package} --all-name --with-gnome
 
@@ -97,7 +101,8 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_datadir}/gnome/gnome-version.xml
 %{_libexecdir}/gnome-rr-debug
 # LGPL
-%{_libdir}/lib*.so.*
+%{_libdir}/libgnome-desktop-3.so.12*
+%{_libdir}/libgnome-desktop-3.so.17*
 %{_libdir}/girepository-1.0/GnomeDesktop-3.0.typelib
 
 %files devel
@@ -114,6 +119,15 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_datadir}/installed-tests
 
 %changelog
+* Mon Jun 04 2018 Bastien Nocera <bnocera@redhat.com> - 3.28.2-2
++ gnome-desktop3-3.28.2-2
+- Bump release to build with flatpak's bwrap
+- Related: #1567479
+
+* Thu May 10 2018 Kalev Lember <klember@redhat.com> - 3.28.2-1
+- Update to 3.28.2
+- Resolves: #1567479
+
 * Wed Apr 19 2017 Rui Matos <rmatos@redhat.com> - 3.22.2-2
 - Fix a crash
   Resolves: #1437059

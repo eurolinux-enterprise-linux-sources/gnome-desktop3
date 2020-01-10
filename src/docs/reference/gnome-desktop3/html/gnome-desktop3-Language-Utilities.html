@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Language Utilities: GNOME Desktop Library Reference Manual</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<meta name="generator" content="DocBook XSL Stylesheets Vsnapshot">
 <link rel="home" href="index.html" title="GNOME Desktop Library Reference Manual">
 <link rel="up" href="languages.html" title="Part VIII. Language Utilities">
 <link rel="prev" href="languages.html" title="Part VIII. Language Utilities">
 <link rel="next" href="annotation-glossary.html" title="Annotation Glossary">
-<meta name="generator" content="GTK-Doc V1.25.1 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.27 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -65,7 +65,7 @@
 </tr>
 <tr>
 <td class="function_type">
-<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+<span class="returnvalue">gboolean</span>
 </td>
 <td class="function_name">
 <a class="link" href="gnome-desktop3-Language-Utilities.html#gnome-get-input-source-from-locale" title="gnome_get_input_source_from_locale ()">gnome_get_input_source_from_locale</a> <span class="c_punctuation">()</span>
@@ -97,7 +97,7 @@
 </tr>
 <tr>
 <td class="function_type">
-<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+<span class="returnvalue">gboolean</span>
 </td>
 <td class="function_name">
 <a class="link" href="gnome-desktop3-Language-Utilities.html#gnome-parse-locale" title="gnome_parse_locale ()">gnome_parse_locale</a> <span class="c_punctuation">()</span>
@@ -105,7 +105,7 @@
 </tr>
 <tr>
 <td class="function_type">
-<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+<span class="returnvalue">gboolean</span>
 </td>
 <td class="function_name">
 <a class="link" href="gnome-desktop3-Language-Utilities.html#gnome-language-has-translations" title="gnome_language_has_translations ()">gnome_language_has_translations</a> <span class="c_punctuation">()</span>
@@ -126,8 +126,8 @@ gnome_get_all_locales (<em class="parameter"><code><span class="type">void</span
 <p>Gets all locales.</p>
 <div class="refsect3">
 <a name="gnome-get-all-locales.returns"></a><h4>Returns</h4>
-<p>  a newly allocated <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>-terminated string array containing the
-all locales. Free with <a href="https://developer.gnome.org/glib/unstable/glib-String-Utility-Functions.html#g-strfreev"><code class="function">g_strfreev()</code></a>. </p>
+<p>a newly allocated <code class="literal">NULL</code>-terminated string array containing the
+all locales. Free with <code class="function">g_strfreev()</code>. </p>
 <p><span class="annotation">[<acronym title="Parameter points to an array of items."><span class="acronym">array</span></acronym> zero-terminated=1][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> utf8][<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
 <p class="since">Since: 3.8</p>
@@ -158,7 +158,7 @@ returned string is translated accordingly.</p>
 </tr>
 <tr>
 <td class="parameter_name"><p>translation</p></td>
-<td class="parameter_description"><p> a locale string. </p></td>
+<td class="parameter_description"><p>a locale string. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
@@ -166,7 +166,7 @@ returned string is translated accordingly.</p>
 </div>
 <div class="refsect3">
 <a name="gnome-get-country-from-code.returns"></a><h4>Returns</h4>
-<p> the country name. Caller takes
+<p>the country name. Caller takes
 ownership. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
@@ -198,7 +198,7 @@ provided the returned string is translated accordingly.</p>
 </tr>
 <tr>
 <td class="parameter_name"><p>translation</p></td>
-<td class="parameter_description"><p> a locale string. </p></td>
+<td class="parameter_description"><p>a locale string. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
@@ -206,7 +206,7 @@ provided the returned string is translated accordingly.</p>
 </div>
 <div class="refsect3">
 <a name="gnome-get-country-from-locale.returns"></a><h4>Returns</h4>
-<p> the country description. Caller
+<p>the country description. Caller
 takes ownership. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
@@ -215,7 +215,7 @@ takes ownership. </p>
 <hr>
 <div class="refsect2">
 <a name="gnome-get-input-source-from-locale"></a><h3>gnome_get_input_source_from_locale ()</h3>
-<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>
 gnome_get_input_source_from_locale (<em class="parameter"><code>const <span class="type">char</span> *locale</code></em>,
                                     <em class="parameter"><code>const <span class="type">char</span> **type</code></em>,
                                     <em class="parameter"><code>const <span class="type">char</span> **id</code></em>);</pre>
@@ -237,13 +237,13 @@ locale.</p>
 </tr>
 <tr>
 <td class="parameter_name"><p>type</p></td>
-<td class="parameter_description"><p> location to store the input source
+<td class="parameter_description"><p>location to store the input source
 type. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>id</p></td>
-<td class="parameter_description"><p> location to store the input source
+<td class="parameter_description"><p>location to store the input source
 identifier. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></td>
 </tr>
@@ -252,7 +252,7 @@ identifier. </p></td>
 </div>
 <div class="refsect3">
 <a name="gnome-get-input-source-from-locale.returns"></a><h4>Returns</h4>
-<p> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if a input source exists or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise.</p>
+<p> <code class="literal">TRUE</code> if a input source exists or <code class="literal">FALSE</code> otherwise.</p>
 </div>
 <p class="since">Since: 3.8</p>
 </div>
@@ -282,7 +282,7 @@ returned string is translated accordingly.</p>
 </tr>
 <tr>
 <td class="parameter_name"><p>translation</p></td>
-<td class="parameter_description"><p> a locale string. </p></td>
+<td class="parameter_description"><p>a locale string. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
@@ -290,7 +290,7 @@ returned string is translated accordingly.</p>
 </div>
 <div class="refsect3">
 <a name="gnome-get-language-from-code.returns"></a><h4>Returns</h4>
-<p> the language name. Caller takes
+<p>the language name. Caller takes
 ownership. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
@@ -322,7 +322,7 @@ provided the returned string is translated accordingly.</p>
 </tr>
 <tr>
 <td class="parameter_name"><p>translation</p></td>
-<td class="parameter_description"><p> a locale string. </p></td>
+<td class="parameter_description"><p>a locale string. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
@@ -330,7 +330,7 @@ provided the returned string is translated accordingly.</p>
 </div>
 <div class="refsect3">
 <a name="gnome-get-language-from-locale.returns"></a><h4>Returns</h4>
-<p> the language description. Caller
+<p>the language description. Caller
 takes ownership. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
@@ -362,7 +362,7 @@ gnome_normalize_locale (<em class="parameter"><code>const <span class="type">cha
 </div>
 <div class="refsect3">
 <a name="gnome-normalize-locale.returns"></a><h4>Returns</h4>
-<p> normalized locale string. Caller
+<p>normalized locale string. Caller
 takes ownership. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
@@ -371,7 +371,7 @@ takes ownership. </p>
 <hr>
 <div class="refsect2">
 <a name="gnome-parse-locale"></a><h3>gnome_parse_locale ()</h3>
-<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>
 gnome_parse_locale (<em class="parameter"><code>const <span class="type">char</span> *locale</code></em>,
                     <em class="parameter"><code><span class="type">char</span> **language_codep</code></em>,
                     <em class="parameter"><code><span class="type">char</span> **country_codep</code></em>,
@@ -397,26 +397,26 @@ http://en.wikipedia.org/wiki/Locale.</p>
 </tr>
 <tr>
 <td class="parameter_name"><p>language_codep</p></td>
-<td class="parameter_description"><p> location to
-store the language code, or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. </p></td>
+<td class="parameter_description"><p>location to
+store the language code, or <code class="literal">NULL</code>. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>country_codep</p></td>
-<td class="parameter_description"><p> location to
-store the country code, or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. </p></td>
+<td class="parameter_description"><p>location to
+store the country code, or <code class="literal">NULL</code>. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>codesetp</p></td>
-<td class="parameter_description"><p> location to
-store the codeset, or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. </p></td>
+<td class="parameter_description"><p>location to
+store the codeset, or <code class="literal">NULL</code>. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>modifierp</p></td>
-<td class="parameter_description"><p> location to
-store the modifier, or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. </p></td>
+<td class="parameter_description"><p>location to
+store the modifier, or <code class="literal">NULL</code>. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></td>
 </tr>
 </tbody>
@@ -424,16 +424,16 @@ store the modifier, or <a href="https://developer.gnome.org/glib/unstable/glib-S
 </div>
 <div class="refsect3">
 <a name="gnome-parse-locale.returns"></a><h4>Returns</h4>
-<p> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if parsing was successful.</p>
+<p> <code class="literal">TRUE</code> if parsing was successful.</p>
 </div>
 <p class="since">Since: 3.8</p>
 </div>
 <hr>
 <div class="refsect2">
 <a name="gnome-language-has-translations"></a><h3>gnome_language_has_translations ()</h3>
-<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>
 gnome_language_has_translations (<em class="parameter"><code>const <span class="type">char</span> *code</code></em>);</pre>
-<p>Returns <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if there are translations for language <em class="parameter"><code>code</code></em>
+<p>Returns <code class="literal">TRUE</code> if there are translations for language <em class="parameter"><code>code</code></em>
 .</p>
 <div class="refsect3">
 <a name="gnome-language-has-translations.parameters"></a><h4>Parameters</h4>
@@ -452,7 +452,7 @@ gnome_language_has_translations (<em class="parameter"><code>const <span class="
 </div>
 <div class="refsect3">
 <a name="gnome-language-has-translations.returns"></a><h4>Returns</h4>
-<p> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if there are translations for language <em class="parameter"><code>code</code></em>
+<p> <code class="literal">TRUE</code> if there are translations for language <em class="parameter"><code>code</code></em>
 .</p>
 </div>
 <p class="since">Since: 3.8</p>
@@ -463,6 +463,6 @@ gnome_language_has_translations (<em class="parameter"><code>const <span class="
 </div>
 </div>
 <div class="footer">
-<hr>Generated by GTK-Doc V1.25.1</div>
+<hr>Generated by GTK-Doc V1.27</div>
 </body>
 </html>

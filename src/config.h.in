@@ -3,11 +3,25 @@
 /* always defined to indicate that i18n is enabled */
 #undef ENABLE_NLS
 
+/* Define if using seccomp */
+#undef ENABLE_SECCOMP
+
 /* The gettext translation domain */
 #undef GETTEXT_PACKAGE
 
 /* Define to 1 if you have the `bind_textdomain_codeset' function. */
 #undef HAVE_BIND_TEXTDOMAIN_CODESET
+
+/* Define to 1 if Bubblewrap support is available */
+#undef HAVE_BWRAP
+
+/* Define to 1 if you have the Mac OS X function CFLocaleCopyCurrent in the
+   CoreFoundation framework. */
+#undef HAVE_CFLOCALECOPYCURRENT
+
+/* Define to 1 if you have the Mac OS X function CFPreferencesCopyAppValue in
+   the CoreFoundation framework. */
+#undef HAVE_CFPREFERENCESCOPYAPPVALUE
 
 /* Define to 1 if you have the `dcgettext' function. */
 #undef HAVE_DCGETTEXT
@@ -60,6 +74,9 @@
 /* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
 
+/* Path to library install prefix */
+#undef INSTALL_PREFIX
+
 /* Define to the sub-directory where libtool stores uninstalled libraries. */
 #undef LT_OBJDIR
 
@@ -92,3 +109,6 @@
 
 /* Define to 1 if the X Window System is missing or not being used. */
 #undef X_DISPLAY_MISSING
+
+/* Define to include GNU extensions */
+#undef _GNU_SOURCE

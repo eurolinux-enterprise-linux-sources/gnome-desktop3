@@ -33,9 +33,9 @@
     <keyword type="function" name="gnome_bg_save_to_preferences ()" link="gnome-desktop3-gnome-bg.html#gnome-bg-save-to-preferences"/>
     <keyword type="function" name="gnome_bg_set_filename ()" link="gnome-desktop3-gnome-bg.html#gnome-bg-set-filename"/>
     <keyword type="function" name="gnome_bg_set_placement ()" link="gnome-desktop3-gnome-bg.html#gnome-bg-set-placement"/>
-    <keyword type="function" name="gnome_bg_set_color ()" link="gnome-desktop3-gnome-bg.html#gnome-bg-set-color"/>
+    <keyword type="function" name="gnome_bg_set_rgba ()" link="gnome-desktop3-gnome-bg.html#gnome-bg-set-rgba"/>
     <keyword type="function" name="gnome_bg_get_placement ()" link="gnome-desktop3-gnome-bg.html#gnome-bg-get-placement"/>
-    <keyword type="function" name="gnome_bg_get_color ()" link="gnome-desktop3-gnome-bg.html#gnome-bg-get-color"/>
+    <keyword type="function" name="gnome_bg_get_rgba ()" link="gnome-desktop3-gnome-bg.html#gnome-bg-get-rgba"/>
     <keyword type="function" name="gnome_bg_get_filename ()" link="gnome-desktop3-gnome-bg.html#gnome-bg-get-filename"/>
     <keyword type="function" name="gnome_bg_draw ()" link="gnome-desktop3-gnome-bg.html#gnome-bg-draw"/>
     <keyword type="function" name="gnome_bg_create_surface ()" link="gnome-desktop3-gnome-bg.html#gnome-bg-create-surface"/>
@@ -163,11 +163,8 @@
     <keyword type="function" name="gnome_desktop_thumbnail_factory_generate_thumbnail ()" link="GnomeDesktopThumbnailFactory.html#gnome-desktop-thumbnail-factory-generate-thumbnail" since="2.2"/>
     <keyword type="function" name="gnome_desktop_thumbnail_factory_save_thumbnail ()" link="GnomeDesktopThumbnailFactory.html#gnome-desktop-thumbnail-factory-save-thumbnail" since="2.2"/>
     <keyword type="function" name="gnome_desktop_thumbnail_factory_create_failed_thumbnail ()" link="GnomeDesktopThumbnailFactory.html#gnome-desktop-thumbnail-factory-create-failed-thumbnail" since="2.2"/>
-    <keyword type="function" name="gnome_desktop_thumbnail_has_uri ()" link="GnomeDesktopThumbnailFactory.html#gnome-desktop-thumbnail-has-uri" since="2.2"/>
     <keyword type="function" name="gnome_desktop_thumbnail_is_valid ()" link="GnomeDesktopThumbnailFactory.html#gnome-desktop-thumbnail-is-valid" since="2.2"/>
-    <keyword type="function" name="gnome_desktop_thumbnail_md5 ()" link="GnomeDesktopThumbnailFactory.html#gnome-desktop-thumbnail-md5" deprecated="2.22: Use #GChecksum instead" since="2.2"/>
     <keyword type="function" name="gnome_desktop_thumbnail_path_for_uri ()" link="GnomeDesktopThumbnailFactory.html#gnome-desktop-thumbnail-path-for-uri" since="2.2"/>
-    <keyword type="function" name="gnome_desktop_thumbnail_scale_down_pixbuf ()" link="GnomeDesktopThumbnailFactory.html#gnome-desktop-thumbnail-scale-down-pixbuf" since="2.2"/>
     <keyword type="enum" name="enum GnomeDesktopThumbnailSize" link="GnomeDesktopThumbnailFactory.html#GnomeDesktopThumbnailSize"/>
     <keyword type="struct" name="struct GnomeDesktopThumbnailFactory" link="GnomeDesktopThumbnailFactory.html#GnomeDesktopThumbnailFactory-struct"/>
     <keyword type="struct" name="struct GnomeDesktopThumbnailFactoryClass" link="GnomeDesktopThumbnailFactory.html#GnomeDesktopThumbnailFactoryClass"/>

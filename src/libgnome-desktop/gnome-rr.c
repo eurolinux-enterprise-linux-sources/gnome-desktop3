@@ -271,8 +271,8 @@ has_similar_mode (GnomeRROutput *output, GnomeRRMode *mode)
 {
     int i;
     GnomeRRMode **modes = gnome_rr_output_list_modes (output);
-    int width = gnome_rr_mode_get_width (mode);
-    int height = gnome_rr_mode_get_height (mode);
+    guint width = gnome_rr_mode_get_width (mode);
+    guint height = gnome_rr_mode_get_height (mode);
 
     for (i = 0; modes[i] != NULL; ++i)
     {
@@ -294,8 +294,8 @@ _gnome_rr_output_get_tiled_display_size (GnomeRROutput *output,
 					 int *total_width, int *total_height)
 {
     GnomeRRTile tile;
-    int ht, vt, i;
-    int total_h = 0, total_w = 0;
+    guint ht, vt;
+    int i, total_h = 0, total_w = 0;
 
     if (!_gnome_rr_output_get_tile_info (output, &tile))
 	return FALSE;
@@ -430,7 +430,7 @@ fill_screen_info_from_resources (ScreenInfo *info,
 				 int         max_width,
 				 int         max_height)
 {
-    int i;
+    guint i;
     GPtrArray *a;
     GnomeRRCrtc **crtc;
     GnomeRROutput **output;
@@ -454,13 +454,10 @@ fill_screen_info_from_resources (ScreenInfo *info,
     a = g_ptr_array_new ();
     for (i = 0; i < ncrtc; ++i)
     {
-	GnomeRRCrtc *crtc;
-
 	g_variant_get_child (crtcs, i, META_CRTC_STRUCT, &id,
 			     NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-	crtc = crtc_new (info, id);
 
-	g_ptr_array_add (a, crtc);
+	g_ptr_array_add (a, crtc_new (info, id));
     }
     g_ptr_array_add (a, NULL);
     info->crtcs = (GnomeRRCrtc **)g_ptr_array_free (a, FALSE);
@@ -468,13 +465,10 @@ fill_screen_info_from_resources (ScreenInfo *info,
     a = g_ptr_array_new ();
     for (i = 0; i < noutput; ++i)
     {
-	GnomeRROutput *output;
- 
 	g_variant_get_child (outputs, i, META_OUTPUT_STRUCT, &id,
 			     NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-	output = output_new (info, id);
 
-	g_ptr_array_add (a, output);
+	g_ptr_array_add (a, output_new (info, id));
     }
     g_ptr_array_add (a, NULL);
     info->outputs = (GnomeRROutput **)g_ptr_array_free (a, FALSE);
@@ -482,13 +476,10 @@ fill_screen_info_from_resources (ScreenInfo *info,
     a = g_ptr_array_new ();
     for (i = 0;  i < nmode; ++i)
     {
-	GnomeRRMode *mode;
-
 	g_variant_get_child (modes, i, META_MONITOR_MODE_STRUCT, &id,
 			     NULL, NULL, NULL, NULL, NULL);
-	mode = mode_new (info, id);
 
-	g_ptr_array_add (a, mode);
+	g_ptr_array_add (a, mode_new (info, id));
     }
     g_ptr_array_add (a, NULL);
     info->modes = (GnomeRRMode **)g_ptr_array_free (a, FALSE);
@@ -1122,16 +1113,13 @@ gnome_rr_screen_get_dpms_mode (GnomeRRScreen    *screen,
     g_return_val_if_fail (mode != NULL, FALSE);
 
     power_save = meta_dbus_display_config_get_power_save_mode (screen->priv->proxy);
-
-    if (power_save == META_POWER_SAVE_UNKNOWN) {
+    switch (power_save) {
+    case META_POWER_SAVE_UNKNOWN:
         g_set_error_literal (error,
                              GNOME_RR_ERROR,
                              GNOME_RR_ERROR_NO_DPMS_EXTENSION,
                              "Display is not DPMS capable");
-	return FALSE;
-    }
-
-    switch (power_save) {
+        return FALSE;
     case META_POWER_SAVE_ON:
         *mode = GNOME_RR_DPMS_ON;
         break;
@@ -1167,6 +1155,9 @@ gnome_rr_screen_set_dpms_mode (GnomeRRScreen    *screen,
     g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
     switch (mode) {
+    case GNOME_RR_DPMS_UNKNOWN:
+        power_save = META_POWER_SAVE_UNKNOWN;
+        break;
     case GNOME_RR_DPMS_ON:
         power_save = META_POWER_SAVE_ON;
         break;
@@ -1336,8 +1327,8 @@ output_initialize (GnomeRROutput *output, GVariant *info)
     GPtrArray *a;
     GVariantIter *crtcs, *clones, *modes;
     GVariant *properties, *edid, *tile;
-    int current_crtc_id;
-    guint id;
+    gint32 current_crtc_id;
+    guint32 id;
 
     g_variant_get (info, META_OUTPUT_STRUCT,
 		   &output->id, &output->winsys_id,
@@ -1356,7 +1347,7 @@ output_initialize (GnomeRROutput *output, GVariant *info)
 
 	g_ptr_array_add (a, crtc);
 
-	if (crtc->id == current_crtc_id)
+	if (current_crtc_id != -1 && crtc->id == (guint32) current_crtc_id)
 	{
 	    output->current_crtc = crtc;
 	    append_output_array (&crtc->current_outputs, output);

@@ -1,8 +1,163 @@
-================
-Version  3.22.2
-================
+==============
+Version 3.28.2
+==============
+
+- Fix a memory leak in background slide shows
+- Updated translations
+
+==============
+Version 3.28.1
+==============
+
+- Updated translations
+
+==============
+Version 3.28.0
+==============
+
+- No changes
+
+===============
+Version 3.27.92
+===============
+
+- idle-monitor fixes
+- Several fixes for compilation warnings
+- Updated translations
+
+===============
+Version 3.27.90
+===============
+
+- Miscellaneous improvements to the thumbnailer code
+- Remove unused gnome_desktop_thumbnail_has_uri()
+- Replace GdkColor methods with GdkRGBA methods
+
+===============
+Version 3.27.2
+===============
+
+- No changes
+
+===============
+Version 3.27.1
+===============
+
+- Change default Japanish input source to KCC
+- wall-clock: respect new clock-show-weekday setting
+- Remove some obsolete API's in thumbnailer
+- Modernize autotools configuration a bit
+- Translations updates
+
+===============
+Version 3.26.0
+===============
 
 - Translation updates
+
+===============
+Version 3.25.92
+===============
+
+- Fix multiple bugs in thumbnailing
+- Disable gvfs in thumbnailer sandboxes
+- Translation updates
+
+=================
+Version 3.25.91.1
+=================
+
+- Fix multiple bugs in sandboxed thumbnailer handling,
+  including performance, and left-over files in /tmp
+- Fix a memory leak in the display handling code
+- Fix a compile-time error on x32
+
+=================
+Version 3.25.90.1
+=================
+
+- Improve error reporting in thumbnailers
+- Fix crashes in thumbnailers (#785963)
+
+===============
+Version 3.25.90
+===============
+
+- Thumbnailers are now sandboxed (#7744970, #785197)
+- Fix a crash in xkb info handling (#785320)
+- Translation updates
+
+==============
+Version 3.25.4
+==============
+
+- Fix uninitialized memory in the thumbnailer (#784915)
+- Add default input source for fr_BE
+
+==============
+Version 3.25.3
+==============
+
+- gnome-bg: Handle exif orientations (#516177)
+- Translation upates
+
+==============
+Version 3.25.2
+==============
+
+- thumbnail: Update documentation
+
+==============
+Version 3.25.1
+==============
+
+- wallclock: don't update needlessly (#780861)
+- wallclock: am/pm is always available now (#780877)
+- Translation updates
+
+==============
+Version 3.24.0
+==============
+
+- No changes
+
+===============
+Version 3.23.92
+===============
+
+- No changes
+
+===============
+Version 3.23.91
+===============
+
+- No changes
+
+===============
+Version 3.23.90
+===============
+
+- Always prefer the backend-provided preview in thumbnails (#738503)
+- Use ibus-libzhuyin as default input method for Simplified Chinese (#772674)
+- Deprecated gnome_desktop_thumbnail_scale_down_pixbuf (#775991)
+
+==============
+Version 3.23.3
+==============
+
+- Always use external gdk-pixbuf thumbnailer (#768064)
+
+================
+Version  3.23.2
+================
+
+- No changes
+
+================
+Version  3.23.1
+================
+
+- No changes
 
 ================
 Version  3.22.1

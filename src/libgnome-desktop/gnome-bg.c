@@ -76,8 +76,8 @@ struct _GnomeBG
 	char *			filename;
 	GDesktopBackgroundStyle	placement;
 	GDesktopBackgroundShading	color_type;
-	GdkColor		primary;
-	GdkColor		secondary;
+	GdkRGBA			primary;
+	GdkRGBA			secondary;
 
 	GFileMonitor *		file_monitor;
 
@@ -126,8 +126,8 @@ static GdkPixbuf *pixbuf_scale_to_min  (GdkPixbuf  *src,
 					int         min_height);
 static void       pixbuf_draw_gradient (GdkPixbuf    *pixbuf,
 					gboolean      horizontal,
-					GdkColor     *c1,
-					GdkColor     *c2,
+					GdkRGBA      *c1,
+					GdkRGBA      *c2,
 					GdkRectangle *rect);
 static void       pixbuf_tile          (GdkPixbuf  *src,
 					GdkPixbuf  *dest);
@@ -170,24 +170,24 @@ static GnomeBGSlideShow *read_slideshow_file (const char *filename,
 
 static void
 color_from_string (const char *string,
-		   GdkColor   *colorp)
+		   GdkRGBA   *colorp)
 {
 	/* If all else fails use black */
-	gdk_color_parse ("black", colorp);
+	gdk_rgba_parse (colorp, "black");
 
 	if (!string)
 		return;
 
-	gdk_color_parse (string, colorp);
+	gdk_rgba_parse (colorp, string);
 }
 
 static char *
-color_to_string (const GdkColor *color)
+color_to_string (const GdkRGBA *color)
 {
 	return g_strdup_printf ("#%02x%02x%02x",
-				color->red >> 8,
-				color->green >> 8,
-				color->blue >> 8);
+				(int) (0.5 + color->red * 255),
+				(int) (0.5 + color->green * 255),
+				(int) (0.5 + color->blue * 255));
 }
 
 static gboolean
@@ -298,7 +298,7 @@ gnome_bg_load_from_preferences (GnomeBG   *bg,
 	char    *tmp;
 	char    *filename;
 	GDesktopBackgroundShading ctype;
-	GdkColor c1, c2;
+	GdkRGBA c1, c2;
 	GDesktopBackgroundStyle placement;
 
 	g_return_if_fail (GNOME_IS_BG (bg));
@@ -322,7 +322,7 @@ gnome_bg_load_from_preferences (GnomeBG   *bg,
 	/* Placement */
 	placement = g_settings_get_enum (settings, BG_KEY_PICTURE_PLACEMENT);
 
-	gnome_bg_set_color (bg, ctype, &c1, &c2);
+	gnome_bg_set_rgba (bg, ctype, &c1, &c2);
 	gnome_bg_set_placement (bg, placement);
 	gnome_bg_set_filename (bg, filename);
 
@@ -443,17 +443,17 @@ gnome_bg_new (void)
 }
 
 void
-gnome_bg_set_color (GnomeBG *bg,
-		    GDesktopBackgroundShading type,
-		    GdkColor *primary,
-		    GdkColor *secondary)
+gnome_bg_set_rgba (GnomeBG *bg,
+		   GDesktopBackgroundShading type,
+		   GdkRGBA *primary,
+		   GdkRGBA *secondary)
 {
 	g_return_if_fail (bg != NULL);
 	g_return_if_fail (primary != NULL);
 
 	if (bg->color_type != type			||
-	    !gdk_color_equal (&bg->primary, primary)			||
-	    (secondary && !gdk_color_equal (&bg->secondary, secondary))) {
+	    !gdk_rgba_equal (&bg->primary, primary)			||
+	    (secondary && !gdk_rgba_equal (&bg->secondary, secondary))) {
 
 		bg->color_type = type;
 		bg->primary = *primary;
@@ -487,10 +487,10 @@ gnome_bg_get_placement (GnomeBG *bg)
 }
 
 void
-gnome_bg_get_color (GnomeBG                   *bg,
-		    GDesktopBackgroundShading *type,
-		    GdkColor                  *primary,
-		    GdkColor                  *secondary)
+gnome_bg_get_rgba (GnomeBG                   *bg,
+		   GDesktopBackgroundShading *type,
+		   GdkRGBA                   *primary,
+		   GdkRGBA                   *secondary)
 {
 	g_return_if_fail (bg != NULL);
 
@@ -708,9 +708,9 @@ draw_color_area (GnomeBG *bg,
 	switch (bg->color_type) {
 	case G_DESKTOP_BACKGROUND_SHADING_SOLID:
 		/* not really a big deal to ignore the area of interest */
-		pixel = ((bg->primary.red >> 8) << 24)      |
-			((bg->primary.green >> 8) << 16)    |
-			((bg->primary.blue >> 8) << 8)      |
+		pixel = ((int) (0.5 + bg->primary.red * 255) << 24)      |
+			((int) (0.5 + bg->primary.green * 255) << 16)    |
+			((int) (0.5 + bg->primary.blue * 255) << 8)      |
 			(0xff);
 		
 		gdk_pixbuf_fill (dest, pixel);
@@ -822,6 +822,11 @@ get_scaled_pixbuf (GDesktopBackgroundStyle placement,
 		new = pixbuf_scale_to_fit (pixbuf, width, height);
 		break;
 		
+	case G_DESKTOP_BACKGROUND_STYLE_NONE:
+		/* This shouldn’t be true, but if it is, assert and
+		 * fall through, in case assertions are disabled.
+		 */
+		g_assert_not_reached ();
 	case G_DESKTOP_BACKGROUND_STYLE_CENTERED:
 	case G_DESKTOP_BACKGROUND_STYLE_WALLPAPER:
 	default:
@@ -867,6 +872,7 @@ draw_image_area (GnomeBG         *bg,
 	case G_DESKTOP_BACKGROUND_STYLE_SPANNED:
 		pixbuf_blend (scaled, dest, 0, 0, w, h, x, y, 1.0);
 		break;
+	case G_DESKTOP_BACKGROUND_STYLE_NONE:
 	default:
 		g_assert_not_reached ();
 		break;
@@ -910,6 +916,14 @@ draw_once (GnomeBG   *bg,
 
 	pixbuf = get_pixbuf_for_size (bg, num_monitor, rect.width, rect.height);
 	if (pixbuf) {
+		GdkPixbuf *rotated;
+
+		rotated = gdk_pixbuf_apply_embedded_orientation (pixbuf);
+		if (rotated != NULL) {
+			g_object_unref (pixbuf);
+			pixbuf = rotated;
+		}
+
 		draw_image_area (bg,
 				 num_monitor,
 				 pixbuf,
@@ -1010,6 +1024,7 @@ gnome_bg_get_pixmap_size (GnomeBG   *bg,
 			
 		case G_DESKTOP_BACKGROUND_SHADING_HORIZONTAL:
 		case G_DESKTOP_BACKGROUND_SHADING_VERTICAL:
+		default:
 			break;
 		}
 		
@@ -1072,11 +1087,8 @@ gnome_bg_create_surface (GnomeBG	    *bg,
 
 	cr = cairo_create (surface);
 	if (!bg->filename && bg->color_type == G_DESKTOP_BACKGROUND_SHADING_SOLID) {
-		gdk_cairo_set_source_color (cr, &(bg->primary));
-		average.red = bg->primary.red / 65535.0;
-		average.green = bg->primary.green / 65535.0;
-		average.blue = bg->primary.blue / 65535.0;
-		average.alpha = 1.0;
+		gdk_cairo_set_source_rgba (cr, &(bg->primary));
+		average = bg->primary;
 	}
 	else {
 		GdkPixbuf *pixbuf;
@@ -1109,8 +1121,8 @@ gnome_bg_is_dark (GnomeBG *bg,
 		  int      width,
 		  int      height)
 {
-	GdkColor color;
-	int intensity;
+	GdkRGBA color;
+	gdouble intensity;
 	GdkPixbuf *pixbuf;
 	
 	g_return_val_if_fail (bg != NULL, FALSE);
@@ -1124,24 +1136,19 @@ gnome_bg_is_dark (GnomeBG *bg,
 	}
 	pixbuf = get_pixbuf_for_size (bg, -1, width, height);
 	if (pixbuf) {
-		GdkRGBA argb;
-		guchar a, r, g, b;
+		GdkRGBA average;
 
-		pixbuf_average_value (pixbuf, &argb);
-		a = argb.alpha * 0xff;
-		r = argb.red * 0xff;
-		g = argb.green * 0xff;
-		b = argb.blue * 0xff;
+		pixbuf_average_value (pixbuf, &average);
 		
-		color.red = (color.red * (0xFF - a) + r * 0x101 * a) / 0xFF;
-		color.green = (color.green * (0xFF - a) + g * 0x101 * a) / 0xFF;
-		color.blue = (color.blue * (0xFF - a) + b * 0x101 * a) / 0xFF;
+		color.red = color.red * (1.0 - average.alpha) + average.red * average.alpha;
+		color.green = color.green * (1.0 - average.alpha) + average.green * average.alpha;
+		color.blue = color.blue * (1.0 - average.alpha) + average.blue * average.alpha;
 		g_object_unref (pixbuf);
 	}
 	
-	intensity = (color.red * 77 +
-		     color.green * 150 +
-		     color.blue * 28) >> 16;
+	intensity = color.red * 77 +
+		    color.green * 150 +
+		    color.blue * 28;
 	
 	return intensity < 160; /* biased slightly to be dark */
 }
@@ -1326,7 +1333,7 @@ gnome_bg_get_surface_from_root (GdkScreen *screen)
 	gint format;
 	gulong nitems;
 	gulong bytes_after;
-	guchar *data;
+	gpointer data;
 	Atom type;
 	Display *display;
 	int screen_num;
@@ -1343,7 +1350,7 @@ gnome_bg_get_surface_from_root (GdkScreen *screen)
 				     gdk_x11_get_xatom_by_name ("_XROOTPMAP_ID"),
 				     0L, 1L, False, XA_PIXMAP,
 				     &type, &format, &nitems, &bytes_after,
-				     &data);
+				     (guchar **) &data);
 	surface = NULL;
 	source_pixmap = NULL;
 
@@ -1416,7 +1423,7 @@ gnome_bg_set_root_pixmap_id (GdkScreen       *screen,
 	gint     format;
 	gulong   nitems;
 	gulong   bytes_after;
-	guchar  *data_esetroot;
+	gpointer data_esetroot;
 	Pixmap   pixmap_id;
 	Atom     type;
 	Display *display;
@@ -1434,7 +1441,7 @@ gnome_bg_set_root_pixmap_id (GdkScreen       *screen,
 				     0L, 1L, False, XA_PIXMAP,
 				     &type, &format, &nitems,
 				     &bytes_after,
-				     &data_esetroot);
+				     (guchar **) &data_esetroot);
 
 	if (data_esetroot != NULL) {
 		if (result == Success && type == XA_PIXMAP &&
@@ -1646,6 +1653,8 @@ file_cache_entry_delete (FileCacheEntry *ent)
 		break;
 	case THUMBNAIL:
 		g_object_unref (ent->u.thumbnail);
+		break;
+	default:
 		break;
 	}
 
@@ -2376,9 +2385,9 @@ pixbuf_scale_to_min (GdkPixbuf *src, int min_width, int min_height)
 }
 
 static guchar *
-create_gradient (const GdkColor *primary,
-		 const GdkColor *secondary,
-		 int	         n_pixels)
+create_gradient (const GdkRGBA *primary,
+		 const GdkRGBA *secondary,
+		 int	        n_pixels)
 {
 	guchar *result = g_malloc (n_pixels * 3);
 	int i;
@@ -2386,9 +2395,9 @@ create_gradient (const GdkColor *primary,
 	for (i = 0; i < n_pixels; ++i) {
 		double ratio = (i + 0.5) / n_pixels;
 		
-		result[3 * i + 0] = ((guint16) (primary->red * (1 - ratio) + secondary->red * ratio)) >> 8;
-		result[3 * i + 1] = ((guint16) (primary->green * (1 - ratio) + secondary->green * ratio)) >> 8;
-		result[3 * i + 2] = ((guint16) (primary->blue * (1 - ratio) + secondary->blue * ratio)) >> 8;
+		result[3 * i + 0] = (int) (0.5 + (primary->red * (1 - ratio) + secondary->red * ratio) * 255);
+		result[3 * i + 1] = (int) (0.5 + (primary->green * (1 - ratio) + secondary->green * ratio) * 255);
+		result[3 * i + 2] = (int) (0.5 + (primary->blue * (1 - ratio) + secondary->blue * ratio) * 255);
 	}
 	
 	return result;
@@ -2397,8 +2406,8 @@ create_gradient (const GdkColor *primary,
 static void
 pixbuf_draw_gradient (GdkPixbuf    *pixbuf,
 		      gboolean      horizontal,
-		      GdkColor     *primary,
-		      GdkColor     *secondary,
+		      GdkRGBA      *primary,
+		      GdkRGBA      *secondary,
 		      GdkRectangle *rect)
 {
 	int width;
@@ -2554,8 +2563,17 @@ create_thumbnail_for_filename (GnomeDesktopThumbnailFactory *factory,
 	else {
 		orig = gdk_pixbuf_new_from_file (filename, NULL);
 		if (orig) {
-			int orig_width = gdk_pixbuf_get_width (orig);
-			int orig_height = gdk_pixbuf_get_height (orig);
+			int orig_width, orig_height;
+			GdkPixbuf *rotated;
+
+			rotated = gdk_pixbuf_apply_embedded_orientation (orig);
+			if (rotated != NULL) {
+				g_object_unref (orig);
+				orig = rotated;
+			}
+
+			orig_width = gdk_pixbuf_get_width (orig);
+			orig_height = gdk_pixbuf_get_height (orig);
 			
 			result = pixbuf_scale_to_fit (orig, THUMBNAIL_SIZE, THUMBNAIL_SIZE);
 			

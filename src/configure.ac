@@ -1,15 +1,16 @@
 m4_define(gnome_platform, 3)
-m4_define(gnome_minor, 22)
+m4_define(gnome_minor, 28)
 m4_define(gnome_micro, 2)
+m4_define(gnome_sub,)
 dnl gnome_sub is an optional sub-version which will not be advertised to the user
 dnl It allows to release a 2.30.1.1 which is just a better 2.30.1
 dnl Leave empty if not needed
-m4_define(gnome_sub, )
 
 m4_define(gnome_version, [gnome_platform.gnome_minor.gnome_micro]m4_ifval(gnome_sub, .gnome_sub)),
 
 AC_INIT([gnome-desktop], gnome_version,
         [http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-desktop])
+AX_IS_RELEASE([git-directory])
 AC_CONFIG_SRCDIR([libgnome-desktop])
 
 AM_INIT_AUTOMAKE([1.11.2 foreign no-dist-gzip dist-xz tar-ustar])
@@ -28,7 +29,7 @@ AC_CONFIG_MACRO_DIR([m4])
 #   change to C+1:0:0
 # - If the interface is the same as the previous version, change to C:R+1:A
 
-LT_VERSION=14:0:2
+LT_VERSION=17:0:0
 AC_SUBST(LT_VERSION)
 
 LT_PREREQ([2.2.6])
@@ -71,18 +72,7 @@ AC_SUBST(GNOME_DATE)
 AC_SUBST(GNOME_DATE_COMMENT_START)
 AC_SUBST(GNOME_DATE_COMMENT_END)
 
-GNOME_COMPILE_WARNINGS([maximum])
-GNOME_MAINTAINER_MODE_DEFINES
-
-AC_ARG_ENABLE(deprecation_flags,
-              [AC_HELP_STRING([--enable-deprecation-flags],
-                              [use *_DISABLE_DEPRECATED flags @<:@default=no@:>@])],,
-              [enable_deprecation_flags=no])
-
-if test "x$enable_deprecation_flags" = "xyes"; then
-   DISABLE_DEPRECATED_CFLAGS=$DISABLE_DEPRECATED
-   AC_SUBST(DISABLE_DEPRECATED_CFLAGS)
-fi
+AX_COMPILER_FLAGS([WARN_CFLAGS],[WARN_LDFLAGS])
 
 # Should we build shared desktop docs? Useful for people who
 # need to build two gnome-desktop using two different versions of GTK+
@@ -103,11 +93,11 @@ GLIB_TESTS
 dnl If you add a version number here, you *must* add an AC_SUBST line for
 dnl it too, or it will never make it into the spec file!
 
-GDK_PIXBUF_REQUIRED=2.33.0
+GDK_PIXBUF_REQUIRED=2.36.5
 GTK_REQUIRED=3.3.6
-GLIB_REQUIRED=2.44.0
+GLIB_REQUIRED=2.53.0
 XRANDR_REQUIRED=1.3
-GSETTINGS_DESKTOP_SCHEMAS_REQUIRED=3.5.91
+GSETTINGS_DESKTOP_SCHEMAS_REQUIRED=3.27.0
 XEXT_REQUIRED=1.1
 
 AC_SUBST(GTK_REQUIRED)
@@ -116,7 +106,7 @@ AC_SUBST(GDK_PIXBUF_REQUIRED)
 AC_SUBST(XRANDR_REQUIRED)
 AC_SUBST(XEXT_REQUIRED)
 
-AC_CHECK_LIBM
+LT_LIB_M
 AC_SUBST(LIBM)
 
 AC_CHECK_LIB([rt], [clock_gettime], [LIBRT="-lrt"], [LIBRT=""])
@@ -131,7 +121,7 @@ PKG_CHECK_MODULES(XLIB, x11,
     [X11_PACKAGE=
      AC_PATH_XTRA
      if test "x$no_x" = xyes; then
-       AC_MSG_ERROR("no (requires X development libraries)")
+       AC_MSG_ERROR(["no (requires X development libraries)"])
      else
        XLIB_LIBS="$X_PRE_LIBS $X_LIBS -lX11 $X_EXTRA_LIBS"
        XLIB_CFLAGS=$X_CFLAGS
@@ -159,6 +149,29 @@ else
 	have_udev=no
 fi
 
+SECCOMP_PKG=""
+enable_seccomp="no"
+dnl Check for bubblewrap compatible platform
+case $host_os in
+  linux*)
+    case $host_cpu in
+      alpha|ia64|m68k|sh4|sparc64)
+        enable_seccomp="no (not available on this architecture)"
+        AC_MSG_WARN("seccomp not available on this architecture")
+        ;;
+      *)
+        PKG_CHECK_MODULES(LIBSECCOMP, [libseccomp])
+        SECCOMP_PKG="libseccomp"
+        AC_DEFINE([ENABLE_SECCOMP], [1], [Define if using seccomp])
+        enable_seccomp="yes"
+        ;;
+    esac
+    AC_DEFINE_UNQUOTED(_GNU_SOURCE, 1, [Define to include GNU extensions])
+    AC_DEFINE_UNQUOTED(HAVE_BWRAP, 1, [Define to 1 if Bubblewrap support is available])
+    AC_DEFINE_UNQUOTED(INSTALL_PREFIX, "$prefix", [Path to library install prefix])
+    ;;
+esac
+
 dnl pkg-config dependency checks
 
 PKG_CHECK_MODULES(GNOME_DESKTOP, gdk-pixbuf-2.0 >= $GDK_PIXBUF_REQUIRED
@@ -168,7 +181,7 @@ PKG_CHECK_MODULES(GNOME_DESKTOP, gdk-pixbuf-2.0 >= $GDK_PIXBUF_REQUIRED
                                  gsettings-desktop-schemas >= $GSETTINGS_DESKTOP_SCHEMAS_REQUIRED
                                  xkeyboard-config
                                  iso-codes
-                                 $UDEV_PKG)
+                                 $UDEV_PKG $SECCOMP_PKG)
 
 XKB_BASE=$($PKG_CONFIG --variable xkb_base xkeyboard-config)
 AC_SUBST(XKB_BASE)
@@ -249,7 +262,6 @@ echo "
         compiler:                     ${CC}
         cflags:                       ${CFLAGS}
         Maintainer mode:              ${USE_MAINTAINER_MODE}
-        Use *_DISABLE_DEPRECATED:     ${enable_deprecation_flags}
 
         GNOME Distributor:            ${GNOME_DISTRIBUTOR}
         Build desktop-wide docs:      ${enable_desktop_docs}
@@ -257,5 +269,6 @@ echo "
         Date in gnome-version.xml:    ${enable_date_in_gnome_version}
         Build gtk-doc documentation:  ${enable_gtk_doc}
         Build with udev support:      ${enable_udev}
+        Build with seccomp support:   ${enable_seccomp}
 
 "

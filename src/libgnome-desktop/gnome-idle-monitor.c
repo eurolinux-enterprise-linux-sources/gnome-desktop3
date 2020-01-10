@@ -24,8 +24,12 @@
 #include <string.h>
 
 #include <glib.h>
+#include <glib/gi18n-lib.h>
 #include <gdk/gdkx.h>
 #include <gdk/gdk.h>
+#if defined(GDK_WINDOWING_WAYLAND)
+#include <gdk/gdkwayland.h>
+#endif
 
 #define GNOME_DESKTOP_USE_UNSTABLE_API
 #include "gnome-idle-monitor.h"
@@ -429,12 +433,21 @@ gnome_idle_monitor_new (void)
  * Returns: a new #GnomeIdleMonitor that tracks the device-specific
  * idletime for @device. If device-specific idletime is not available,
  * %NULL is returned, and @error is set. To track server-global
- * idletime for all devices, use gnome_idle_monitor_new().
+ * idletime for all devices, use gnome_idle_monitor_new(). This function
+ * only works under X11, not under Wayland and will return an error.
  */
 GnomeIdleMonitor *
 gnome_idle_monitor_new_for_device (GdkDevice  *device,
 				   GError    **error)
 {
+#if defined(GDK_WINDOWING_WAYLAND)
+	if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ())) {
+		g_set_error_literal (error, G_IO_ERROR, G_IO_ERROR_NOT_SUPPORTED,
+				     "Per-device idle monitors not supported under Wayland");
+		return NULL;
+	}
+#endif
+
 	return GNOME_IDLE_MONITOR (g_initable_new (GNOME_TYPE_IDLE_MONITOR, NULL, error,
 						   "device", device, NULL));
 }
@@ -521,7 +534,8 @@ add_active_watch (GnomeIdleMonitor      *monitor,
 /**
  * gnome_idle_monitor_add_idle_watch:
  * @monitor: A #GnomeIdleMonitor
- * @interval_msec: The idletime interval, in milliseconds
+ * @interval_msec: The idletime interval, in milliseconds. It must be
+ *     a strictly positive value (> 0).
  * @callback: (allow-none): The callback to call when the user has
  *     accumulated @interval_msec milliseconds of idle time.
  * @user_data: (allow-none): The user data to pass to the callback
@@ -550,6 +564,7 @@ gnome_idle_monitor_add_idle_watch (GnomeIdleMonitor	       *monitor,
 	GnomeIdleMonitorWatch *watch;
 
 	g_return_val_if_fail (GNOME_IS_IDLE_MONITOR (monitor), 0);
+	g_return_val_if_fail (interval_msec > 0, 0);
 
 	watch = make_watch (monitor,
 			    interval_msec,

@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>gnome-bg: GNOME Desktop Library Reference Manual</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<meta name="generator" content="DocBook XSL Stylesheets Vsnapshot">
 <link rel="home" href="index.html" title="GNOME Desktop Library Reference Manual">
 <link rel="up" href="background.html" title="Part II. Desktop Background">
 <link rel="prev" href="background.html" title="Part II. Desktop Background">
 <link rel="next" href="randr.html" title="Part III. Monitor Configuration">
-<meta name="generator" content="GTK-Doc V1.25.1 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.27 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -86,7 +86,7 @@
 <span class="returnvalue">void</span>
 </td>
 <td class="function_name">
-<a class="link" href="gnome-desktop3-gnome-bg.html#gnome-bg-set-color" title="gnome_bg_set_color ()">gnome_bg_set_color</a> <span class="c_punctuation">()</span>
+<a class="link" href="gnome-desktop3-gnome-bg.html#gnome-bg-set-rgba" title="gnome_bg_set_rgba ()">gnome_bg_set_rgba</a> <span class="c_punctuation">()</span>
 </td>
 </tr>
 <tr>
@@ -102,11 +102,11 @@
 <span class="returnvalue">void</span>
 </td>
 <td class="function_name">
-<a class="link" href="gnome-desktop3-gnome-bg.html#gnome-bg-get-color" title="gnome_bg_get_color ()">gnome_bg_get_color</a> <span class="c_punctuation">()</span>
+<a class="link" href="gnome-desktop3-gnome-bg.html#gnome-bg-get-rgba" title="gnome_bg_get_rgba ()">gnome_bg_get_rgba</a> <span class="c_punctuation">()</span>
 </td>
 </tr>
 <tr>
-<td class="function_type">const <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+<td class="function_type">const <span class="returnvalue">gchar</span> *
 </td>
 <td class="function_name">
 <a class="link" href="gnome-desktop3-gnome-bg.html#gnome-bg-get-filename" title="gnome_bg_get_filename ()">gnome_bg_get_filename</a> <span class="c_punctuation">()</span>
@@ -130,7 +130,7 @@
 </tr>
 <tr>
 <td class="function_type">
-<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+<span class="returnvalue">gboolean</span>
 </td>
 <td class="function_name">
 <a class="link" href="gnome-desktop3-gnome-bg.html#gnome-bg-get-image-size" title="gnome_bg_get_image_size ()">gnome_bg_get_image_size</a> <span class="c_punctuation">()</span>
@@ -146,7 +146,7 @@
 </tr>
 <tr>
 <td class="function_type">
-<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+<span class="returnvalue">gboolean</span>
 </td>
 <td class="function_name">
 <a class="link" href="gnome-desktop3-gnome-bg.html#gnome-bg-is-dark" title="gnome_bg_is_dark ()">gnome_bg_is_dark</a> <span class="c_punctuation">()</span>
@@ -154,7 +154,7 @@
 </tr>
 <tr>
 <td class="function_type">
-<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+<span class="returnvalue">gboolean</span>
 </td>
 <td class="function_name">
 <a class="link" href="gnome-desktop3-gnome-bg.html#gnome-bg-has-multiple-sizes" title="gnome_bg_has_multiple_sizes ()">gnome_bg_has_multiple_sizes</a> <span class="c_punctuation">()</span>
@@ -162,7 +162,7 @@
 </tr>
 <tr>
 <td class="function_type">
-<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+<span class="returnvalue">gboolean</span>
 </td>
 <td class="function_name">
 <a class="link" href="gnome-desktop3-gnome-bg.html#gnome-bg-changes-with-time" title="gnome_bg_changes_with_time ()">gnome_bg_changes_with_time</a> <span class="c_punctuation">()</span>
@@ -215,12 +215,12 @@
 <tr>
 <td class="signal_type"><span class="returnvalue">void</span></td>
 <td class="signal_name"><a class="link" href="gnome-desktop3-gnome-bg.html#GnomeBG-changed" title="The “changed” signal">changed</a></td>
-<td class="signal_flags"><a href="https://developer.gnome.org/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></td>
+<td class="signal_flags">Run Last</td>
 </tr>
 <tr>
 <td class="signal_type"><span class="returnvalue">void</span></td>
 <td class="signal_name"><a class="link" href="gnome-desktop3-gnome-bg.html#GnomeBG-transitioned" title="The “transitioned” signal">transitioned</a></td>
-<td class="signal_flags"><a href="https://developer.gnome.org/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></td>
+<td class="signal_flags">Run Last</td>
 </tr>
 </tbody>
 </table></div>
@@ -246,7 +246,7 @@
 </div>
 <div class="refsect1">
 <a name="gnome-desktop3-gnome-bg.object-hierarchy"></a><h2>Object Hierarchy</h2>
-<pre class="screen">    <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObject-struct">GObject</a>
+<pre class="screen">    GObject
     <span class="lineart">╰──</span> GnomeBG
 </pre>
 </div>
@@ -265,14 +265,14 @@ gnome_bg_new (<em class="parameter"><code><span class="type">void</span></code><
 <a name="gnome-bg-load-from-preferences"></a><h3>gnome_bg_load_from_preferences ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>
 gnome_bg_load_from_preferences (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-bg.html#GnomeBG"><span class="type">GnomeBG</span></a> *bg</code></em>,
-                                <em class="parameter"><code><a href="https://developer.gnome.org/gio/unstable/GSettings.html#GSettings-struct"><span class="type">GSettings</span></a> *settings</code></em>);</pre>
+                                <em class="parameter"><code><span class="type">GSettings</span> *settings</code></em>);</pre>
 </div>
 <hr>
 <div class="refsect2">
 <a name="gnome-bg-save-to-preferences"></a><h3>gnome_bg_save_to_preferences ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>
 gnome_bg_save_to_preferences (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-bg.html#GnomeBG"><span class="type">GnomeBG</span></a> *bg</code></em>,
-                              <em class="parameter"><code><a href="https://developer.gnome.org/gio/unstable/GSettings.html#GSettings-struct"><span class="type">GSettings</span></a> *settings</code></em>);</pre>
+                              <em class="parameter"><code><span class="type">GSettings</span> *settings</code></em>);</pre>
 </div>
 <hr>
 <div class="refsect2">
@@ -290,12 +290,12 @@ gnome_bg_set_placement (<em class="parameter"><code><a class="link" href="gnome-
 </div>
 <hr>
 <div class="refsect2">
-<a name="gnome-bg-set-color"></a><h3>gnome_bg_set_color ()</h3>
+<a name="gnome-bg-set-rgba"></a><h3>gnome_bg_set_rgba ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>
-gnome_bg_set_color (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-bg.html#GnomeBG"><span class="type">GnomeBG</span></a> *bg</code></em>,
-                    <em class="parameter"><code><span class="type">GDesktopBackgroundShading</span> type</code></em>,
-                    <em class="parameter"><code><span class="type">GdkColor</span> *primary</code></em>,
-                    <em class="parameter"><code><span class="type">GdkColor</span> *secondary</code></em>);</pre>
+gnome_bg_set_rgba (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-bg.html#GnomeBG"><span class="type">GnomeBG</span></a> *bg</code></em>,
+                   <em class="parameter"><code><span class="type">GDesktopBackgroundShading</span> type</code></em>,
+                   <em class="parameter"><code><span class="type">GdkRGBA</span> *primary</code></em>,
+                   <em class="parameter"><code><span class="type">GdkRGBA</span> *secondary</code></em>);</pre>
 </div>
 <hr>
 <div class="refsect2">
@@ -305,17 +305,17 @@ gnome_bg_get_placement (<em class="parameter"><code><a class="link" href="gnome-
 </div>
 <hr>
 <div class="refsect2">
-<a name="gnome-bg-get-color"></a><h3>gnome_bg_get_color ()</h3>
+<a name="gnome-bg-get-rgba"></a><h3>gnome_bg_get_rgba ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>
-gnome_bg_get_color (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-bg.html#GnomeBG"><span class="type">GnomeBG</span></a> *bg</code></em>,
-                    <em class="parameter"><code><span class="type">GDesktopBackgroundShading</span> *type</code></em>,
-                    <em class="parameter"><code><span class="type">GdkColor</span> *primary</code></em>,
-                    <em class="parameter"><code><span class="type">GdkColor</span> *secondary</code></em>);</pre>
+gnome_bg_get_rgba (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-bg.html#GnomeBG"><span class="type">GnomeBG</span></a> *bg</code></em>,
+                   <em class="parameter"><code><span class="type">GDesktopBackgroundShading</span> *type</code></em>,
+                   <em class="parameter"><code><span class="type">GdkRGBA</span> *primary</code></em>,
+                   <em class="parameter"><code><span class="type">GdkRGBA</span> *secondary</code></em>);</pre>
 </div>
 <hr>
 <div class="refsect2">
 <a name="gnome-bg-get-filename"></a><h3>gnome_bg_get_filename ()</h3>
-<pre class="programlisting">const <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+<pre class="programlisting">const <span class="returnvalue">gchar</span> *
 gnome_bg_get_filename (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-bg.html#GnomeBG"><span class="type">GnomeBG</span></a> *bg</code></em>);</pre>
 </div>
 <hr>
@@ -324,18 +324,18 @@ gnome_bg_get_filename (<em class="parameter"><code><a class="link" href="gnome-d
 <pre class="programlisting"><span class="returnvalue">void</span>
 gnome_bg_draw (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-bg.html#GnomeBG"><span class="type">GnomeBG</span></a> *bg</code></em>,
                <em class="parameter"><code><span class="type">GdkPixbuf</span> *dest</code></em>,
-               <em class="parameter"><code><a href="http://developer.gnome.org/gdk3/GdkScreen.html#GdkScreen-struct"><span class="type">GdkScreen</span></a> *screen</code></em>,
-               <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> is_root</code></em>);</pre>
+               <em class="parameter"><code><span class="type">GdkScreen</span> *screen</code></em>,
+               <em class="parameter"><code><span class="type">gboolean</span> is_root</code></em>);</pre>
 </div>
 <hr>
 <div class="refsect2">
 <a name="gnome-bg-create-surface"></a><h3>gnome_bg_create_surface ()</h3>
 <pre class="programlisting"><span class="returnvalue">cairo_surface_t</span> *
 gnome_bg_create_surface (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-bg.html#GnomeBG"><span class="type">GnomeBG</span></a> *bg</code></em>,
-                         <em class="parameter"><code><a href="http://developer.gnome.org/gdk3/gdk4-Windows.html#GdkWindow-struct"><span class="type">GdkWindow</span></a> *window</code></em>,
+                         <em class="parameter"><code><span class="type">GdkWindow</span> *window</code></em>,
                          <em class="parameter"><code><span class="type">int</span> width</code></em>,
                          <em class="parameter"><code><span class="type">int</span> height</code></em>,
-                         <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> root</code></em>);</pre>
+                         <em class="parameter"><code><span class="type">gboolean</span> root</code></em>);</pre>
 <p>Create a surface that can be set as background for <em class="parameter"><code>window</code></em>
 . If <em class="parameter"><code>is_root</code></em>
  is
@@ -359,13 +359,13 @@ who created it.</p>
 </div>
 <div class="refsect3">
 <a name="gnome-bg-create-surface.returns"></a><h4>Returns</h4>
-<p> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> on error (e.g. out of X connections)</p>
+<p> <code class="literal">NULL</code> on error (e.g. out of X connections)</p>
 </div>
 </div>
 <hr>
 <div class="refsect2">
 <a name="gnome-bg-get-image-size"></a><h3>gnome_bg_get_image_size ()</h3>
-<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>
 gnome_bg_get_image_size (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-bg.html#GnomeBG"><span class="type">GnomeBG</span></a> *bg</code></em>,
                          <em class="parameter"><code><a class="link" href="GnomeDesktopThumbnailFactory.html" title="GnomeDesktopThumbnailFactory"><span class="type">GnomeDesktopThumbnailFactory</span></a> *factory</code></em>,
                          <em class="parameter"><code><span class="type">int</span> best_width</code></em>,
@@ -379,19 +379,19 @@ gnome_bg_get_image_size (<em class="parameter"><code><a class="link" href="gnome
 <pre class="programlisting"><span class="returnvalue">GdkPixbuf</span> *
 gnome_bg_create_thumbnail (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-bg.html#GnomeBG"><span class="type">GnomeBG</span></a> *bg</code></em>,
                            <em class="parameter"><code><a class="link" href="GnomeDesktopThumbnailFactory.html" title="GnomeDesktopThumbnailFactory"><span class="type">GnomeDesktopThumbnailFactory</span></a> *factory</code></em>,
-                           <em class="parameter"><code><a href="http://developer.gnome.org/gdk3/GdkScreen.html#GdkScreen-struct"><span class="type">GdkScreen</span></a> *screen</code></em>,
+                           <em class="parameter"><code><span class="type">GdkScreen</span> *screen</code></em>,
                            <em class="parameter"><code><span class="type">int</span> dest_width</code></em>,
                            <em class="parameter"><code><span class="type">int</span> dest_height</code></em>);</pre>
 <div class="refsect3">
 <a name="gnome-bg-create-thumbnail.returns"></a><h4>Returns</h4>
-<p> a <span class="type">GdkPixbuf</span> showing the background as a thumbnail. </p>
+<p>a <span class="type">GdkPixbuf</span> showing the background as a thumbnail. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
 </div>
 <hr>
 <div class="refsect2">
 <a name="gnome-bg-is-dark"></a><h3>gnome_bg_is_dark ()</h3>
-<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>
 gnome_bg_is_dark (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-bg.html#GnomeBG"><span class="type">GnomeBG</span></a> *bg</code></em>,
                   <em class="parameter"><code><span class="type">int</span> dest_width</code></em>,
                   <em class="parameter"><code><span class="type">int</span> dest_height</code></em>);</pre>
@@ -399,13 +399,13 @@ gnome_bg_is_dark (<em class="parameter"><code><a class="link" href="gnome-deskto
 <hr>
 <div class="refsect2">
 <a name="gnome-bg-has-multiple-sizes"></a><h3>gnome_bg_has_multiple_sizes ()</h3>
-<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>
 gnome_bg_has_multiple_sizes (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-bg.html#GnomeBG"><span class="type">GnomeBG</span></a> *bg</code></em>);</pre>
 </div>
 <hr>
 <div class="refsect2">
 <a name="gnome-bg-changes-with-time"></a><h3>gnome_bg_changes_with_time ()</h3>
-<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>
 gnome_bg_changes_with_time (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-bg.html#GnomeBG"><span class="type">GnomeBG</span></a> *bg</code></em>);</pre>
 </div>
 <hr>
@@ -414,7 +414,7 @@ gnome_bg_changes_with_time (<em class="parameter"><code><a class="link" href="gn
 <pre class="programlisting"><span class="returnvalue">GdkPixbuf</span> *
 gnome_bg_create_frame_thumbnail (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-bg.html#GnomeBG"><span class="type">GnomeBG</span></a> *bg</code></em>,
                                  <em class="parameter"><code><a class="link" href="GnomeDesktopThumbnailFactory.html" title="GnomeDesktopThumbnailFactory"><span class="type">GnomeDesktopThumbnailFactory</span></a> *factory</code></em>,
-                                 <em class="parameter"><code><a href="http://developer.gnome.org/gdk3/GdkScreen.html#GdkScreen-struct"><span class="type">GdkScreen</span></a> *screen</code></em>,
+                                 <em class="parameter"><code><span class="type">GdkScreen</span> *screen</code></em>,
                                  <em class="parameter"><code><span class="type">int</span> dest_width</code></em>,
                                  <em class="parameter"><code><span class="type">int</span> dest_height</code></em>,
                                  <em class="parameter"><code><span class="type">int</span> frame_num</code></em>);</pre>
@@ -423,7 +423,7 @@ vaguely defined as 'suitable point to show while single-stepping
 through the slideshow'.</p>
 <div class="refsect3">
 <a name="gnome-bg-create-frame-thumbnail.returns"></a><h4>Returns</h4>
-<p> the newly created thumbnail or
+<p>the newly created thumbnail or
 or NULL if frame_num is out of bounds. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
@@ -432,7 +432,7 @@ or NULL if frame_num is out of bounds. </p>
 <div class="refsect2">
 <a name="gnome-bg-set-surface-as-root"></a><h3>gnome_bg_set_surface_as_root ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>
-gnome_bg_set_surface_as_root (<em class="parameter"><code><a href="http://developer.gnome.org/gdk3/GdkScreen.html#GdkScreen-struct"><span class="type">GdkScreen</span></a> *screen</code></em>,
+gnome_bg_set_surface_as_root (<em class="parameter"><code><span class="type">GdkScreen</span> *screen</code></em>,
                               <em class="parameter"><code><span class="type">cairo_surface_t</span> *surface</code></em>);</pre>
 <p>Set the root pixmap, and properties pointing to it. We
 do this atomically with a server grab to make sure that
@@ -452,7 +452,7 @@ to <a class="link" href="gnome-desktop3-gnome-bg.html#gnome-bg-create-surface" t
 <tbody>
 <tr>
 <td class="parameter_name"><p>screen</p></td>
-<td class="parameter_description"><p>the <a href="http://developer.gnome.org/gdk3/GdkScreen.html#GdkScreen-struct"><span class="type">GdkScreen</span></a> to change root background on</p></td>
+<td class="parameter_description"><p>the <span class="type">GdkScreen</span> to change root background on</p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -470,7 +470,7 @@ Must be an xlib surface backing a pixmap.</p></td>
 <a name="gnome-bg-set-surface-as-root-with-crossfade"></a><h3>gnome_bg_set_surface_as_root_with_crossfade ()</h3>
 <pre class="programlisting"><span class="returnvalue">GnomeBGCrossfade</span> *
 gnome_bg_set_surface_as_root_with_crossfade
-                               (<em class="parameter"><code><a href="http://developer.gnome.org/gdk3/GdkScreen.html#GdkScreen-struct"><span class="type">GdkScreen</span></a> *screen</code></em>,
+                               (<em class="parameter"><code><span class="type">GdkScreen</span> *screen</code></em>,
                                 <em class="parameter"><code><span class="type">cairo_surface_t</span> *surface</code></em>);</pre>
 <p>Set the root pixmap, and properties pointing to it.
 This function differs from <a class="link" href="gnome-desktop3-gnome-bg.html#gnome-bg-set-surface-as-root" title="gnome_bg_set_surface_as_root ()"><code class="function">gnome_bg_set_surface_as_root()</code></a>
@@ -487,7 +487,7 @@ current root pixmap to the new one.</p>
 <tbody>
 <tr>
 <td class="parameter_name"><p>screen</p></td>
-<td class="parameter_description"><p>the <a href="http://developer.gnome.org/gdk3/GdkScreen.html#GdkScreen-struct"><span class="type">GdkScreen</span></a> to change root background on</p></td>
+<td class="parameter_description"><p>the <span class="type">GdkScreen</span> to change root background on</p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -500,7 +500,7 @@ current root pixmap to the new one.</p>
 </div>
 <div class="refsect3">
 <a name="gnome-bg-set-surface-as-root-with-crossfade.returns"></a><h4>Returns</h4>
-<p> a <span class="type">GnomeBGCrossfade</span> object. </p>
+<p>a <span class="type">GnomeBGCrossfade</span> object. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
 </div>
@@ -508,7 +508,7 @@ current root pixmap to the new one.</p>
 <div class="refsect2">
 <a name="gnome-bg-get-surface-from-root"></a><h3>gnome_bg_get_surface_from_root ()</h3>
 <pre class="programlisting"><span class="returnvalue">cairo_surface_t</span> *
-gnome_bg_get_surface_from_root (<em class="parameter"><code><a href="http://developer.gnome.org/gdk3/GdkScreen.html#GdkScreen-struct"><span class="type">GdkScreen</span></a> *screen</code></em>);</pre>
+gnome_bg_get_surface_from_root (<em class="parameter"><code><span class="type">GdkScreen</span> *screen</code></em>);</pre>
 <p>This function queries the _XROOTPMAP_ID property from
 the root window associated with <em class="parameter"><code>screen</code></em>
  to determine
@@ -525,14 +525,14 @@ a black surface is returned.</p>
 </colgroup>
 <tbody><tr>
 <td class="parameter_name"><p>screen</p></td>
-<td class="parameter_description"><p>a <a href="http://developer.gnome.org/gdk3/GdkScreen.html#GdkScreen-struct"><span class="type">GdkScreen</span></a></p></td>
+<td class="parameter_description"><p>a <span class="type">GdkScreen</span></p></td>
 <td class="parameter_annotations"> </td>
 </tr></tbody>
 </table></div>
 </div>
 <div class="refsect3">
 <a name="gnome-bg-get-surface-from-root.returns"></a><h4>Returns</h4>
-<p> a <span class="type">cairo_surface_t</span> if successful or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a></p>
+<p> a <span class="type">cairo_surface_t</span> if successful or <code class="literal">NULL</code></p>
 </div>
 </div>
 </div>
@@ -554,20 +554,20 @@ a black surface is returned.</p>
 <a name="GnomeBG-changed"></a><h3>The <code class="literal">“changed”</code> signal</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>
 user_function (<a class="link" href="gnome-desktop3-gnome-bg.html#GnomeBG"><span class="type">GnomeBG</span></a> *bg,
-               <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data)</pre>
-<p>Flags: <a href="https://developer.gnome.org/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></p>
+               <span class="type">gpointer</span> user_data)</pre>
+<p>Flags: Run Last</p>
 </div>
 <hr>
 <div class="refsect2">
 <a name="GnomeBG-transitioned"></a><h3>The <code class="literal">“transitioned”</code> signal</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>
 user_function (<a class="link" href="gnome-desktop3-gnome-bg.html#GnomeBG"><span class="type">GnomeBG</span></a> *bg,
-               <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data)</pre>
-<p>Flags: <a href="https://developer.gnome.org/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></p>
+               <span class="type">gpointer</span> user_data)</pre>
+<p>Flags: Run Last</p>
 </div>
 </div>
 </div>
 <div class="footer">
-<hr>Generated by GTK-Doc V1.25.1</div>
+<hr>Generated by GTK-Doc V1.27</div>
 </body>
 </html>

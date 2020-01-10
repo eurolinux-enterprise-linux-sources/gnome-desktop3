@@ -1,6 +1,6 @@
-# generated automatically by aclocal 1.15 -*- Autoconf -*-
+# generated automatically by aclocal 1.15.1 -*- Autoconf -*-
 
-# Copyright (C) 1996-2014 Free Software Foundation, Inc.
+# Copyright (C) 1996-2017 Free Software Foundation, Inc.
 
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -20,9 +20,1552 @@ You have another version of autoconf.  It may work, but is not guaranteed to.
 If you have problems, you may need to regenerate the build system entirely.
 To do so, use the procedure documented by the package, typically 'autoreconf'.])])
 
-dnl pkg.m4 - Macros to locate and utilise pkg-config.   -*- Autoconf -*-
-dnl serial 11 (pkg-config-0.29.1)
+# ============================================================================
+#  https://www.gnu.org/software/autoconf-archive/ax_append_compile_flags.html
+# ============================================================================
+#
+# SYNOPSIS
+#
+#   AX_APPEND_COMPILE_FLAGS([FLAG1 FLAG2 ...], [FLAGS-VARIABLE], [EXTRA-FLAGS], [INPUT])
+#
+# DESCRIPTION
+#
+#   For every FLAG1, FLAG2 it is checked whether the compiler works with the
+#   flag.  If it does, the flag is added FLAGS-VARIABLE
+#
+#   If FLAGS-VARIABLE is not specified, the current language's flags (e.g.
+#   CFLAGS) is used.  During the check the flag is always added to the
+#   current language's flags.
+#
+#   If EXTRA-FLAGS is defined, it is added to the current language's default
+#   flags (e.g. CFLAGS) when the check is done.  The check is thus made with
+#   the flags: "CFLAGS EXTRA-FLAGS FLAG".  This can for example be used to
+#   force the compiler to issue an error when a bad flag is given.
+#
+#   INPUT gives an alternative input source to AC_COMPILE_IFELSE.
+#
+#   NOTE: This macro depends on the AX_APPEND_FLAG and
+#   AX_CHECK_COMPILE_FLAG. Please keep this macro in sync with
+#   AX_APPEND_LINK_FLAGS.
+#
+# LICENSE
+#
+#   Copyright (c) 2011 Maarten Bosmans <mkbosmans@gmail.com>
+#
+#   This program is free software: you can redistribute it and/or modify it
+#   under the terms of the GNU General Public License as published by the
+#   Free Software Foundation, either version 3 of the License, or (at your
+#   option) any later version.
+#
+#   This program is distributed in the hope that it will be useful, but
+#   WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+#   Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License along
+#   with this program. If not, see <https://www.gnu.org/licenses/>.
+#
+#   As a special exception, the respective Autoconf Macro's copyright owner
+#   gives unlimited permission to copy, distribute and modify the configure
+#   scripts that are the output of Autoconf when processing the Macro. You
+#   need not follow the terms of the GNU General Public License when using
+#   or distributing such scripts, even though portions of the text of the
+#   Macro appear in them. The GNU General Public License (GPL) does govern
+#   all other use of the material that constitutes the Autoconf Macro.
+#
+#   This special exception to the GPL applies to versions of the Autoconf
+#   Macro released by the Autoconf Archive. When you make and distribute a
+#   modified version of the Autoconf Macro, you may extend this special
+#   exception to the GPL to apply to your modified version as well.
+
+#serial 6
+
+AC_DEFUN([AX_APPEND_COMPILE_FLAGS],
+[AX_REQUIRE_DEFINED([AX_CHECK_COMPILE_FLAG])
+AX_REQUIRE_DEFINED([AX_APPEND_FLAG])
+for flag in $1; do
+  AX_CHECK_COMPILE_FLAG([$flag], [AX_APPEND_FLAG([$flag], [$2])], [], [$3], [$4])
+done
+])dnl AX_APPEND_COMPILE_FLAGS
+
+# ===========================================================================
+#      https://www.gnu.org/software/autoconf-archive/ax_append_flag.html
+# ===========================================================================
+#
+# SYNOPSIS
+#
+#   AX_APPEND_FLAG(FLAG, [FLAGS-VARIABLE])
+#
+# DESCRIPTION
+#
+#   FLAG is appended to the FLAGS-VARIABLE shell variable, with a space
+#   added in between.
+#
+#   If FLAGS-VARIABLE is not specified, the current language's flags (e.g.
+#   CFLAGS) is used.  FLAGS-VARIABLE is not changed if it already contains
+#   FLAG.  If FLAGS-VARIABLE is unset in the shell, it is set to exactly
+#   FLAG.
+#
+#   NOTE: Implementation based on AX_CFLAGS_GCC_OPTION.
+#
+# LICENSE
+#
+#   Copyright (c) 2008 Guido U. Draheim <guidod@gmx.de>
+#   Copyright (c) 2011 Maarten Bosmans <mkbosmans@gmail.com>
+#
+#   This program is free software: you can redistribute it and/or modify it
+#   under the terms of the GNU General Public License as published by the
+#   Free Software Foundation, either version 3 of the License, or (at your
+#   option) any later version.
+#
+#   This program is distributed in the hope that it will be useful, but
+#   WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+#   Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License along
+#   with this program. If not, see <https://www.gnu.org/licenses/>.
+#
+#   As a special exception, the respective Autoconf Macro's copyright owner
+#   gives unlimited permission to copy, distribute and modify the configure
+#   scripts that are the output of Autoconf when processing the Macro. You
+#   need not follow the terms of the GNU General Public License when using
+#   or distributing such scripts, even though portions of the text of the
+#   Macro appear in them. The GNU General Public License (GPL) does govern
+#   all other use of the material that constitutes the Autoconf Macro.
+#
+#   This special exception to the GPL applies to versions of the Autoconf
+#   Macro released by the Autoconf Archive. When you make and distribute a
+#   modified version of the Autoconf Macro, you may extend this special
+#   exception to the GPL to apply to your modified version as well.
+
+#serial 7
+
+AC_DEFUN([AX_APPEND_FLAG],
+[dnl
+AC_PREREQ(2.64)dnl for _AC_LANG_PREFIX and AS_VAR_SET_IF
+AS_VAR_PUSHDEF([FLAGS], [m4_default($2,_AC_LANG_PREFIX[FLAGS])])
+AS_VAR_SET_IF(FLAGS,[
+  AS_CASE([" AS_VAR_GET(FLAGS) "],
+    [*" $1 "*], [AC_RUN_LOG([: FLAGS already contains $1])],
+    [
+     AS_VAR_APPEND(FLAGS,[" $1"])
+     AC_RUN_LOG([: FLAGS="$FLAGS"])
+    ])
+  ],
+  [
+  AS_VAR_SET(FLAGS,[$1])
+  AC_RUN_LOG([: FLAGS="$FLAGS"])
+  ])
+AS_VAR_POPDEF([FLAGS])dnl
+])dnl AX_APPEND_FLAG
+
+# ===========================================================================
+#   https://www.gnu.org/software/autoconf-archive/ax_append_link_flags.html
+# ===========================================================================
+#
+# SYNOPSIS
+#
+#   AX_APPEND_LINK_FLAGS([FLAG1 FLAG2 ...], [FLAGS-VARIABLE], [EXTRA-FLAGS], [INPUT])
+#
+# DESCRIPTION
+#
+#   For every FLAG1, FLAG2 it is checked whether the linker works with the
+#   flag.  If it does, the flag is added FLAGS-VARIABLE
+#
+#   If FLAGS-VARIABLE is not specified, the linker's flags (LDFLAGS) is
+#   used. During the check the flag is always added to the linker's flags.
+#
+#   If EXTRA-FLAGS is defined, it is added to the linker's default flags
+#   when the check is done.  The check is thus made with the flags: "LDFLAGS
+#   EXTRA-FLAGS FLAG".  This can for example be used to force the linker to
+#   issue an error when a bad flag is given.
+#
+#   INPUT gives an alternative input source to AC_COMPILE_IFELSE.
+#
+#   NOTE: This macro depends on the AX_APPEND_FLAG and AX_CHECK_LINK_FLAG.
+#   Please keep this macro in sync with AX_APPEND_COMPILE_FLAGS.
+#
+# LICENSE
+#
+#   Copyright (c) 2011 Maarten Bosmans <mkbosmans@gmail.com>
+#
+#   This program is free software: you can redistribute it and/or modify it
+#   under the terms of the GNU General Public License as published by the
+#   Free Software Foundation, either version 3 of the License, or (at your
+#   option) any later version.
+#
+#   This program is distributed in the hope that it will be useful, but
+#   WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+#   Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License along
+#   with this program. If not, see <https://www.gnu.org/licenses/>.
+#
+#   As a special exception, the respective Autoconf Macro's copyright owner
+#   gives unlimited permission to copy, distribute and modify the configure
+#   scripts that are the output of Autoconf when processing the Macro. You
+#   need not follow the terms of the GNU General Public License when using
+#   or distributing such scripts, even though portions of the text of the
+#   Macro appear in them. The GNU General Public License (GPL) does govern
+#   all other use of the material that constitutes the Autoconf Macro.
+#
+#   This special exception to the GPL applies to versions of the Autoconf
+#   Macro released by the Autoconf Archive. When you make and distribute a
+#   modified version of the Autoconf Macro, you may extend this special
+#   exception to the GPL to apply to your modified version as well.
+
+#serial 6
+
+AC_DEFUN([AX_APPEND_LINK_FLAGS],
+[AX_REQUIRE_DEFINED([AX_CHECK_LINK_FLAG])
+AX_REQUIRE_DEFINED([AX_APPEND_FLAG])
+for flag in $1; do
+  AX_CHECK_LINK_FLAG([$flag], [AX_APPEND_FLAG([$flag], [m4_default([$2], [LDFLAGS])])], [], [$3], [$4])
+done
+])dnl AX_APPEND_LINK_FLAGS
+
+# ===========================================================================
+#  https://www.gnu.org/software/autoconf-archive/ax_check_compile_flag.html
+# ===========================================================================
+#
+# SYNOPSIS
+#
+#   AX_CHECK_COMPILE_FLAG(FLAG, [ACTION-SUCCESS], [ACTION-FAILURE], [EXTRA-FLAGS], [INPUT])
+#
+# DESCRIPTION
+#
+#   Check whether the given FLAG works with the current language's compiler
+#   or gives an error.  (Warnings, however, are ignored)
+#
+#   ACTION-SUCCESS/ACTION-FAILURE are shell commands to execute on
+#   success/failure.
+#
+#   If EXTRA-FLAGS is defined, it is added to the current language's default
+#   flags (e.g. CFLAGS) when the check is done.  The check is thus made with
+#   the flags: "CFLAGS EXTRA-FLAGS FLAG".  This can for example be used to
+#   force the compiler to issue an error when a bad flag is given.
+#
+#   INPUT gives an alternative input source to AC_COMPILE_IFELSE.
+#
+#   NOTE: Implementation based on AX_CFLAGS_GCC_OPTION. Please keep this
+#   macro in sync with AX_CHECK_{PREPROC,LINK}_FLAG.
+#
+# LICENSE
+#
+#   Copyright (c) 2008 Guido U. Draheim <guidod@gmx.de>
+#   Copyright (c) 2011 Maarten Bosmans <mkbosmans@gmail.com>
+#
+#   This program is free software: you can redistribute it and/or modify it
+#   under the terms of the GNU General Public License as published by the
+#   Free Software Foundation, either version 3 of the License, or (at your
+#   option) any later version.
+#
+#   This program is distributed in the hope that it will be useful, but
+#   WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+#   Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License along
+#   with this program. If not, see <https://www.gnu.org/licenses/>.
+#
+#   As a special exception, the respective Autoconf Macro's copyright owner
+#   gives unlimited permission to copy, distribute and modify the configure
+#   scripts that are the output of Autoconf when processing the Macro. You
+#   need not follow the terms of the GNU General Public License when using
+#   or distributing such scripts, even though portions of the text of the
+#   Macro appear in them. The GNU General Public License (GPL) does govern
+#   all other use of the material that constitutes the Autoconf Macro.
+#
+#   This special exception to the GPL applies to versions of the Autoconf
+#   Macro released by the Autoconf Archive. When you make and distribute a
+#   modified version of the Autoconf Macro, you may extend this special
+#   exception to the GPL to apply to your modified version as well.
+
+#serial 5
+
+AC_DEFUN([AX_CHECK_COMPILE_FLAG],
+[AC_PREREQ(2.64)dnl for _AC_LANG_PREFIX and AS_VAR_IF
+AS_VAR_PUSHDEF([CACHEVAR],[ax_cv_check_[]_AC_LANG_ABBREV[]flags_$4_$1])dnl
+AC_CACHE_CHECK([whether _AC_LANG compiler accepts $1], CACHEVAR, [
+  ax_check_save_flags=$[]_AC_LANG_PREFIX[]FLAGS
+  _AC_LANG_PREFIX[]FLAGS="$[]_AC_LANG_PREFIX[]FLAGS $4 $1"
+  AC_COMPILE_IFELSE([m4_default([$5],[AC_LANG_PROGRAM()])],
+    [AS_VAR_SET(CACHEVAR,[yes])],
+    [AS_VAR_SET(CACHEVAR,[no])])
+  _AC_LANG_PREFIX[]FLAGS=$ax_check_save_flags])
+AS_VAR_IF(CACHEVAR,yes,
+  [m4_default([$2], :)],
+  [m4_default([$3], :)])
+AS_VAR_POPDEF([CACHEVAR])dnl
+])dnl AX_CHECK_COMPILE_FLAGS
+
+# ===========================================================================
+#    https://www.gnu.org/software/autoconf-archive/ax_check_link_flag.html
+# ===========================================================================
+#
+# SYNOPSIS
+#
+#   AX_CHECK_LINK_FLAG(FLAG, [ACTION-SUCCESS], [ACTION-FAILURE], [EXTRA-FLAGS], [INPUT])
+#
+# DESCRIPTION
+#
+#   Check whether the given FLAG works with the linker or gives an error.
+#   (Warnings, however, are ignored)
+#
+#   ACTION-SUCCESS/ACTION-FAILURE are shell commands to execute on
+#   success/failure.
+#
+#   If EXTRA-FLAGS is defined, it is added to the linker's default flags
+#   when the check is done.  The check is thus made with the flags: "LDFLAGS
+#   EXTRA-FLAGS FLAG".  This can for example be used to force the linker to
+#   issue an error when a bad flag is given.
+#
+#   INPUT gives an alternative input source to AC_LINK_IFELSE.
+#
+#   NOTE: Implementation based on AX_CFLAGS_GCC_OPTION. Please keep this
+#   macro in sync with AX_CHECK_{PREPROC,COMPILE}_FLAG.
+#
+# LICENSE
+#
+#   Copyright (c) 2008 Guido U. Draheim <guidod@gmx.de>
+#   Copyright (c) 2011 Maarten Bosmans <mkbosmans@gmail.com>
+#
+#   This program is free software: you can redistribute it and/or modify it
+#   under the terms of the GNU General Public License as published by the
+#   Free Software Foundation, either version 3 of the License, or (at your
+#   option) any later version.
+#
+#   This program is distributed in the hope that it will be useful, but
+#   WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+#   Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License along
+#   with this program. If not, see <https://www.gnu.org/licenses/>.
+#
+#   As a special exception, the respective Autoconf Macro's copyright owner
+#   gives unlimited permission to copy, distribute and modify the configure
+#   scripts that are the output of Autoconf when processing the Macro. You
+#   need not follow the terms of the GNU General Public License when using
+#   or distributing such scripts, even though portions of the text of the
+#   Macro appear in them. The GNU General Public License (GPL) does govern
+#   all other use of the material that constitutes the Autoconf Macro.
+#
+#   This special exception to the GPL applies to versions of the Autoconf
+#   Macro released by the Autoconf Archive. When you make and distribute a
+#   modified version of the Autoconf Macro, you may extend this special
+#   exception to the GPL to apply to your modified version as well.
+
+#serial 5
+
+AC_DEFUN([AX_CHECK_LINK_FLAG],
+[AC_PREREQ(2.64)dnl for _AC_LANG_PREFIX and AS_VAR_IF
+AS_VAR_PUSHDEF([CACHEVAR],[ax_cv_check_ldflags_$4_$1])dnl
+AC_CACHE_CHECK([whether the linker accepts $1], CACHEVAR, [
+  ax_check_save_flags=$LDFLAGS
+  LDFLAGS="$LDFLAGS $4 $1"
+  AC_LINK_IFELSE([m4_default([$5],[AC_LANG_PROGRAM()])],
+    [AS_VAR_SET(CACHEVAR,[yes])],
+    [AS_VAR_SET(CACHEVAR,[no])])
+  LDFLAGS=$ax_check_save_flags])
+AS_VAR_IF(CACHEVAR,yes,
+  [m4_default([$2], :)],
+  [m4_default([$3], :)])
+AS_VAR_POPDEF([CACHEVAR])dnl
+])dnl AX_CHECK_LINK_FLAGS
+
+# ===========================================================================
+#    https://www.gnu.org/software/autoconf-archive/ax_compiler_flags.html
+# ===========================================================================
+#
+# SYNOPSIS
+#
+#   AX_COMPILER_FLAGS([CFLAGS-VARIABLE], [LDFLAGS-VARIABLE], [IS-RELEASE], [EXTRA-BASE-CFLAGS], [EXTRA-YES-CFLAGS], [UNUSED], [UNUSED], [UNUSED], [EXTRA-BASE-LDFLAGS], [EXTRA-YES-LDFLAGS], [UNUSED], [UNUSED], [UNUSED])
+#
+# DESCRIPTION
+#
+#   Check for the presence of an --enable-compile-warnings option to
+#   configure, defaulting to "error" in normal operation, or "yes" if
+#   IS-RELEASE is equal to "yes".  Return the value in the variable
+#   $ax_enable_compile_warnings.
+#
+#   Depending on the value of --enable-compile-warnings, different compiler
+#   warnings are checked to see if they work with the current compiler and,
+#   if so, are appended to CFLAGS-VARIABLE and LDFLAGS-VARIABLE.  This
+#   allows a consistent set of baseline compiler warnings to be used across
+#   a code base, irrespective of any warnings enabled locally by individual
+#   developers.  By standardising the warnings used by all developers of a
+#   project, the project can commit to a zero-warnings policy, using -Werror
+#   to prevent compilation if new warnings are introduced.  This makes
+#   catching bugs which are flagged by warnings a lot easier.
+#
+#   By providing a consistent --enable-compile-warnings argument across all
+#   projects using this macro, continuous integration systems can easily be
+#   configured the same for all projects.  Automated systems or build
+#   systems aimed at beginners may want to pass the --disable-Werror
+#   argument to unconditionally prevent warnings being fatal.
+#
+#   --enable-compile-warnings can take the values:
+#
+#    * no:      Base compiler warnings only; not even -Wall.
+#    * yes:     The above, plus a broad range of useful warnings.
+#    * error:   The above, plus -Werror so that all warnings are fatal.
+#               Use --disable-Werror to override this and disable fatal
+#               warnings.
+#
+#   The set of base and enabled flags can be augmented using the
+#   EXTRA-*-CFLAGS and EXTRA-*-LDFLAGS variables, which are tested and
+#   appended to the output variable if --enable-compile-warnings is not
+#   "no". Flags should not be disabled using these arguments, as the entire
+#   point of AX_COMPILER_FLAGS is to enforce a consistent set of useful
+#   compiler warnings on code, using warnings which have been chosen for low
+#   false positive rates.  If a compiler emits false positives for a
+#   warning, a #pragma should be used in the code to disable the warning
+#   locally. See:
+#
+#     https://gcc.gnu.org/onlinedocs/gcc-4.9.2/gcc/Diagnostic-Pragmas.html#Diagnostic-Pragmas
+#
+#   The EXTRA-* variables should only be used to supply extra warning flags,
+#   and not general purpose compiler flags, as they are controlled by
+#   configure options such as --disable-Werror.
+#
+#   IS-RELEASE can be used to disable -Werror when making a release, which
+#   is useful for those hairy moments when you just want to get the release
+#   done as quickly as possible.  Set it to "yes" to disable -Werror. By
+#   default, it uses the value of $ax_is_release, so if you are using the
+#   AX_IS_RELEASE macro, there is no need to pass this parameter. For
+#   example:
+#
+#     AX_IS_RELEASE([git-directory])
+#     AX_COMPILER_FLAGS()
+#
+#   CFLAGS-VARIABLE defaults to WARN_CFLAGS, and LDFLAGS-VARIABLE defaults
+#   to WARN_LDFLAGS.  Both variables are AC_SUBST-ed by this macro, but must
+#   be manually added to the CFLAGS and LDFLAGS variables for each target in
+#   the code base.
+#
+#   If C++ language support is enabled with AC_PROG_CXX, which must occur
+#   before this macro in configure.ac, warning flags for the C++ compiler
+#   are AC_SUBST-ed as WARN_CXXFLAGS, and must be manually added to the
+#   CXXFLAGS variables for each target in the code base.  EXTRA-*-CFLAGS can
+#   be used to augment the base and enabled flags.
+#
+#   Warning flags for g-ir-scanner (from GObject Introspection) are
+#   AC_SUBST-ed as WARN_SCANNERFLAGS.  This variable must be manually added
+#   to the SCANNERFLAGS variable for each GIR target in the code base.  If
+#   extra g-ir-scanner flags need to be enabled, the AX_COMPILER_FLAGS_GIR
+#   macro must be invoked manually.
+#
+#   AX_COMPILER_FLAGS may add support for other tools in future, in addition
+#   to the compiler and linker.  No extra EXTRA-* variables will be added
+#   for those tools, and all extra support will still use the single
+#   --enable-compile-warnings configure option.  For finer grained control
+#   over the flags for individual tools, use AX_COMPILER_FLAGS_CFLAGS,
+#   AX_COMPILER_FLAGS_LDFLAGS and AX_COMPILER_FLAGS_* for new tools.
+#
+#   The UNUSED variables date from a previous version of this macro, and are
+#   automatically appended to the preceding non-UNUSED variable. They should
+#   be left empty in new uses of the macro.
+#
+# LICENSE
+#
+#   Copyright (c) 2014, 2015 Philip Withnall <philip@tecnocode.co.uk>
+#   Copyright (c) 2015 David King <amigadave@amigadave.com>
+#
+#   Copying and distribution of this file, with or without modification, are
+#   permitted in any medium without royalty provided the copyright notice
+#   and this notice are preserved.  This file is offered as-is, without any
+#   warranty.
+
+#serial 14
+
+# _AX_COMPILER_FLAGS_LANG([LANGNAME])
+m4_defun([_AX_COMPILER_FLAGS_LANG],
+[m4_ifdef([_AX_COMPILER_FLAGS_LANG_]$1[_enabled], [],
+          [m4_define([_AX_COMPILER_FLAGS_LANG_]$1[_enabled], [])dnl
+           AX_REQUIRE_DEFINED([AX_COMPILER_FLAGS_]$1[FLAGS])])dnl
+])
+
+AC_DEFUN([AX_COMPILER_FLAGS],[
+    # C support is enabled by default.
+    _AX_COMPILER_FLAGS_LANG([C])
+    # Only enable C++ support if AC_PROG_CXX is called. The redefinition of
+    # AC_PROG_CXX is so that a fatal error is emitted if this macro is called
+    # before AC_PROG_CXX, which would otherwise cause no C++ warnings to be
+    # checked.
+    AC_PROVIDE_IFELSE([AC_PROG_CXX],
+                      [_AX_COMPILER_FLAGS_LANG([CXX])],
+                      [m4_define([AC_PROG_CXX], defn([AC_PROG_CXX])[_AX_COMPILER_FLAGS_LANG([CXX])])])
+    AX_REQUIRE_DEFINED([AX_COMPILER_FLAGS_LDFLAGS])
+
+    # Default value for IS-RELEASE is $ax_is_release
+    ax_compiler_flags_is_release=m4_tolower(m4_normalize(ifelse([$3],,
+                                                                [$ax_is_release],
+                                                                [$3])))
+
+    AC_ARG_ENABLE([compile-warnings],
+                  AS_HELP_STRING([--enable-compile-warnings=@<:@no/yes/error@:>@],
+                                 [Enable compiler warnings and errors]),,
+                  [AS_IF([test "$ax_compiler_flags_is_release" = "yes"],
+                         [enable_compile_warnings="yes"],
+                         [enable_compile_warnings="error"])])
+    AC_ARG_ENABLE([Werror],
+                  AS_HELP_STRING([--disable-Werror],
+                                 [Unconditionally make all compiler warnings non-fatal]),,
+                  [enable_Werror=maybe])
+
+    # Return the user's chosen warning level
+    AS_IF([test "$enable_Werror" = "no" -a \
+                "$enable_compile_warnings" = "error"],[
+        enable_compile_warnings="yes"
+    ])
+
+    ax_enable_compile_warnings=$enable_compile_warnings
+
+    AX_COMPILER_FLAGS_CFLAGS([$1],[$ax_compiler_flags_is_release],
+                             [$4],[$5 $6 $7 $8])
+    m4_ifdef([_AX_COMPILER_FLAGS_LANG_CXX_enabled],
+             [AX_COMPILER_FLAGS_CXXFLAGS([WARN_CXXFLAGS],
+                                         [$ax_compiler_flags_is_release],
+                                         [$4],[$5 $6 $7 $8])])
+    AX_COMPILER_FLAGS_LDFLAGS([$2],[$ax_compiler_flags_is_release],
+                              [$9],[$10 $11 $12 $13])
+    AX_COMPILER_FLAGS_GIR([WARN_SCANNERFLAGS],[$ax_compiler_flags_is_release])
+])dnl AX_COMPILER_FLAGS
+
+# =============================================================================
+#  https://www.gnu.org/software/autoconf-archive/ax_compiler_flags_cflags.html
+# =============================================================================
+#
+# SYNOPSIS
+#
+#   AX_COMPILER_FLAGS_CFLAGS([VARIABLE], [IS-RELEASE], [EXTRA-BASE-FLAGS], [EXTRA-YES-FLAGS])
+#
+# DESCRIPTION
+#
+#   Add warning flags for the C compiler to VARIABLE, which defaults to
+#   WARN_CFLAGS.  VARIABLE is AC_SUBST-ed by this macro, but must be
+#   manually added to the CFLAGS variable for each target in the code base.
+#
+#   This macro depends on the environment set up by AX_COMPILER_FLAGS.
+#   Specifically, it uses the value of $ax_enable_compile_warnings to decide
+#   which flags to enable.
+#
+# LICENSE
+#
+#   Copyright (c) 2014, 2015 Philip Withnall <philip@tecnocode.co.uk>
+#
+#   Copying and distribution of this file, with or without modification, are
+#   permitted in any medium without royalty provided the copyright notice
+#   and this notice are preserved.  This file is offered as-is, without any
+#   warranty.
+
+#serial 14
+
+AC_DEFUN([AX_COMPILER_FLAGS_CFLAGS],[
+    AC_REQUIRE([AC_PROG_SED])
+    AX_REQUIRE_DEFINED([AX_APPEND_COMPILE_FLAGS])
+    AX_REQUIRE_DEFINED([AX_APPEND_FLAG])
+    AX_REQUIRE_DEFINED([AX_CHECK_COMPILE_FLAG])
+
+    # Variable names
+    m4_define([ax_warn_cflags_variable],
+              [m4_normalize(ifelse([$1],,[WARN_CFLAGS],[$1]))])
+
+    AC_LANG_PUSH([C])
+
+    # Always pass -Werror=unknown-warning-option to get Clang to fail on bad
+    # flags, otherwise they are always appended to the warn_cflags variable, and
+    # Clang warns on them for every compilation unit.
+    # If this is passed to GCC, it will explode, so the flag must be enabled
+    # conditionally.
+    AX_CHECK_COMPILE_FLAG([-Werror=unknown-warning-option],[
+        ax_compiler_flags_test="-Werror=unknown-warning-option"
+    ],[
+        ax_compiler_flags_test=""
+    ])
+
+    # Check that -Wno-suggest-attribute=format is supported
+    AX_CHECK_COMPILE_FLAG([-Wno-suggest-attribute=format],[
+        ax_compiler_no_suggest_attribute_flags="-Wno-suggest-attribute=format"
+    ],[
+        ax_compiler_no_suggest_attribute_flags=""
+    ])
+
+    # Base flags
+    AX_APPEND_COMPILE_FLAGS([ dnl
+        -fno-strict-aliasing dnl
+        $3 dnl
+    ],ax_warn_cflags_variable,[$ax_compiler_flags_test])
+
+    AS_IF([test "$ax_enable_compile_warnings" != "no"],[
+        # "yes" flags
+        AX_APPEND_COMPILE_FLAGS([ dnl
+            -Wall dnl
+            -Wextra dnl
+            -Wundef dnl
+            -Wnested-externs dnl
+            -Wwrite-strings dnl
+            -Wpointer-arith dnl
+            -Wmissing-declarations dnl
+            -Wmissing-prototypes dnl
+            -Wstrict-prototypes dnl
+            -Wredundant-decls dnl
+            -Wno-unused-parameter dnl
+            -Wno-missing-field-initializers dnl
+            -Wdeclaration-after-statement dnl
+            -Wformat=2 dnl
+            -Wold-style-definition dnl
+            -Wcast-align dnl
+            -Wformat-nonliteral dnl
+            -Wformat-security dnl
+            -Wsign-compare dnl
+            -Wstrict-aliasing dnl
+            -Wshadow dnl
+            -Winline dnl
+            -Wpacked dnl
+            -Wmissing-format-attribute dnl
+            -Wmissing-noreturn dnl
+            -Winit-self dnl
+            -Wredundant-decls dnl
+            -Wmissing-include-dirs dnl
+            -Wunused-but-set-variable dnl
+            -Warray-bounds dnl
+            -Wimplicit-function-declaration dnl
+            -Wreturn-type dnl
+            -Wswitch-enum dnl
+            -Wswitch-default dnl
+            $4 dnl
+            $5 dnl
+            $6 dnl
+            $7 dnl
+        ],ax_warn_cflags_variable,[$ax_compiler_flags_test])
+    ])
+    AS_IF([test "$ax_enable_compile_warnings" = "error"],[
+        # "error" flags; -Werror has to be appended unconditionally because
+        # it's not possible to test for
+        #
+        # suggest-attribute=format is disabled because it gives too many false
+        # positives
+        AX_APPEND_FLAG([-Werror],ax_warn_cflags_variable)
+
+        AX_APPEND_COMPILE_FLAGS([ dnl
+            [$ax_compiler_no_suggest_attribute_flags] dnl
+        ],ax_warn_cflags_variable,[$ax_compiler_flags_test])
+    ])
+
+    # In the flags below, when disabling specific flags, always add *both*
+    # -Wno-foo and -Wno-error=foo. This fixes the situation where (for example)
+    # we enable -Werror, disable a flag, and a build bot passes CFLAGS=-Wall,
+    # which effectively turns that flag back on again as an error.
+    for flag in $ax_warn_cflags_variable; do
+        AS_CASE([$flag],
+                [-Wno-*=*],[],
+                [-Wno-*],[
+                    AX_APPEND_COMPILE_FLAGS([-Wno-error=$(AS_ECHO([$flag]) | $SED 's/^-Wno-//')],
+                                            ax_warn_cflags_variable,
+                                            [$ax_compiler_flags_test])
+                ])
+    done
+
+    AC_LANG_POP([C])
+
+    # Substitute the variables
+    AC_SUBST(ax_warn_cflags_variable)
+])dnl AX_COMPILER_FLAGS
+
+# ===========================================================================
+#  https://www.gnu.org/software/autoconf-archive/ax_compiler_flags_gir.html
+# ===========================================================================
+#
+# SYNOPSIS
+#
+#   AX_COMPILER_FLAGS_GIR([VARIABLE], [IS-RELEASE], [EXTRA-BASE-FLAGS], [EXTRA-YES-FLAGS])
+#
+# DESCRIPTION
+#
+#   Add warning flags for the g-ir-scanner (from GObject Introspection) to
+#   VARIABLE, which defaults to WARN_SCANNERFLAGS.  VARIABLE is AC_SUBST-ed
+#   by this macro, but must be manually added to the SCANNERFLAGS variable
+#   for each GIR target in the code base.
+#
+#   This macro depends on the environment set up by AX_COMPILER_FLAGS.
+#   Specifically, it uses the value of $ax_enable_compile_warnings to decide
+#   which flags to enable.
+#
+# LICENSE
+#
+#   Copyright (c) 2015 Philip Withnall <philip@tecnocode.co.uk>
+#
+#   Copying and distribution of this file, with or without modification, are
+#   permitted in any medium without royalty provided the copyright notice
+#   and this notice are preserved.  This file is offered as-is, without any
+#   warranty.
+
+#serial 6
+
+AC_DEFUN([AX_COMPILER_FLAGS_GIR],[
+    AX_REQUIRE_DEFINED([AX_APPEND_FLAG])
+
+    # Variable names
+    m4_define([ax_warn_scannerflags_variable],
+              [m4_normalize(ifelse([$1],,[WARN_SCANNERFLAGS],[$1]))])
+
+    # Base flags
+    AX_APPEND_FLAG([$3],ax_warn_scannerflags_variable)
+
+    AS_IF([test "$ax_enable_compile_warnings" != "no"],[
+        # "yes" flags
+        AX_APPEND_FLAG([ dnl
+            --warn-all dnl
+            $4 dnl
+            $5 dnl
+            $6 dnl
+            $7 dnl
+        ],ax_warn_scannerflags_variable)
+    ])
+    AS_IF([test "$ax_enable_compile_warnings" = "error"],[
+        # "error" flags
+        AX_APPEND_FLAG([ dnl
+            --warn-error dnl
+        ],ax_warn_scannerflags_variable)
+    ])
+
+    # Substitute the variables
+    AC_SUBST(ax_warn_scannerflags_variable)
+])dnl AX_COMPILER_FLAGS
+
+# ==============================================================================
+#  https://www.gnu.org/software/autoconf-archive/ax_compiler_flags_ldflags.html
+# ==============================================================================
+#
+# SYNOPSIS
+#
+#   AX_COMPILER_FLAGS_LDFLAGS([VARIABLE], [IS-RELEASE], [EXTRA-BASE-FLAGS], [EXTRA-YES-FLAGS])
+#
+# DESCRIPTION
+#
+#   Add warning flags for the linker to VARIABLE, which defaults to
+#   WARN_LDFLAGS.  VARIABLE is AC_SUBST-ed by this macro, but must be
+#   manually added to the LDFLAGS variable for each target in the code base.
+#
+#   This macro depends on the environment set up by AX_COMPILER_FLAGS.
+#   Specifically, it uses the value of $ax_enable_compile_warnings to decide
+#   which flags to enable.
+#
+# LICENSE
+#
+#   Copyright (c) 2014, 2015 Philip Withnall <philip@tecnocode.co.uk>
+#
+#   Copying and distribution of this file, with or without modification, are
+#   permitted in any medium without royalty provided the copyright notice
+#   and this notice are preserved.  This file is offered as-is, without any
+#   warranty.
+
+#serial 8
+
+AC_DEFUN([AX_COMPILER_FLAGS_LDFLAGS],[
+    AX_REQUIRE_DEFINED([AX_APPEND_LINK_FLAGS])
+    AX_REQUIRE_DEFINED([AX_APPEND_FLAG])
+    AX_REQUIRE_DEFINED([AX_CHECK_COMPILE_FLAG])
+    AX_REQUIRE_DEFINED([AX_CHECK_LINK_FLAG])
+
+    # Variable names
+    m4_define([ax_warn_ldflags_variable],
+              [m4_normalize(ifelse([$1],,[WARN_LDFLAGS],[$1]))])
+
+    # Always pass -Werror=unknown-warning-option to get Clang to fail on bad
+    # flags, otherwise they are always appended to the warn_ldflags variable,
+    # and Clang warns on them for every compilation unit.
+    # If this is passed to GCC, it will explode, so the flag must be enabled
+    # conditionally.
+    AX_CHECK_COMPILE_FLAG([-Werror=unknown-warning-option],[
+        ax_compiler_flags_test="-Werror=unknown-warning-option"
+    ],[
+        ax_compiler_flags_test=""
+    ])
+
+    # macOS linker does not have --as-needed
+    AX_CHECK_LINK_FLAG([-Wl,--no-as-needed], [
+        ax_compiler_flags_as_needed_option="-Wl,--no-as-needed"
+    ], [
+        ax_compiler_flags_as_needed_option=""
+    ])
+
+    # macOS linker speaks with a different accent
+    ax_compiler_flags_fatal_warnings_option=""
+    AX_CHECK_LINK_FLAG([-Wl,--fatal-warnings], [
+        ax_compiler_flags_fatal_warnings_option="-Wl,--fatal-warnings"
+    ])
+    AX_CHECK_LINK_FLAG([-Wl,-fatal_warnings], [
+        ax_compiler_flags_fatal_warnings_option="-Wl,-fatal_warnings"
+    ])
+
+    # Base flags
+    AX_APPEND_LINK_FLAGS([ dnl
+        $ax_compiler_flags_as_needed_option dnl
+        $3 dnl
+    ],ax_warn_ldflags_variable,[$ax_compiler_flags_test])
+
+    AS_IF([test "$ax_enable_compile_warnings" != "no"],[
+        # "yes" flags
+        AX_APPEND_LINK_FLAGS([$4 $5 $6 $7],
+                                ax_warn_ldflags_variable,
+                                [$ax_compiler_flags_test])
+    ])
+    AS_IF([test "$ax_enable_compile_warnings" = "error"],[
+        # "error" flags; -Werror has to be appended unconditionally because
+        # it's not possible to test for
+        #
+        # suggest-attribute=format is disabled because it gives too many false
+        # positives
+        AX_APPEND_LINK_FLAGS([ dnl
+            $ax_compiler_flags_fatal_warnings_option dnl
+        ],ax_warn_ldflags_variable,[$ax_compiler_flags_test])
+    ])
+
+    # Substitute the variables
+    AC_SUBST(ax_warn_ldflags_variable)
+])dnl AX_COMPILER_FLAGS
+
+# ===========================================================================
+#      https://www.gnu.org/software/autoconf-archive/ax_is_release.html
+# ===========================================================================
+#
+# SYNOPSIS
+#
+#   AX_IS_RELEASE(POLICY)
+#
+# DESCRIPTION
+#
+#   Determine whether the code is being configured as a release, or from
+#   git. Set the ax_is_release variable to 'yes' or 'no'.
+#
+#   If building a release version, it is recommended that the configure
+#   script disable compiler errors and debug features, by conditionalising
+#   them on the ax_is_release variable.  If building from git, these
+#   features should be enabled.
+#
+#   The POLICY parameter specifies how ax_is_release is determined. It can
+#   take the following values:
+#
+#    * git-directory:  ax_is_release will be 'no' if a '.git' directory exists
+#    * minor-version:  ax_is_release will be 'no' if the minor version number
+#                      in $PACKAGE_VERSION is odd; this assumes
+#                      $PACKAGE_VERSION follows the 'major.minor.micro' scheme
+#    * micro-version:  ax_is_release will be 'no' if the micro version number
+#                      in $PACKAGE_VERSION is odd; this assumes
+#                      $PACKAGE_VERSION follows the 'major.minor.micro' scheme
+#    * dash-version:   ax_is_release will be 'no' if there is a dash '-'
+#                      in $PACKAGE_VERSION, for example 1.2-pre3, 1.2.42-a8b9
+#                      or 2.0-dirty (in particular this is suitable for use
+#                      with git-version-gen)
+#    * always:         ax_is_release will always be 'yes'
+#    * never:          ax_is_release will always be 'no'
+#
+#   Other policies may be added in future.
+#
+# LICENSE
+#
+#   Copyright (c) 2015 Philip Withnall <philip@tecnocode.co.uk>
+#   Copyright (c) 2016 Collabora Ltd.
+#
+#   Copying and distribution of this file, with or without modification, are
+#   permitted in any medium without royalty provided the copyright notice
+#   and this notice are preserved.
+
+#serial 7
+
+AC_DEFUN([AX_IS_RELEASE],[
+    AC_BEFORE([AC_INIT],[$0])
+
+    m4_case([$1],
+      [git-directory],[
+        # $is_release = (.git directory does not exist)
+        AS_IF([test -d ${srcdir}/.git],[ax_is_release=no],[ax_is_release=yes])
+      ],
+      [minor-version],[
+        # $is_release = ($minor_version is even)
+        minor_version=`echo "$PACKAGE_VERSION" | sed 's/[[^.]][[^.]]*.\([[^.]][[^.]]*\).*/\1/'`
+        AS_IF([test "$(( $minor_version % 2 ))" -ne 0],
+              [ax_is_release=no],[ax_is_release=yes])
+      ],
+      [micro-version],[
+        # $is_release = ($micro_version is even)
+        micro_version=`echo "$PACKAGE_VERSION" | sed 's/[[^.]]*\.[[^.]]*\.\([[^.]]*\).*/\1/'`
+        AS_IF([test "$(( $micro_version % 2 ))" -ne 0],
+              [ax_is_release=no],[ax_is_release=yes])
+      ],
+      [dash-version],[
+        # $is_release = ($PACKAGE_VERSION has a dash)
+        AS_CASE([$PACKAGE_VERSION],
+                [*-*], [ax_is_release=no],
+                [*], [ax_is_release=yes])
+      ],
+      [always],[ax_is_release=yes],
+      [never],[ax_is_release=no],
+      [
+        AC_MSG_ERROR([Invalid policy. Valid policies: git-directory, minor-version, micro-version, dash-version, always, never.])
+      ])
+])
+
+# ===========================================================================
+#    https://www.gnu.org/software/autoconf-archive/ax_require_defined.html
+# ===========================================================================
+#
+# SYNOPSIS
+#
+#   AX_REQUIRE_DEFINED(MACRO)
+#
+# DESCRIPTION
+#
+#   AX_REQUIRE_DEFINED is a simple helper for making sure other macros have
+#   been defined and thus are available for use.  This avoids random issues
+#   where a macro isn't expanded.  Instead the configure script emits a
+#   non-fatal:
+#
+#     ./configure: line 1673: AX_CFLAGS_WARN_ALL: command not found
+#
+#   It's like AC_REQUIRE except it doesn't expand the required macro.
+#
+#   Here's an example:
+#
+#     AX_REQUIRE_DEFINED([AX_CHECK_LINK_FLAG])
+#
+# LICENSE
+#
+#   Copyright (c) 2014 Mike Frysinger <vapier@gentoo.org>
+#
+#   Copying and distribution of this file, with or without modification, are
+#   permitted in any medium without royalty provided the copyright notice
+#   and this notice are preserved. This file is offered as-is, without any
+#   warranty.
+
+#serial 2
+
+AC_DEFUN([AX_REQUIRE_DEFINED], [dnl
+  m4_ifndef([$1], [m4_fatal([macro ]$1[ is not defined; is a m4 file missing?])])
+])dnl AX_REQUIRE_DEFINED
+
+# Copyright (C) 1995-2002 Free Software Foundation, Inc.
+# Copyright (C) 2001-2003,2004 Red Hat, Inc.
+#
+# This file is free software, distributed under the terms of the GNU
+# General Public License.  As a special exception to the GNU General
+# Public License, this file may be distributed as part of a program
+# that contains a configuration script generated by Autoconf, under
+# the same distribution terms as the rest of that program.
+#
+# This file can be copied and used freely without restrictions.  It can
+# be used in projects which are not available under the GNU Public License
+# but which still want to provide support for the GNU gettext functionality.
+#
+# Macro to add for using GNU gettext.
+# Ulrich Drepper <drepper@cygnus.com>, 1995, 1996
+#
+# Modified to never use included libintl. 
+# Owen Taylor <otaylor@redhat.com>, 12/15/1998
+#
+# Major rework to remove unused code
+# Owen Taylor <otaylor@redhat.com>, 12/11/2002
+#
+# Added better handling of ALL_LINGUAS from GNU gettext version 
+# written by Bruno Haible, Owen Taylor <otaylor.redhat.com> 5/30/3002
+#
+# Modified to require ngettext
+# Matthias Clasen <mclasen@redhat.com> 08/06/2004
+#
+# We need this here as well, since someone might use autoconf-2.5x
+# to configure GLib then an older version to configure a package
+# using AM_GLIB_GNU_GETTEXT
+AC_PREREQ(2.53)
+
 dnl
+dnl We go to great lengths to make sure that aclocal won't 
+dnl try to pull in the installed version of these macros
+dnl when running aclocal in the glib directory.
+dnl
+m4_copy([AC_DEFUN],[glib_DEFUN])
+m4_copy([AC_REQUIRE],[glib_REQUIRE])
+dnl
+dnl At the end, if we're not within glib, we'll define the public
+dnl definitions in terms of our private definitions.
+dnl
+
+# GLIB_LC_MESSAGES
+#--------------------
+glib_DEFUN([GLIB_LC_MESSAGES],
+  [AC_CHECK_HEADERS([locale.h])
+    if test $ac_cv_header_locale_h = yes; then
+    AC_CACHE_CHECK([for LC_MESSAGES], am_cv_val_LC_MESSAGES,
+      [AC_TRY_LINK([#include <locale.h>], [return LC_MESSAGES],
+       am_cv_val_LC_MESSAGES=yes, am_cv_val_LC_MESSAGES=no)])
+    if test $am_cv_val_LC_MESSAGES = yes; then
+      AC_DEFINE(HAVE_LC_MESSAGES, 1,
+        [Define if your <locale.h> file defines LC_MESSAGES.])
+    fi
+  fi])
+
+# GLIB_PATH_PROG_WITH_TEST
+#----------------------------
+dnl GLIB_PATH_PROG_WITH_TEST(VARIABLE, PROG-TO-CHECK-FOR,
+dnl   TEST-PERFORMED-ON-FOUND_PROGRAM [, VALUE-IF-NOT-FOUND [, PATH]])
+glib_DEFUN([GLIB_PATH_PROG_WITH_TEST],
+[# Extract the first word of "$2", so it can be a program name with args.
+set dummy $2; ac_word=[$]2
+AC_MSG_CHECKING([for $ac_word])
+AC_CACHE_VAL(ac_cv_path_$1,
+[case "[$]$1" in
+  /*)
+  ac_cv_path_$1="[$]$1" # Let the user override the test with a path.
+  ;;
+  *)
+  IFS="${IFS= 	}"; ac_save_ifs="$IFS"; IFS="${IFS}:"
+  for ac_dir in ifelse([$5], , $PATH, [$5]); do
+    test -z "$ac_dir" && ac_dir=.
+    if test -f $ac_dir/$ac_word; then
+      if [$3]; then
+	ac_cv_path_$1="$ac_dir/$ac_word"
+	break
+      fi
+    fi
+  done
+  IFS="$ac_save_ifs"
+dnl If no 4th arg is given, leave the cache variable unset,
+dnl so AC_PATH_PROGS will keep looking.
+ifelse([$4], , , [  test -z "[$]ac_cv_path_$1" && ac_cv_path_$1="$4"
+])dnl
+  ;;
+esac])dnl
+$1="$ac_cv_path_$1"
+if test ifelse([$4], , [-n "[$]$1"], ["[$]$1" != "$4"]); then
+  AC_MSG_RESULT([$]$1)
+else
+  AC_MSG_RESULT(no)
+fi
+AC_SUBST($1)dnl
+])
+
+dnl Checks for special options needed on Mac OS X.
+dnl Defines INTL_MACOSX_LIBS.
+dnl
+dnl Copied from intlmacosx.m4 in gettext, GPL.
+dnl Copyright (C) 2004-2013 Free Software Foundation, Inc.
+glib_DEFUN([glib_gt_INTL_MACOSX],
+[
+  dnl Check for API introduced in Mac OS X 10.2.
+  AC_CACHE_CHECK([for CFPreferencesCopyAppValue],
+    [gt_cv_func_CFPreferencesCopyAppValue],
+    [gt_save_LIBS="$LIBS"
+     LIBS="$LIBS -Wl,-framework -Wl,CoreFoundation"
+     AC_LINK_IFELSE(
+       [AC_LANG_PROGRAM(
+          [[#include <CoreFoundation/CFPreferences.h>]],
+          [[CFPreferencesCopyAppValue(NULL, NULL)]])],
+       [gt_cv_func_CFPreferencesCopyAppValue=yes],
+       [gt_cv_func_CFPreferencesCopyAppValue=no])
+     LIBS="$gt_save_LIBS"])
+  if test $gt_cv_func_CFPreferencesCopyAppValue = yes; then
+    AC_DEFINE([HAVE_CFPREFERENCESCOPYAPPVALUE], [1],
+      [Define to 1 if you have the Mac OS X function CFPreferencesCopyAppValue in the CoreFoundation framework.])
+  fi
+  dnl Check for API introduced in Mac OS X 10.3.
+  AC_CACHE_CHECK([for CFLocaleCopyCurrent], [gt_cv_func_CFLocaleCopyCurrent],
+    [gt_save_LIBS="$LIBS"
+     LIBS="$LIBS -Wl,-framework -Wl,CoreFoundation"
+     AC_LINK_IFELSE(
+       [AC_LANG_PROGRAM(
+          [[#include <CoreFoundation/CFLocale.h>]],
+          [[CFLocaleCopyCurrent();]])],
+       [gt_cv_func_CFLocaleCopyCurrent=yes],
+       [gt_cv_func_CFLocaleCopyCurrent=no])
+     LIBS="$gt_save_LIBS"])
+  if test $gt_cv_func_CFLocaleCopyCurrent = yes; then
+    AC_DEFINE([HAVE_CFLOCALECOPYCURRENT], [1],
+      [Define to 1 if you have the Mac OS X function CFLocaleCopyCurrent in the CoreFoundation framework.])
+  fi
+  INTL_MACOSX_LIBS=
+  if test $gt_cv_func_CFPreferencesCopyAppValue = yes || test $gt_cv_func_CFLocaleCopyCurrent = yes; then
+    INTL_MACOSX_LIBS="-Wl,-framework -Wl,CoreFoundation"
+  fi
+  AC_SUBST([INTL_MACOSX_LIBS])
+])
+
+# GLIB_WITH_NLS
+#-----------------
+glib_DEFUN([GLIB_WITH_NLS],
+  dnl NLS is obligatory
+  [USE_NLS=yes
+    AC_SUBST(USE_NLS)
+
+    gt_cv_have_gettext=no
+
+    CATOBJEXT=NONE
+    XGETTEXT=:
+    INTLLIBS=
+
+    glib_gt_INTL_MACOSX
+
+    AC_CHECK_HEADER(libintl.h,
+     [gt_cv_func_dgettext_libintl="no"
+      libintl_extra_libs=""
+
+      #
+      # First check in libc
+      #
+      AC_CACHE_CHECK([for ngettext in libc], gt_cv_func_ngettext_libc,
+        [AC_TRY_LINK([
+#include <libintl.h>
+],
+         [return !ngettext ("","", 1)],
+	  gt_cv_func_ngettext_libc=yes,
+          gt_cv_func_ngettext_libc=no)
+        ])
+  
+      if test "$gt_cv_func_ngettext_libc" = "yes" ; then
+	      AC_CACHE_CHECK([for dgettext in libc], gt_cv_func_dgettext_libc,
+        	[AC_TRY_LINK([
+#include <libintl.h>
+],
+	          [return !dgettext ("","")],
+		  gt_cv_func_dgettext_libc=yes,
+	          gt_cv_func_dgettext_libc=no)
+        	])
+      fi
+  
+      if test "$gt_cv_func_ngettext_libc" = "yes" ; then
+        AC_CHECK_FUNCS(bind_textdomain_codeset)
+      fi
+
+      #
+      # If we don't have everything we want, check in libintl
+      #
+      if test "$gt_cv_func_dgettext_libc" != "yes" \
+	 || test "$gt_cv_func_ngettext_libc" != "yes" \
+         || test "$ac_cv_func_bind_textdomain_codeset" != "yes" ; then
+        
+        AC_CHECK_LIB(intl, bindtextdomain,
+	    [AC_CHECK_LIB(intl, ngettext,
+		    [AC_CHECK_LIB(intl, dgettext,
+			          gt_cv_func_dgettext_libintl=yes)])])
+
+	if test "$gt_cv_func_dgettext_libintl" != "yes" ; then
+	  AC_MSG_CHECKING([if -liconv is needed to use gettext])
+	  AC_MSG_RESULT([])
+  	  AC_CHECK_LIB(intl, ngettext,
+          	[AC_CHECK_LIB(intl, dcgettext,
+		       [gt_cv_func_dgettext_libintl=yes
+			libintl_extra_libs=-liconv],
+			:,-liconv)],
+		:,-liconv)
+        fi
+
+        #
+        # If we found libintl, then check in it for bind_textdomain_codeset();
+        # we'll prefer libc if neither have bind_textdomain_codeset(),
+        # and both have dgettext and ngettext
+        #
+        if test "$gt_cv_func_dgettext_libintl" = "yes" ; then
+          glib_save_LIBS="$LIBS"
+          LIBS="$LIBS -lintl $libintl_extra_libs"
+          unset ac_cv_func_bind_textdomain_codeset
+          AC_CHECK_FUNCS(bind_textdomain_codeset)
+          LIBS="$glib_save_LIBS"
+
+          if test "$ac_cv_func_bind_textdomain_codeset" = "yes" ; then
+            gt_cv_func_dgettext_libc=no
+          else
+            if test "$gt_cv_func_dgettext_libc" = "yes" \
+		&& test "$gt_cv_func_ngettext_libc" = "yes"; then
+              gt_cv_func_dgettext_libintl=no
+            fi
+          fi
+        fi
+      fi
+
+      if test "$gt_cv_func_dgettext_libc" = "yes" \
+	|| test "$gt_cv_func_dgettext_libintl" = "yes"; then
+        gt_cv_have_gettext=yes
+      fi
+  
+      if test "$gt_cv_func_dgettext_libintl" = "yes"; then
+        INTLLIBS="-lintl $libintl_extra_libs $INTL_MACOSX_LIBS"
+      fi
+  
+      if test "$gt_cv_have_gettext" = "yes"; then
+	AC_DEFINE(HAVE_GETTEXT,1,
+	  [Define if the GNU gettext() function is already present or preinstalled.])
+	GLIB_PATH_PROG_WITH_TEST(MSGFMT, msgfmt,
+	  [test -z "`$ac_dir/$ac_word -h 2>&1 | grep 'dv '`"], no)dnl
+	if test "$MSGFMT" != "no"; then
+          glib_save_LIBS="$LIBS"
+          LIBS="$LIBS $INTLLIBS"
+	  AC_CHECK_FUNCS(dcgettext)
+	  MSGFMT_OPTS=
+	  AC_MSG_CHECKING([if msgfmt accepts -c])
+	  GLIB_RUN_PROG([$MSGFMT -c -o /dev/null],[
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: test 1.0\n"
+"PO-Revision-Date: 2007-02-15 12:01+0100\n"
+"Last-Translator: test <foo@bar.xx>\n"
+"Language-Team: C <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+], [MSGFMT_OPTS=-c; AC_MSG_RESULT([yes])], [AC_MSG_RESULT([no])])
+	  AC_SUBST(MSGFMT_OPTS)
+	  AC_PATH_PROG(GMSGFMT, gmsgfmt, $MSGFMT)
+	  GLIB_PATH_PROG_WITH_TEST(XGETTEXT, xgettext,
+	    [test -z "`$ac_dir/$ac_word -h 2>&1 | grep '(HELP)'`"], :)
+	  AC_TRY_LINK(, [extern int _nl_msg_cat_cntr;
+			 return _nl_msg_cat_cntr],
+	    [CATOBJEXT=.gmo 
+             DATADIRNAME=share],
+	    [case $host in
+	    *-*-solaris*)
+	    dnl On Solaris, if bind_textdomain_codeset is in libc,
+	    dnl GNU format message catalog is always supported,
+            dnl since both are added to the libc all together.
+	    dnl Hence, we'd like to go with DATADIRNAME=share and
+	    dnl and CATOBJEXT=.gmo in this case.
+            AC_CHECK_FUNC(bind_textdomain_codeset,
+	      [CATOBJEXT=.gmo 
+               DATADIRNAME=share],
+	      [CATOBJEXT=.mo
+               DATADIRNAME=lib])
+	    ;;
+	    *-*-openbsd*)
+	    CATOBJEXT=.mo
+            DATADIRNAME=share
+	    ;;
+	    *)
+	    CATOBJEXT=.mo
+            DATADIRNAME=lib
+	    ;;
+	    esac])
+          LIBS="$glib_save_LIBS"
+	  INSTOBJEXT=.mo
+	else
+	  gt_cv_have_gettext=no
+	fi
+      fi
+    ])
+
+    if test "$gt_cv_have_gettext" = "yes" ; then
+      AC_DEFINE(ENABLE_NLS, 1,
+        [always defined to indicate that i18n is enabled])
+    fi
+
+    dnl Test whether we really found GNU xgettext.
+    if test "$XGETTEXT" != ":"; then
+      dnl If it is not GNU xgettext we define it as : so that the
+      dnl Makefiles still can work.
+      if $XGETTEXT --omit-header /dev/null 2> /dev/null; then
+        : ;
+      else
+        AC_MSG_RESULT(
+	  [found xgettext program is not GNU xgettext; ignore it])
+        XGETTEXT=":"
+      fi
+    fi
+
+    # We need to process the po/ directory.
+    POSUB=po
+
+    AC_OUTPUT_COMMANDS(
+      [case "$CONFIG_FILES" in *po/Makefile.in*)
+        sed -e "/POTFILES =/r po/POTFILES" po/Makefile.in > po/Makefile
+      esac])
+
+    dnl These rules are solely for the distribution goal.  While doing this
+    dnl we only have to keep exactly one list of the available catalogs
+    dnl in configure.ac.
+    for lang in $ALL_LINGUAS; do
+      GMOFILES="$GMOFILES $lang.gmo"
+      POFILES="$POFILES $lang.po"
+    done
+
+    dnl Make all variables we use known to autoconf.
+    AC_SUBST(CATALOGS)
+    AC_SUBST(CATOBJEXT)
+    AC_SUBST(DATADIRNAME)
+    AC_SUBST(GMOFILES)
+    AC_SUBST(INSTOBJEXT)
+    AC_SUBST(INTLLIBS)
+    AC_SUBST(PO_IN_DATADIR_TRUE)
+    AC_SUBST(PO_IN_DATADIR_FALSE)
+    AC_SUBST(POFILES)
+    AC_SUBST(POSUB)
+  ])
+
+# AM_GLIB_GNU_GETTEXT
+# -------------------
+# Do checks necessary for use of gettext. If a suitable implementation 
+# of gettext is found in either in libintl or in the C library,
+# it will set INTLLIBS to the libraries needed for use of gettext
+# and AC_DEFINE() HAVE_GETTEXT and ENABLE_NLS. (The shell variable
+# gt_cv_have_gettext will be set to "yes".) It will also call AC_SUBST()
+# on various variables needed by the Makefile.in.in installed by 
+# glib-gettextize.
+dnl
+AU_DEFUN([GLIB_GNU_GETTEXT],
+  [AC_REQUIRE([AC_PROG_CC])dnl
+   
+   GLIB_LC_MESSAGES
+   GLIB_WITH_NLS
+
+   if test "$gt_cv_have_gettext" = "yes"; then
+     if test "x$ALL_LINGUAS" = "x"; then
+       LINGUAS=
+     else
+       AC_MSG_CHECKING(for catalogs to be installed)
+       NEW_LINGUAS=
+       for presentlang in $ALL_LINGUAS; do
+         useit=no
+         if test "%UNSET%" != "${LINGUAS-%UNSET%}"; then
+           desiredlanguages="$LINGUAS"
+         else
+           desiredlanguages="$ALL_LINGUAS"
+         fi
+         for desiredlang in $desiredlanguages; do
+ 	   # Use the presentlang catalog if desiredlang is
+           #   a. equal to presentlang, or
+           #   b. a variant of presentlang (because in this case,
+           #      presentlang can be used as a fallback for messages
+           #      which are not translated in the desiredlang catalog).
+           case "$desiredlang" in
+             "$presentlang"*) useit=yes;;
+           esac
+         done
+         if test $useit = yes; then
+           NEW_LINGUAS="$NEW_LINGUAS $presentlang"
+         fi
+       done
+       LINGUAS=$NEW_LINGUAS
+       AC_MSG_RESULT($LINGUAS)
+     fi
+
+     dnl Construct list of names of catalog files to be constructed.
+     if test -n "$LINGUAS"; then
+       for lang in $LINGUAS; do CATALOGS="$CATALOGS $lang$CATOBJEXT"; done
+     fi
+   fi
+
+   dnl If the AC_CONFIG_AUX_DIR macro for autoconf is used we possibly
+   dnl find the mkinstalldirs script in another subdir but ($top_srcdir).
+   dnl Try to locate is.
+   MKINSTALLDIRS=
+   if test -n "$ac_aux_dir"; then
+     MKINSTALLDIRS="$ac_aux_dir/mkinstalldirs"
+   fi
+   if test -z "$MKINSTALLDIRS"; then
+     MKINSTALLDIRS="\$(top_srcdir)/mkinstalldirs"
+   fi
+   AC_SUBST(MKINSTALLDIRS)
+
+   dnl Generate list of files to be processed by xgettext which will
+   dnl be included in po/Makefile.
+   test -d po || mkdir po
+   if test "x$srcdir" != "x."; then
+     if test "x`echo $srcdir | sed 's@/.*@@'`" = "x"; then
+       posrcprefix="$srcdir/"
+     else
+       posrcprefix="../$srcdir/"
+     fi
+   else
+     posrcprefix="../"
+   fi
+   rm -f po/POTFILES
+   sed -e "/^#/d" -e "/^\$/d" -e "s,.*,	$posrcprefix& \\\\," -e "\$s/\(.*\) \\\\/\1/" \
+	< $srcdir/po/POTFILES.in > po/POTFILES
+  ],
+  [[$0: This macro is deprecated. You should use upstream gettext instead.]])
+
+# AM_GLIB_DEFINE_LOCALEDIR(VARIABLE)
+# -------------------------------
+# Define VARIABLE to the location where catalog files will
+# be installed by po/Makefile.
+glib_DEFUN([GLIB_DEFINE_LOCALEDIR],
+[glib_REQUIRE([GLIB_GNU_GETTEXT])dnl
+glib_save_prefix="$prefix"
+glib_save_exec_prefix="$exec_prefix"
+glib_save_datarootdir="$datarootdir"
+test "x$prefix" = xNONE && prefix=$ac_default_prefix
+test "x$exec_prefix" = xNONE && exec_prefix=$prefix
+datarootdir=`eval echo "${datarootdir}"`
+if test "x$CATOBJEXT" = "x.mo" ; then
+  localedir=`eval echo "${libdir}/locale"`
+else
+  localedir=`eval echo "${datadir}/locale"`
+fi
+prefix="$glib_save_prefix"
+exec_prefix="$glib_save_exec_prefix"
+datarootdir="$glib_save_datarootdir"
+AC_DEFINE_UNQUOTED($1, "$localedir",
+  [Define the location where the catalogs will be installed])
+])
+
+dnl
+dnl Now the definitions that aclocal will find
+dnl
+ifdef(glib_configure_ac,[],[
+AC_DEFUN([AM_GLIB_GNU_GETTEXT],[GLIB_GNU_GETTEXT($@)])
+AC_DEFUN([AM_GLIB_DEFINE_LOCALEDIR],[GLIB_DEFINE_LOCALEDIR($@)])
+])dnl
+
+# GLIB_RUN_PROG(PROGRAM, TEST-FILE, [ACTION-IF-PASS], [ACTION-IF-FAIL])
+# 
+# Create a temporary file with TEST-FILE as its contents and pass the
+# file name to PROGRAM.  Perform ACTION-IF-PASS if PROGRAM exits with
+# 0 and perform ACTION-IF-FAIL for any other exit status.
+AC_DEFUN([GLIB_RUN_PROG],
+[cat >conftest.foo <<_ACEOF
+$2
+_ACEOF
+if AC_RUN_LOG([$1 conftest.foo]); then
+  m4_ifval([$3], [$3], [:])
+m4_ifvaln([$4], [else $4])dnl
+echo "$as_me: failed input was:" >&AS_MESSAGE_LOG_FD
+sed 's/^/| /' conftest.foo >&AS_MESSAGE_LOG_FD
+fi])
+
+
+dnl -*- mode: autoconf -*-
+dnl Copyright 2009 Johan Dahlin
+dnl
+dnl This file is free software; the author(s) gives unlimited
+dnl permission to copy and/or distribute it, with or without
+dnl modifications, as long as this notice is preserved.
+dnl
+
+# serial 1
+
+m4_define([_GOBJECT_INTROSPECTION_CHECK_INTERNAL],
+[
+    AC_BEFORE([AC_PROG_LIBTOOL],[$0])dnl setup libtool first
+    AC_BEFORE([AM_PROG_LIBTOOL],[$0])dnl setup libtool first
+    AC_BEFORE([LT_INIT],[$0])dnl setup libtool first
+
+    dnl enable/disable introspection
+    m4_if([$2], [require],
+    [dnl
+        enable_introspection=yes
+    ],[dnl
+        AC_ARG_ENABLE(introspection,
+                  AS_HELP_STRING([--enable-introspection[=@<:@no/auto/yes@:>@]],
+                                 [Enable introspection for this build]),, 
+                                 [enable_introspection=auto])
+    ])dnl
+
+    AC_MSG_CHECKING([for gobject-introspection])
+
+    dnl presence/version checking
+    AS_CASE([$enable_introspection],
+    [no], [dnl
+        found_introspection="no (disabled, use --enable-introspection to enable)"
+    ],dnl
+    [yes],[dnl
+        PKG_CHECK_EXISTS([gobject-introspection-1.0],,
+                         AC_MSG_ERROR([gobject-introspection-1.0 is not installed]))
+        PKG_CHECK_EXISTS([gobject-introspection-1.0 >= $1],
+                         found_introspection=yes,
+                         AC_MSG_ERROR([You need to have gobject-introspection >= $1 installed to build AC_PACKAGE_NAME]))
+    ],dnl
+    [auto],[dnl
+        PKG_CHECK_EXISTS([gobject-introspection-1.0 >= $1], found_introspection=yes, found_introspection=no)
+	dnl Canonicalize enable_introspection
+	enable_introspection=$found_introspection
+    ],dnl
+    [dnl	
+        AC_MSG_ERROR([invalid argument passed to --enable-introspection, should be one of @<:@no/auto/yes@:>@])
+    ])dnl
+
+    AC_MSG_RESULT([$found_introspection])
+
+    INTROSPECTION_SCANNER=
+    INTROSPECTION_COMPILER=
+    INTROSPECTION_GENERATE=
+    INTROSPECTION_GIRDIR=
+    INTROSPECTION_TYPELIBDIR=
+    if test "x$found_introspection" = "xyes"; then
+       INTROSPECTION_SCANNER=`$PKG_CONFIG --variable=g_ir_scanner gobject-introspection-1.0`
+       INTROSPECTION_COMPILER=`$PKG_CONFIG --variable=g_ir_compiler gobject-introspection-1.0`
+       INTROSPECTION_GENERATE=`$PKG_CONFIG --variable=g_ir_generate gobject-introspection-1.0`
+       INTROSPECTION_GIRDIR=`$PKG_CONFIG --variable=girdir gobject-introspection-1.0`
+       INTROSPECTION_TYPELIBDIR="$($PKG_CONFIG --variable=typelibdir gobject-introspection-1.0)"
+       INTROSPECTION_CFLAGS=`$PKG_CONFIG --cflags gobject-introspection-1.0`
+       INTROSPECTION_LIBS=`$PKG_CONFIG --libs gobject-introspection-1.0`
+       INTROSPECTION_MAKEFILE=`$PKG_CONFIG --variable=datadir gobject-introspection-1.0`/gobject-introspection-1.0/Makefile.introspection
+    fi
+    AC_SUBST(INTROSPECTION_SCANNER)
+    AC_SUBST(INTROSPECTION_COMPILER)
+    AC_SUBST(INTROSPECTION_GENERATE)
+    AC_SUBST(INTROSPECTION_GIRDIR)
+    AC_SUBST(INTROSPECTION_TYPELIBDIR)
+    AC_SUBST(INTROSPECTION_CFLAGS)
+    AC_SUBST(INTROSPECTION_LIBS)
+    AC_SUBST(INTROSPECTION_MAKEFILE)
+
+    AM_CONDITIONAL(HAVE_INTROSPECTION, test "x$found_introspection" = "xyes")
+])
+
+
+dnl Usage:
+dnl   GOBJECT_INTROSPECTION_CHECK([minimum-g-i-version])
+
+AC_DEFUN([GOBJECT_INTROSPECTION_CHECK],
+[
+  _GOBJECT_INTROSPECTION_CHECK_INTERNAL([$1])
+])
+
+dnl Usage:
+dnl   GOBJECT_INTROSPECTION_REQUIRE([minimum-g-i-version])
+
+
+AC_DEFUN([GOBJECT_INTROSPECTION_REQUIRE],
+[
+  _GOBJECT_INTROSPECTION_CHECK_INTERNAL([$1], [require])
+])
+
+# nls.m4 serial 5 (gettext-0.18)
+dnl Copyright (C) 1995-2003, 2005-2006, 2008-2014, 2016 Free Software
+dnl Foundation, Inc.
+dnl This file is free software; the Free Software Foundation
+dnl gives unlimited permission to copy and/or distribute it,
+dnl with or without modifications, as long as this notice is preserved.
+dnl
+dnl This file can be used in projects which are not available under
+dnl the GNU General Public License or the GNU Library General Public
+dnl License but which still want to provide support for the GNU gettext
+dnl functionality.
+dnl Please note that the actual code of the GNU gettext library is covered
+dnl by the GNU Library General Public License, and the rest of the GNU
+dnl gettext package is covered by the GNU General Public License.
+dnl They are *not* in the public domain.
+
+dnl Authors:
+dnl   Ulrich Drepper <drepper@cygnus.com>, 1995-2000.
+dnl   Bruno Haible <haible@clisp.cons.org>, 2000-2003.
+
+AC_PREREQ([2.50])
+
+AC_DEFUN([AM_NLS],
+[
+  AC_MSG_CHECKING([whether NLS is requested])
+  dnl Default is enabled NLS
+  AC_ARG_ENABLE([nls],
+    [  --disable-nls           do not use Native Language Support],
+    USE_NLS=$enableval, USE_NLS=yes)
+  AC_MSG_RESULT([$USE_NLS])
+  AC_SUBST([USE_NLS])
+])
+
+# pkg.m4 - Macros to locate and utilise pkg-config.   -*- Autoconf -*-
+# serial 11 (pkg-config-0.29.1)
+
 dnl Copyright © 2004 Scott James Remnant <scott@netsplit.com>.
 dnl Copyright © 2012-2015 Dan Nicholson <dbn.lists@gmail.com>
 dnl
@@ -296,790 +1839,73 @@ AS_VAR_COPY([$1], [pkg_cv_][$1])
 AS_VAR_IF([$1], [""], [$5], [$4])dnl
 ])dnl PKG_CHECK_VAR
 
-# Copyright (C) 1995-2002 Free Software Foundation, Inc.
-# Copyright (C) 2001-2003,2004 Red Hat, Inc.
-#
-# This file is free software, distributed under the terms of the GNU
-# General Public License.  As a special exception to the GNU General
-# Public License, this file may be distributed as part of a program
-# that contains a configuration script generated by Autoconf, under
-# the same distribution terms as the rest of that program.
-#
-# This file can be copied and used freely without restrictions.  It can
-# be used in projects which are not available under the GNU Public License
-# but which still want to provide support for the GNU gettext functionality.
-#
-# Macro to add for using GNU gettext.
-# Ulrich Drepper <drepper@cygnus.com>, 1995, 1996
-#
-# Modified to never use included libintl. 
-# Owen Taylor <otaylor@redhat.com>, 12/15/1998
-#
-# Major rework to remove unused code
-# Owen Taylor <otaylor@redhat.com>, 12/11/2002
-#
-# Added better handling of ALL_LINGUAS from GNU gettext version 
-# written by Bruno Haible, Owen Taylor <otaylor.redhat.com> 5/30/3002
-#
-# Modified to require ngettext
-# Matthias Clasen <mclasen@redhat.com> 08/06/2004
-#
-# We need this here as well, since someone might use autoconf-2.5x
-# to configure GLib then an older version to configure a package
-# using AM_GLIB_GNU_GETTEXT
-AC_PREREQ(2.53)
-
+dnl PKG_WITH_MODULES(VARIABLE-PREFIX, MODULES,
+dnl   [ACTION-IF-FOUND],[ACTION-IF-NOT-FOUND],
+dnl   [DESCRIPTION], [DEFAULT])
+dnl ------------------------------------------
 dnl
-dnl We go to great lengths to make sure that aclocal won't 
-dnl try to pull in the installed version of these macros
-dnl when running aclocal in the glib directory.
-dnl
-m4_copy([AC_DEFUN],[glib_DEFUN])
-m4_copy([AC_REQUIRE],[glib_REQUIRE])
-dnl
-dnl At the end, if we're not within glib, we'll define the public
-dnl definitions in terms of our private definitions.
-dnl
-
-# GLIB_LC_MESSAGES
-#--------------------
-glib_DEFUN([GLIB_LC_MESSAGES],
-  [AC_CHECK_HEADERS([locale.h])
-    if test $ac_cv_header_locale_h = yes; then
-    AC_CACHE_CHECK([for LC_MESSAGES], am_cv_val_LC_MESSAGES,
-      [AC_TRY_LINK([#include <locale.h>], [return LC_MESSAGES],
-       am_cv_val_LC_MESSAGES=yes, am_cv_val_LC_MESSAGES=no)])
-    if test $am_cv_val_LC_MESSAGES = yes; then
-      AC_DEFINE(HAVE_LC_MESSAGES, 1,
-        [Define if your <locale.h> file defines LC_MESSAGES.])
-    fi
-  fi])
-
-# GLIB_PATH_PROG_WITH_TEST
-#----------------------------
-dnl GLIB_PATH_PROG_WITH_TEST(VARIABLE, PROG-TO-CHECK-FOR,
-dnl   TEST-PERFORMED-ON-FOUND_PROGRAM [, VALUE-IF-NOT-FOUND [, PATH]])
-glib_DEFUN([GLIB_PATH_PROG_WITH_TEST],
-[# Extract the first word of "$2", so it can be a program name with args.
-set dummy $2; ac_word=[$]2
-AC_MSG_CHECKING([for $ac_word])
-AC_CACHE_VAL(ac_cv_path_$1,
-[case "[$]$1" in
-  /*)
-  ac_cv_path_$1="[$]$1" # Let the user override the test with a path.
-  ;;
-  *)
-  IFS="${IFS= 	}"; ac_save_ifs="$IFS"; IFS="${IFS}:"
-  for ac_dir in ifelse([$5], , $PATH, [$5]); do
-    test -z "$ac_dir" && ac_dir=.
-    if test -f $ac_dir/$ac_word; then
-      if [$3]; then
-	ac_cv_path_$1="$ac_dir/$ac_word"
-	break
-      fi
-    fi
-  done
-  IFS="$ac_save_ifs"
-dnl If no 4th arg is given, leave the cache variable unset,
-dnl so AC_PATH_PROGS will keep looking.
-ifelse([$4], , , [  test -z "[$]ac_cv_path_$1" && ac_cv_path_$1="$4"
-])dnl
-  ;;
-esac])dnl
-$1="$ac_cv_path_$1"
-if test ifelse([$4], , [-n "[$]$1"], ["[$]$1" != "$4"]); then
-  AC_MSG_RESULT([$]$1)
-else
-  AC_MSG_RESULT(no)
-fi
-AC_SUBST($1)dnl
-])
-
-# GLIB_WITH_NLS
-#-----------------
-glib_DEFUN([GLIB_WITH_NLS],
-  dnl NLS is obligatory
-  [USE_NLS=yes
-    AC_SUBST(USE_NLS)
-
-    gt_cv_have_gettext=no
-
-    CATOBJEXT=NONE
-    XGETTEXT=:
-    INTLLIBS=
-
-    AC_CHECK_HEADER(libintl.h,
-     [gt_cv_func_dgettext_libintl="no"
-      libintl_extra_libs=""
-
-      #
-      # First check in libc
-      #
-      AC_CACHE_CHECK([for ngettext in libc], gt_cv_func_ngettext_libc,
-        [AC_TRY_LINK([
-#include <libintl.h>
-],
-         [return !ngettext ("","", 1)],
-	  gt_cv_func_ngettext_libc=yes,
-          gt_cv_func_ngettext_libc=no)
-        ])
-  
-      if test "$gt_cv_func_ngettext_libc" = "yes" ; then
-	      AC_CACHE_CHECK([for dgettext in libc], gt_cv_func_dgettext_libc,
-        	[AC_TRY_LINK([
-#include <libintl.h>
-],
-	          [return !dgettext ("","")],
-		  gt_cv_func_dgettext_libc=yes,
-	          gt_cv_func_dgettext_libc=no)
-        	])
-      fi
-  
-      if test "$gt_cv_func_ngettext_libc" = "yes" ; then
-        AC_CHECK_FUNCS(bind_textdomain_codeset)
-      fi
-
-      #
-      # If we don't have everything we want, check in libintl
-      #
-      if test "$gt_cv_func_dgettext_libc" != "yes" \
-	 || test "$gt_cv_func_ngettext_libc" != "yes" \
-         || test "$ac_cv_func_bind_textdomain_codeset" != "yes" ; then
-        
-        AC_CHECK_LIB(intl, bindtextdomain,
-	    [AC_CHECK_LIB(intl, ngettext,
-		    [AC_CHECK_LIB(intl, dgettext,
-			          gt_cv_func_dgettext_libintl=yes)])])
-
-	if test "$gt_cv_func_dgettext_libintl" != "yes" ; then
-	  AC_MSG_CHECKING([if -liconv is needed to use gettext])
-	  AC_MSG_RESULT([])
-  	  AC_CHECK_LIB(intl, ngettext,
-          	[AC_CHECK_LIB(intl, dcgettext,
-		       [gt_cv_func_dgettext_libintl=yes
-			libintl_extra_libs=-liconv],
-			:,-liconv)],
-		:,-liconv)
-        fi
-
-        #
-        # If we found libintl, then check in it for bind_textdomain_codeset();
-        # we'll prefer libc if neither have bind_textdomain_codeset(),
-        # and both have dgettext and ngettext
-        #
-        if test "$gt_cv_func_dgettext_libintl" = "yes" ; then
-          glib_save_LIBS="$LIBS"
-          LIBS="$LIBS -lintl $libintl_extra_libs"
-          unset ac_cv_func_bind_textdomain_codeset
-          AC_CHECK_FUNCS(bind_textdomain_codeset)
-          LIBS="$glib_save_LIBS"
-
-          if test "$ac_cv_func_bind_textdomain_codeset" = "yes" ; then
-            gt_cv_func_dgettext_libc=no
-          else
-            if test "$gt_cv_func_dgettext_libc" = "yes" \
-		&& test "$gt_cv_func_ngettext_libc" = "yes"; then
-              gt_cv_func_dgettext_libintl=no
-            fi
-          fi
-        fi
-      fi
-
-      if test "$gt_cv_func_dgettext_libc" = "yes" \
-	|| test "$gt_cv_func_dgettext_libintl" = "yes"; then
-        gt_cv_have_gettext=yes
-      fi
-  
-      if test "$gt_cv_func_dgettext_libintl" = "yes"; then
-        INTLLIBS="-lintl $libintl_extra_libs"
-      fi
-  
-      if test "$gt_cv_have_gettext" = "yes"; then
-	AC_DEFINE(HAVE_GETTEXT,1,
-	  [Define if the GNU gettext() function is already present or preinstalled.])
-	GLIB_PATH_PROG_WITH_TEST(MSGFMT, msgfmt,
-	  [test -z "`$ac_dir/$ac_word -h 2>&1 | grep 'dv '`"], no)dnl
-	if test "$MSGFMT" != "no"; then
-          glib_save_LIBS="$LIBS"
-          LIBS="$LIBS $INTLLIBS"
-	  AC_CHECK_FUNCS(dcgettext)
-	  MSGFMT_OPTS=
-	  AC_MSG_CHECKING([if msgfmt accepts -c])
-	  GLIB_RUN_PROG([$MSGFMT -c -o /dev/null],[
-msgid ""
-msgstr ""
-"Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: test 1.0\n"
-"PO-Revision-Date: 2007-02-15 12:01+0100\n"
-"Last-Translator: test <foo@bar.xx>\n"
-"Language-Team: C <LL@li.org>\n"
-"MIME-Version: 1.0\n"
-"Content-Transfer-Encoding: 8bit\n"
-], [MSGFMT_OPTS=-c; AC_MSG_RESULT([yes])], [AC_MSG_RESULT([no])])
-	  AC_SUBST(MSGFMT_OPTS)
-	  AC_PATH_PROG(GMSGFMT, gmsgfmt, $MSGFMT)
-	  GLIB_PATH_PROG_WITH_TEST(XGETTEXT, xgettext,
-	    [test -z "`$ac_dir/$ac_word -h 2>&1 | grep '(HELP)'`"], :)
-	  AC_TRY_LINK(, [extern int _nl_msg_cat_cntr;
-			 return _nl_msg_cat_cntr],
-	    [CATOBJEXT=.gmo 
-             DATADIRNAME=share],
-	    [case $host in
-	    *-*-solaris*)
-	    dnl On Solaris, if bind_textdomain_codeset is in libc,
-	    dnl GNU format message catalog is always supported,
-            dnl since both are added to the libc all together.
-	    dnl Hence, we'd like to go with DATADIRNAME=share and
-	    dnl and CATOBJEXT=.gmo in this case.
-            AC_CHECK_FUNC(bind_textdomain_codeset,
-	      [CATOBJEXT=.gmo 
-               DATADIRNAME=share],
-	      [CATOBJEXT=.mo
-               DATADIRNAME=lib])
-	    ;;
-	    *-*-openbsd*)
-	    CATOBJEXT=.mo
-            DATADIRNAME=share
-	    ;;
-	    *)
-	    CATOBJEXT=.mo
-            DATADIRNAME=lib
-	    ;;
-	    esac])
-          LIBS="$glib_save_LIBS"
-	  INSTOBJEXT=.mo
-	else
-	  gt_cv_have_gettext=no
-	fi
-      fi
-    ])
-
-    if test "$gt_cv_have_gettext" = "yes" ; then
-      AC_DEFINE(ENABLE_NLS, 1,
-        [always defined to indicate that i18n is enabled])
-    fi
-
-    dnl Test whether we really found GNU xgettext.
-    if test "$XGETTEXT" != ":"; then
-      dnl If it is not GNU xgettext we define it as : so that the
-      dnl Makefiles still can work.
-      if $XGETTEXT --omit-header /dev/null 2> /dev/null; then
-        : ;
-      else
-        AC_MSG_RESULT(
-	  [found xgettext program is not GNU xgettext; ignore it])
-        XGETTEXT=":"
-      fi
-    fi
-
-    # We need to process the po/ directory.
-    POSUB=po
-
-    AC_OUTPUT_COMMANDS(
-      [case "$CONFIG_FILES" in *po/Makefile.in*)
-        sed -e "/POTFILES =/r po/POTFILES" po/Makefile.in > po/Makefile
-      esac])
-
-    dnl These rules are solely for the distribution goal.  While doing this
-    dnl we only have to keep exactly one list of the available catalogs
-    dnl in configure.ac.
-    for lang in $ALL_LINGUAS; do
-      GMOFILES="$GMOFILES $lang.gmo"
-      POFILES="$POFILES $lang.po"
-    done
-
-    dnl Make all variables we use known to autoconf.
-    AC_SUBST(CATALOGS)
-    AC_SUBST(CATOBJEXT)
-    AC_SUBST(DATADIRNAME)
-    AC_SUBST(GMOFILES)
-    AC_SUBST(INSTOBJEXT)
-    AC_SUBST(INTLLIBS)
-    AC_SUBST(PO_IN_DATADIR_TRUE)
-    AC_SUBST(PO_IN_DATADIR_FALSE)
-    AC_SUBST(POFILES)
-    AC_SUBST(POSUB)
-  ])
-
-# AM_GLIB_GNU_GETTEXT
-# -------------------
-# Do checks necessary for use of gettext. If a suitable implementation 
-# of gettext is found in either in libintl or in the C library,
-# it will set INTLLIBS to the libraries needed for use of gettext
-# and AC_DEFINE() HAVE_GETTEXT and ENABLE_NLS. (The shell variable
-# gt_cv_have_gettext will be set to "yes".) It will also call AC_SUBST()
-# on various variables needed by the Makefile.in.in installed by 
-# glib-gettextize.
-dnl
-AU_DEFUN([GLIB_GNU_GETTEXT],
-  [AC_REQUIRE([AC_PROG_CC])dnl
-   
-   GLIB_LC_MESSAGES
-   GLIB_WITH_NLS
-
-   if test "$gt_cv_have_gettext" = "yes"; then
-     if test "x$ALL_LINGUAS" = "x"; then
-       LINGUAS=
-     else
-       AC_MSG_CHECKING(for catalogs to be installed)
-       NEW_LINGUAS=
-       for presentlang in $ALL_LINGUAS; do
-         useit=no
-         if test "%UNSET%" != "${LINGUAS-%UNSET%}"; then
-           desiredlanguages="$LINGUAS"
-         else
-           desiredlanguages="$ALL_LINGUAS"
-         fi
-         for desiredlang in $desiredlanguages; do
- 	   # Use the presentlang catalog if desiredlang is
-           #   a. equal to presentlang, or
-           #   b. a variant of presentlang (because in this case,
-           #      presentlang can be used as a fallback for messages
-           #      which are not translated in the desiredlang catalog).
-           case "$desiredlang" in
-             "$presentlang"*) useit=yes;;
-           esac
-         done
-         if test $useit = yes; then
-           NEW_LINGUAS="$NEW_LINGUAS $presentlang"
-         fi
-       done
-       LINGUAS=$NEW_LINGUAS
-       AC_MSG_RESULT($LINGUAS)
-     fi
-
-     dnl Construct list of names of catalog files to be constructed.
-     if test -n "$LINGUAS"; then
-       for lang in $LINGUAS; do CATALOGS="$CATALOGS $lang$CATOBJEXT"; done
-     fi
-   fi
-
-   dnl If the AC_CONFIG_AUX_DIR macro for autoconf is used we possibly
-   dnl find the mkinstalldirs script in another subdir but ($top_srcdir).
-   dnl Try to locate is.
-   MKINSTALLDIRS=
-   if test -n "$ac_aux_dir"; then
-     MKINSTALLDIRS="$ac_aux_dir/mkinstalldirs"
-   fi
-   if test -z "$MKINSTALLDIRS"; then
-     MKINSTALLDIRS="\$(top_srcdir)/mkinstalldirs"
-   fi
-   AC_SUBST(MKINSTALLDIRS)
-
-   dnl Generate list of files to be processed by xgettext which will
-   dnl be included in po/Makefile.
-   test -d po || mkdir po
-   if test "x$srcdir" != "x."; then
-     if test "x`echo $srcdir | sed 's@/.*@@'`" = "x"; then
-       posrcprefix="$srcdir/"
-     else
-       posrcprefix="../$srcdir/"
-     fi
-   else
-     posrcprefix="../"
-   fi
-   rm -f po/POTFILES
-   sed -e "/^#/d" -e "/^\$/d" -e "s,.*,	$posrcprefix& \\\\," -e "\$s/\(.*\) \\\\/\1/" \
-	< $srcdir/po/POTFILES.in > po/POTFILES
-  ],
-  [[$0: This macro is deprecated. You should use upstream gettext instead.]])
-
-# AM_GLIB_DEFINE_LOCALEDIR(VARIABLE)
-# -------------------------------
-# Define VARIABLE to the location where catalog files will
-# be installed by po/Makefile.
-glib_DEFUN([GLIB_DEFINE_LOCALEDIR],
-[glib_REQUIRE([GLIB_GNU_GETTEXT])dnl
-glib_save_prefix="$prefix"
-glib_save_exec_prefix="$exec_prefix"
-glib_save_datarootdir="$datarootdir"
-test "x$prefix" = xNONE && prefix=$ac_default_prefix
-test "x$exec_prefix" = xNONE && exec_prefix=$prefix
-datarootdir=`eval echo "${datarootdir}"`
-if test "x$CATOBJEXT" = "x.mo" ; then
-  localedir=`eval echo "${libdir}/locale"`
-else
-  localedir=`eval echo "${datadir}/locale"`
-fi
-prefix="$glib_save_prefix"
-exec_prefix="$glib_save_exec_prefix"
-datarootdir="$glib_save_datarootdir"
-AC_DEFINE_UNQUOTED($1, "$localedir",
-  [Define the location where the catalogs will be installed])
-])
-
-dnl
-dnl Now the definitions that aclocal will find
-dnl
-ifdef(glib_configure_ac,[],[
-AC_DEFUN([AM_GLIB_GNU_GETTEXT],[GLIB_GNU_GETTEXT($@)])
-AC_DEFUN([AM_GLIB_DEFINE_LOCALEDIR],[GLIB_DEFINE_LOCALEDIR($@)])
-])dnl
-
-# GLIB_RUN_PROG(PROGRAM, TEST-FILE, [ACTION-IF-PASS], [ACTION-IF-FAIL])
-# 
-# Create a temporary file with TEST-FILE as its contents and pass the
-# file name to PROGRAM.  Perform ACTION-IF-PASS if PROGRAM exits with
-# 0 and perform ACTION-IF-FAIL for any other exit status.
-AC_DEFUN([GLIB_RUN_PROG],
-[cat >conftest.foo <<_ACEOF
-$2
-_ACEOF
-if AC_RUN_LOG([$1 conftest.foo]); then
-  m4_ifval([$3], [$3], [:])
-m4_ifvaln([$4], [else $4])dnl
-echo "$as_me: failed input was:" >&AS_MESSAGE_LOG_FD
-sed 's/^/| /' conftest.foo >&AS_MESSAGE_LOG_FD
-fi])
-
-
-# gnome-common.m4
-#
-# serial 3
-# 
-
-AU_DEFUN([GNOME_DEBUG_CHECK],
+dnl Prepare a "--with-" configure option using the lowercase
+dnl [VARIABLE-PREFIX] name, merging the behaviour of AC_ARG_WITH and
+dnl PKG_CHECK_MODULES in a single macro.
+AC_DEFUN([PKG_WITH_MODULES],
 [
-	AX_CHECK_ENABLE_DEBUG([no],[GNOME_ENABLE_DEBUG])
-],
-[[$0: This macro is deprecated. You should use AX_CHECK_ENABLE_DEBUG instead and
-replace uses of GNOME_ENABLE_DEBUG with ENABLE_DEBUG.
-See: http://www.gnu.org/software/autoconf-archive/ax_check_enable_debug.html#ax_check_enable_debug]])
+m4_pushdef([with_arg], m4_tolower([$1]))
 
-dnl GNOME_MAINTAINER_MODE_DEFINES ()
-dnl define DISABLE_DEPRECATED
+m4_pushdef([description],
+           [m4_default([$5], [build with ]with_arg[ support])])
+
+m4_pushdef([def_arg], [m4_default([$6], [auto])])
+m4_pushdef([def_action_if_found], [AS_TR_SH([with_]with_arg)=yes])
+m4_pushdef([def_action_if_not_found], [AS_TR_SH([with_]with_arg)=no])
+
+m4_case(def_arg,
+            [yes],[m4_pushdef([with_without], [--without-]with_arg)],
+            [m4_pushdef([with_without],[--with-]with_arg)])
+
+AC_ARG_WITH(with_arg,
+     AS_HELP_STRING(with_without, description[ @<:@default=]def_arg[@:>@]),,
+    [AS_TR_SH([with_]with_arg)=def_arg])
+
+AS_CASE([$AS_TR_SH([with_]with_arg)],
+            [yes],[PKG_CHECK_MODULES([$1],[$2],$3,$4)],
+            [auto],[PKG_CHECK_MODULES([$1],[$2],
+                                        [m4_n([def_action_if_found]) $3],
+                                        [m4_n([def_action_if_not_found]) $4])])
+
+m4_popdef([with_arg])
+m4_popdef([description])
+m4_popdef([def_arg])
+
+])dnl PKG_WITH_MODULES
+
+dnl PKG_HAVE_WITH_MODULES(VARIABLE-PREFIX, MODULES,
+dnl   [DESCRIPTION], [DEFAULT])
+dnl -----------------------------------------------
 dnl
-AU_DEFUN([GNOME_MAINTAINER_MODE_DEFINES],
+dnl Convenience macro to trigger AM_CONDITIONAL after PKG_WITH_MODULES
+dnl check._[VARIABLE-PREFIX] is exported as make variable.
+AC_DEFUN([PKG_HAVE_WITH_MODULES],
 [
-	AC_REQUIRE([AM_MAINTAINER_MODE])
+PKG_WITH_MODULES([$1],[$2],,,[$3],[$4])
 
-	DISABLE_DEPRECATED=""
-	if test $USE_MAINTAINER_MODE = yes; then
-	        DOMAINS="GCONF BONOBO BONOBO_UI GNOME LIBGLADE GNOME_VFS WNCK LIBSOUP"
-	        for DOMAIN in $DOMAINS; do
-	               DISABLE_DEPRECATED="$DISABLE_DEPRECATED -D${DOMAIN}_DISABLE_DEPRECATED -D${DOMAIN}_DISABLE_SINGLE_INCLUDES"
-	        done
-	fi
+AM_CONDITIONAL([HAVE_][$1],
+               [test "$AS_TR_SH([with_]m4_tolower([$1]))" = "yes"])
+])dnl PKG_HAVE_WITH_MODULES
 
-	AC_SUBST(DISABLE_DEPRECATED)
-],
-[[$0: This macro is deprecated. All of the modules it disables deprecations for
-are obsolete. Remove it and all uses of DISABLE_DEPRECATED.]])
-
-# gnome-compiler-flags.m4
-#
-# serial 4
-#
-
-dnl GNOME_COMPILE_WARNINGS
-dnl Turn on many useful compiler warnings and substitute the result into
-dnl WARN_CFLAGS
-dnl For now, only works on GCC
-dnl Pass the default value of the --enable-compile-warnings configure option as
-dnl the first argument to the macro, defaulting to 'yes'.
-dnl Additional warning/error flags can be passed as an optional second argument.
+dnl PKG_HAVE_DEFINE_WITH_MODULES(VARIABLE-PREFIX, MODULES,
+dnl   [DESCRIPTION], [DEFAULT])
+dnl ------------------------------------------------------
 dnl
-dnl For example: GNOME_COMPILE_WARNINGS([maximum],[-Werror=some-flag -Wfoobar])
-AU_DEFUN([GNOME_COMPILE_WARNINGS],[
-    dnl ******************************
-    dnl More compiler warnings
-    dnl ******************************
-
-    AC_ARG_ENABLE(compile-warnings, 
-                  AS_HELP_STRING([--enable-compile-warnings=@<:@no/minimum/yes/maximum/error@:>@],
-                                 [Turn on compiler warnings]),,
-                  [enable_compile_warnings="m4_default([$1],[yes])"])
-
-    if test "x$GCC" != xyes; then
-	enable_compile_warnings=no
-    fi
-
-    warning_flags=
-    realsave_CFLAGS="$CFLAGS"
-
-    dnl These are warning flags that aren't marked as fatal.  Can be
-    dnl overridden on a per-project basis with -Wno-foo.
-    base_warn_flags=" \
-        -Wall \
-        -Wstrict-prototypes \
-        -Wnested-externs \
-    "
-
-    dnl These compiler flags typically indicate very broken or suspicious
-    dnl code.  Some of them such as implicit-function-declaration are
-    dnl just not default because gcc compiles a lot of legacy code.
-    dnl We choose to make this set into explicit errors.
-    base_error_flags=" \
-        -Werror=missing-prototypes \
-        -Werror=implicit-function-declaration \
-        -Werror=pointer-arith \
-        -Werror=init-self \
-        -Werror=format-security \
-        -Werror=format=2 \
-        -Werror=missing-include-dirs \
-        -Werror=return-type \
-    "
-
-    dnl Additional warning or error flags provided by the module author to
-    dnl allow stricter standards to be imposed on a per-module basis.
-    dnl The author can pass -W or -Werror flags here as they see fit.
-    additional_flags="m4_default([$2],[])"
-
-    case "$enable_compile_warnings" in
-    no)
-        warning_flags="-w"
-        ;;
-    minimum)
-        warning_flags="-Wall"
-        ;;
-    yes|maximum|error)
-        warning_flags="$base_warn_flags $base_error_flags $additional_flags"
-        ;;
-    *)
-        AC_MSG_ERROR(Unknown argument '$enable_compile_warnings' to --enable-compile-warnings)
-        ;;
-    esac
-
-    if test "$enable_compile_warnings" = "error" ; then
-        warning_flags="$warning_flags -Werror"
-    fi
-
-    dnl Check whether GCC supports the warning options
-    for option in $warning_flags; do
-	save_CFLAGS="$CFLAGS"
-	CFLAGS="$CFLAGS $option"
-	AC_MSG_CHECKING([whether gcc understands $option])
-	AC_TRY_COMPILE([], [],
-	    has_option=yes,
-	    has_option=no,)
-	CFLAGS="$save_CFLAGS"
-	AC_MSG_RESULT([$has_option])
-	if test $has_option = yes; then
-	    tested_warning_flags="$tested_warning_flags $option"
-	fi
-	unset has_option
-	unset save_CFLAGS
-    done
-    unset option
-    CFLAGS="$realsave_CFLAGS"
-    AC_MSG_CHECKING(what warning flags to pass to the C compiler)
-    AC_MSG_RESULT($tested_warning_flags)
-
-    AC_ARG_ENABLE(iso-c,
-                  AS_HELP_STRING([--enable-iso-c],
-                                 [Try to warn if code is not ISO C ]),,
-                  [enable_iso_c=no])
-
-    AC_MSG_CHECKING(what language compliance flags to pass to the C compiler)
-    complCFLAGS=
-    if test "x$enable_iso_c" != "xno"; then
-	if test "x$GCC" = "xyes"; then
-	case " $CFLAGS " in
-	    *[\ \	]-ansi[\ \	]*) ;;
-	    *) complCFLAGS="$complCFLAGS -ansi" ;;
-	esac
-	case " $CFLAGS " in
-	    *[\ \	]-pedantic[\ \	]*) ;;
-	    *) complCFLAGS="$complCFLAGS -pedantic" ;;
-	esac
-	fi
-    fi
-    AC_MSG_RESULT($complCFLAGS)
-
-    WARN_CFLAGS="$tested_warning_flags $complCFLAGS"
-    AC_SUBST(WARN_CFLAGS)
-],
-[[$0: This macro is deprecated. You should use AX_COMPILER_FLAGS instead and
-eliminate use of --enable-iso-c.
-See: http://www.gnu.org/software/autoconf-archive/ax_compiler_flags.html#ax_compiler_flags]])
-
-dnl For C++, do basically the same thing.
-
-AU_DEFUN([GNOME_CXX_WARNINGS],[
-  AC_ARG_ENABLE(cxx-warnings,
-                AS_HELP_STRING([--enable-cxx-warnings=@<:@no/minimum/yes@:>@]
-                               [Turn on compiler warnings.]),,
-                [enable_cxx_warnings="m4_default([$1],[minimum])"])
-
-  AC_MSG_CHECKING(what warning flags to pass to the C++ compiler)
-  warnCXXFLAGS=
-  if test "x$GXX" != xyes; then
-    enable_cxx_warnings=no
-  fi
-  if test "x$enable_cxx_warnings" != "xno"; then
-    if test "x$GXX" = "xyes"; then
-      case " $CXXFLAGS " in
-      *[\ \	]-Wall[\ \	]*) ;;
-      *) warnCXXFLAGS="-Wall -Wno-unused" ;;
-      esac
-
-      ## -W is not all that useful.  And it cannot be controlled
-      ## with individual -Wno-xxx flags, unlike -Wall
-      if test "x$enable_cxx_warnings" = "xyes"; then
-	warnCXXFLAGS="$warnCXXFLAGS -Wshadow -Woverloaded-virtual"
-      fi
-    fi
-  fi
-  AC_MSG_RESULT($warnCXXFLAGS)
-
-   AC_ARG_ENABLE(iso-cxx,
-                 AS_HELP_STRING([--enable-iso-cxx],
-                                [Try to warn if code is not ISO C++ ]),,
-                 [enable_iso_cxx=no])
-
-   AC_MSG_CHECKING(what language compliance flags to pass to the C++ compiler)
-   complCXXFLAGS=
-   if test "x$enable_iso_cxx" != "xno"; then
-     if test "x$GXX" = "xyes"; then
-      case " $CXXFLAGS " in
-      *[\ \	]-ansi[\ \	]*) ;;
-      *) complCXXFLAGS="$complCXXFLAGS -ansi" ;;
-      esac
-
-      case " $CXXFLAGS " in
-      *[\ \	]-pedantic[\ \	]*) ;;
-      *) complCXXFLAGS="$complCXXFLAGS -pedantic" ;;
-      esac
-     fi
-   fi
-  AC_MSG_RESULT($complCXXFLAGS)
-
-  WARN_CXXFLAGS="$CXXFLAGS $warnCXXFLAGS $complCXXFLAGS"
-  AC_SUBST(WARN_CXXFLAGS)
-],
-[[$0: This macro is deprecated. You should use AX_COMPILER_FLAGS instead and
-eliminate use of --enable-iso-cxx.
-See: http://www.gnu.org/software/autoconf-archive/ax_compiler_flags.html#ax_compiler_flags]])
-
-dnl -*- mode: autoconf -*-
-dnl Copyright 2009 Johan Dahlin
-dnl
-dnl This file is free software; the author(s) gives unlimited
-dnl permission to copy and/or distribute it, with or without
-dnl modifications, as long as this notice is preserved.
-dnl
-
-# serial 1
-
-m4_define([_GOBJECT_INTROSPECTION_CHECK_INTERNAL],
+dnl Convenience macro to run AM_CONDITIONAL and AC_DEFINE after
+dnl PKG_WITH_MODULES check. HAVE_[VARIABLE-PREFIX] is exported as make
+dnl and preprocessor variable.
+AC_DEFUN([PKG_HAVE_DEFINE_WITH_MODULES],
 [
-    AC_BEFORE([AC_PROG_LIBTOOL],[$0])dnl setup libtool first
-    AC_BEFORE([AM_PROG_LIBTOOL],[$0])dnl setup libtool first
-    AC_BEFORE([LT_INIT],[$0])dnl setup libtool first
+PKG_HAVE_WITH_MODULES([$1],[$2],[$3],[$4])
 
-    dnl enable/disable introspection
-    m4_if([$2], [require],
-    [dnl
-        enable_introspection=yes
-    ],[dnl
-        AC_ARG_ENABLE(introspection,
-                  AS_HELP_STRING([--enable-introspection[=@<:@no/auto/yes@:>@]],
-                                 [Enable introspection for this build]),, 
-                                 [enable_introspection=auto])
-    ])dnl
-
-    AC_MSG_CHECKING([for gobject-introspection])
-
-    dnl presence/version checking
-    AS_CASE([$enable_introspection],
-    [no], [dnl
-        found_introspection="no (disabled, use --enable-introspection to enable)"
-    ],dnl
-    [yes],[dnl
-        PKG_CHECK_EXISTS([gobject-introspection-1.0],,
-                         AC_MSG_ERROR([gobject-introspection-1.0 is not installed]))
-        PKG_CHECK_EXISTS([gobject-introspection-1.0 >= $1],
-                         found_introspection=yes,
-                         AC_MSG_ERROR([You need to have gobject-introspection >= $1 installed to build AC_PACKAGE_NAME]))
-    ],dnl
-    [auto],[dnl
-        PKG_CHECK_EXISTS([gobject-introspection-1.0 >= $1], found_introspection=yes, found_introspection=no)
-	dnl Canonicalize enable_introspection
-	enable_introspection=$found_introspection
-    ],dnl
-    [dnl	
-        AC_MSG_ERROR([invalid argument passed to --enable-introspection, should be one of @<:@no/auto/yes@:>@])
-    ])dnl
-
-    AC_MSG_RESULT([$found_introspection])
-
-    INTROSPECTION_SCANNER=
-    INTROSPECTION_COMPILER=
-    INTROSPECTION_GENERATE=
-    INTROSPECTION_GIRDIR=
-    INTROSPECTION_TYPELIBDIR=
-    if test "x$found_introspection" = "xyes"; then
-       INTROSPECTION_SCANNER=`$PKG_CONFIG --variable=g_ir_scanner gobject-introspection-1.0`
-       INTROSPECTION_COMPILER=`$PKG_CONFIG --variable=g_ir_compiler gobject-introspection-1.0`
-       INTROSPECTION_GENERATE=`$PKG_CONFIG --variable=g_ir_generate gobject-introspection-1.0`
-       INTROSPECTION_GIRDIR=`$PKG_CONFIG --variable=girdir gobject-introspection-1.0`
-       INTROSPECTION_TYPELIBDIR="$($PKG_CONFIG --variable=typelibdir gobject-introspection-1.0)"
-       INTROSPECTION_CFLAGS=`$PKG_CONFIG --cflags gobject-introspection-1.0`
-       INTROSPECTION_LIBS=`$PKG_CONFIG --libs gobject-introspection-1.0`
-       INTROSPECTION_MAKEFILE=`$PKG_CONFIG --variable=datadir gobject-introspection-1.0`/gobject-introspection-1.0/Makefile.introspection
-    fi
-    AC_SUBST(INTROSPECTION_SCANNER)
-    AC_SUBST(INTROSPECTION_COMPILER)
-    AC_SUBST(INTROSPECTION_GENERATE)
-    AC_SUBST(INTROSPECTION_GIRDIR)
-    AC_SUBST(INTROSPECTION_TYPELIBDIR)
-    AC_SUBST(INTROSPECTION_CFLAGS)
-    AC_SUBST(INTROSPECTION_LIBS)
-    AC_SUBST(INTROSPECTION_MAKEFILE)
-
-    AM_CONDITIONAL(HAVE_INTROSPECTION, test "x$found_introspection" = "xyes")
-])
-
-
-dnl Usage:
-dnl   GOBJECT_INTROSPECTION_CHECK([minimum-g-i-version])
-
-AC_DEFUN([GOBJECT_INTROSPECTION_CHECK],
-[
-  _GOBJECT_INTROSPECTION_CHECK_INTERNAL([$1])
-])
-
-dnl Usage:
-dnl   GOBJECT_INTROSPECTION_REQUIRE([minimum-g-i-version])
-
-
-AC_DEFUN([GOBJECT_INTROSPECTION_REQUIRE],
-[
-  _GOBJECT_INTROSPECTION_CHECK_INTERNAL([$1], [require])
-])
-
-# nls.m4 serial 5 (gettext-0.18)
-dnl Copyright (C) 1995-2003, 2005-2006, 2008-2014, 2016 Free Software
-dnl Foundation, Inc.
-dnl This file is free software; the Free Software Foundation
-dnl gives unlimited permission to copy and/or distribute it,
-dnl with or without modifications, as long as this notice is preserved.
-dnl
-dnl This file can be used in projects which are not available under
-dnl the GNU General Public License or the GNU Library General Public
-dnl License but which still want to provide support for the GNU gettext
-dnl functionality.
-dnl Please note that the actual code of the GNU gettext library is covered
-dnl by the GNU Library General Public License, and the rest of the GNU
-dnl gettext package is covered by the GNU General Public License.
-dnl They are *not* in the public domain.
-
-dnl Authors:
-dnl   Ulrich Drepper <drepper@cygnus.com>, 1995-2000.
-dnl   Bruno Haible <haible@clisp.cons.org>, 2000-2003.
-
-AC_PREREQ([2.50])
-
-AC_DEFUN([AM_NLS],
-[
-  AC_MSG_CHECKING([whether NLS is requested])
-  dnl Default is enabled NLS
-  AC_ARG_ENABLE([nls],
-    [  --disable-nls           do not use Native Language Support],
-    USE_NLS=$enableval, USE_NLS=yes)
-  AC_MSG_RESULT([$USE_NLS])
-  AC_SUBST([USE_NLS])
-])
+AS_IF([test "$AS_TR_SH([with_]m4_tolower([$1]))" = "yes"],
+        [AC_DEFINE([HAVE_][$1], 1, [Enable ]m4_tolower([$1])[ support])])
+])dnl PKG_HAVE_DEFINE_WITH_MODULES
 
 AC_DEFUN([YELP_HELP_INIT],
 [
@@ -1295,7 +2121,7 @@ AC_SUBST([YELP_HELP_RULES])
 m4_ifdef([_AM_SUBST_NOTMAKE], [_AM_SUBST_NOTMAKE([YELP_HELP_RULES])])
 ])
 
-# Copyright (C) 2002-2014 Free Software Foundation, Inc.
+# Copyright (C) 2002-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -1310,7 +2136,7 @@ AC_DEFUN([AM_AUTOMAKE_VERSION],
 [am__api_version='1.15'
 dnl Some users find AM_AUTOMAKE_VERSION and mistake it for a way to
 dnl require some minimum version.  Point them to the right macro.
-m4_if([$1], [1.15], [],
+m4_if([$1], [1.15.1], [],
       [AC_FATAL([Do not call $0, use AM_INIT_AUTOMAKE([$1]).])])dnl
 ])
 
@@ -1326,14 +2152,14 @@ m4_define([_AM_AUTOCONF_VERSION], [])
 # Call AM_AUTOMAKE_VERSION and AM_AUTOMAKE_VERSION so they can be traced.
 # This function is AC_REQUIREd by AM_INIT_AUTOMAKE.
 AC_DEFUN([AM_SET_CURRENT_AUTOMAKE_VERSION],
-[AM_AUTOMAKE_VERSION([1.15])dnl
+[AM_AUTOMAKE_VERSION([1.15.1])dnl
 m4_ifndef([AC_AUTOCONF_VERSION],
   [m4_copy([m4_PACKAGE_VERSION], [AC_AUTOCONF_VERSION])])dnl
 _AM_AUTOCONF_VERSION(m4_defn([AC_AUTOCONF_VERSION]))])
 
 # AM_AUX_DIR_EXPAND                                         -*- Autoconf -*-
 
-# Copyright (C) 2001-2014 Free Software Foundation, Inc.
+# Copyright (C) 2001-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -1385,7 +2211,7 @@ am_aux_dir=`cd "$ac_aux_dir" && pwd`
 
 # AM_CONDITIONAL                                            -*- Autoconf -*-
 
-# Copyright (C) 1997-2014 Free Software Foundation, Inc.
+# Copyright (C) 1997-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -1416,7 +2242,7 @@ AC_CONFIG_COMMANDS_PRE(
 Usually this means the macro was only invoked conditionally.]])
 fi])])
 
-# Copyright (C) 1999-2014 Free Software Foundation, Inc.
+# Copyright (C) 1999-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -1607,7 +2433,7 @@ _AM_SUBST_NOTMAKE([am__nodep])dnl
 
 # Generate code to set up dependency tracking.              -*- Autoconf -*-
 
-# Copyright (C) 1999-2014 Free Software Foundation, Inc.
+# Copyright (C) 1999-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -1683,7 +2509,7 @@ AC_DEFUN([AM_OUTPUT_DEPENDENCY_COMMANDS],
 
 # Do all the work for Automake.                             -*- Autoconf -*-
 
-# Copyright (C) 1996-2014 Free Software Foundation, Inc.
+# Copyright (C) 1996-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -1880,7 +2706,7 @@ for _am_header in $config_headers :; do
 done
 echo "timestamp for $_am_arg" >`AS_DIRNAME(["$_am_arg"])`/stamp-h[]$_am_stamp_count])
 
-# Copyright (C) 2001-2014 Free Software Foundation, Inc.
+# Copyright (C) 2001-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -1901,7 +2727,7 @@ if test x"${install_sh+set}" != xset; then
 fi
 AC_SUBST([install_sh])])
 
-# Copyright (C) 2003-2014 Free Software Foundation, Inc.
+# Copyright (C) 2003-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -1923,7 +2749,7 @@ AC_SUBST([am__leading_dot])])
 # Add --enable-maintainer-mode option to configure.         -*- Autoconf -*-
 # From Jim Meyering
 
-# Copyright (C) 1996-2014 Free Software Foundation, Inc.
+# Copyright (C) 1996-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -1958,7 +2784,7 @@ AC_MSG_CHECKING([whether to enable maintainer-specific portions of Makefiles])
 
 # Check to see how 'make' treats includes.	            -*- Autoconf -*-
 
-# Copyright (C) 2001-2014 Free Software Foundation, Inc.
+# Copyright (C) 2001-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -2008,7 +2834,7 @@ rm -f confinc confmf
 
 # Fake the existence of programs that GNU maintainers use.  -*- Autoconf -*-
 
-# Copyright (C) 1997-2014 Free Software Foundation, Inc.
+# Copyright (C) 1997-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -2047,7 +2873,7 @@ fi
 
 # Helper functions for option handling.                     -*- Autoconf -*-
 
-# Copyright (C) 2001-2014 Free Software Foundation, Inc.
+# Copyright (C) 2001-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -2076,7 +2902,7 @@ AC_DEFUN([_AM_SET_OPTIONS],
 AC_DEFUN([_AM_IF_OPTION],
 [m4_ifset(_AM_MANGLE_OPTION([$1]), [$2], [$3])])
 
-# Copyright (C) 1999-2014 Free Software Foundation, Inc.
+# Copyright (C) 1999-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -2123,7 +2949,7 @@ AC_LANG_POP([C])])
 # For backward compatibility.
 AC_DEFUN_ONCE([AM_PROG_CC_C_O], [AC_REQUIRE([AC_PROG_CC])])
 
-# Copyright (C) 2001-2014 Free Software Foundation, Inc.
+# Copyright (C) 2001-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -2142,7 +2968,7 @@ AC_DEFUN([AM_RUN_LOG],
 
 # Check to make sure that the build environment is sane.    -*- Autoconf -*-
 
-# Copyright (C) 1996-2014 Free Software Foundation, Inc.
+# Copyright (C) 1996-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -2223,7 +3049,7 @@ AC_CONFIG_COMMANDS_PRE(
 rm -f conftest.file
 ])
 
-# Copyright (C) 2009-2014 Free Software Foundation, Inc.
+# Copyright (C) 2009-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -2283,7 +3109,7 @@ AC_SUBST([AM_BACKSLASH])dnl
 _AM_SUBST_NOTMAKE([AM_BACKSLASH])dnl
 ])
 
-# Copyright (C) 2001-2014 Free Software Foundation, Inc.
+# Copyright (C) 2001-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -2311,7 +3137,7 @@ fi
 INSTALL_STRIP_PROGRAM="\$(install_sh) -c -s"
 AC_SUBST([INSTALL_STRIP_PROGRAM])])
 
-# Copyright (C) 2006-2014 Free Software Foundation, Inc.
+# Copyright (C) 2006-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -2330,7 +3156,7 @@ AC_DEFUN([AM_SUBST_NOTMAKE], [_AM_SUBST_NOTMAKE($@)])
 
 # Check how to create a tarball.                            -*- Autoconf -*-
 
-# Copyright (C) 2004-2014 Free Software Foundation, Inc.
+# Copyright (C) 2004-2017 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,

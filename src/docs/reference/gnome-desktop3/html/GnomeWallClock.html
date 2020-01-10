@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>GnomeWallClock: GNOME Desktop Library Reference Manual</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<meta name="generator" content="DocBook XSL Stylesheets Vsnapshot">
 <link rel="home" href="index.html" title="GNOME Desktop Library Reference Manual">
 <link rel="up" href="wall-clock.html" title="Part VI. Wall Clock">
 <link rel="prev" href="wall-clock.html" title="Part VI. Wall Clock">
 <link rel="next" href="xkb-info.html" title="Part VII. X Keyboard Information">
-<meta name="generator" content="GTK-Doc V1.25.1 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.27 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -58,7 +58,7 @@
 </tr>
 <tr>
 <td class="function_type">
-<a href="https://developer.gnome.org/glib/unstable/glib-GTimeZone.html#GTimeZone"><span class="returnvalue">GTimeZone</span></a> *
+<span class="returnvalue">GTimeZone</span> *
 </td>
 <td class="function_name">
 <a class="link" href="GnomeWallClock.html#gnome-wall-clock-get-timezone" title="gnome_wall_clock_get_timezone ()">gnome_wall_clock_get_timezone</a> <span class="c_punctuation">()</span>
@@ -86,18 +86,18 @@
 <tbody>
 <tr>
 <td class="property_type">
-<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
+<span class="type">gchar</span> *</td>
 <td class="property_name"><a class="link" href="GnomeWallClock.html#GnomeWallClock--clock" title="The “clock” property">clock</a></td>
 <td class="property_flags">Read</td>
 </tr>
 <tr>
-<td class="property_type"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a></td>
+<td class="property_type"><span class="type">gboolean</span></td>
 <td class="property_name"><a class="link" href="GnomeWallClock.html#GnomeWallClock--time-only" title="The “time-only” property">time-only</a></td>
 <td class="property_flags">Read / Write</td>
 </tr>
 <tr>
 <td class="property_type">
-<a href="https://developer.gnome.org/glib/unstable/glib-GTimeZone.html#GTimeZone"><span class="type">GTimeZone</span></a> *</td>
+<span class="type">GTimeZone</span> *</td>
 <td class="property_name"><a class="link" href="GnomeWallClock.html#GnomeWallClock--timezone" title="The “timezone” property">timezone</a></td>
 <td class="property_flags">Read</td>
 </tr>
@@ -125,7 +125,7 @@
 </div>
 <div class="refsect1">
 <a name="GnomeWallClock.object-hierarchy"></a><h2>Object Hierarchy</h2>
-<pre class="screen">    <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObject-struct">GObject</a>
+<pre class="screen">    GObject
     <span class="lineart">╰──</span> GnomeWallClock
 </pre>
 </div>
@@ -176,7 +176,7 @@ must not be freed, modified or stored.</p>
 <hr>
 <div class="refsect2">
 <a name="gnome-wall-clock-get-timezone"></a><h3>gnome_wall_clock_get_timezone ()</h3>
-<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-GTimeZone.html#GTimeZone"><span class="returnvalue">GTimeZone</span></a> *
+<pre class="programlisting"><span class="returnvalue">GTimeZone</span> *
 gnome_wall_clock_get_timezone (<em class="parameter"><code><a class="link" href="GnomeWallClock.html" title="GnomeWallClock"><span class="type">GnomeWallClock</span></a> *clock</code></em>);</pre>
 <p>Returns the current local time zone used by this clock.</p>
 <div class="refsect3">
@@ -196,7 +196,7 @@ gnome_wall_clock_get_timezone (<em class="parameter"><code><a class="link" href=
 </div>
 <div class="refsect3">
 <a name="gnome-wall-clock-get-timezone.returns"></a><h4>Returns</h4>
-<p> the <a href="https://developer.gnome.org/glib/unstable/glib-GTimeZone.html#GTimeZone"><span class="type">GTimeZone</span></a> of the clock. </p>
+<p>the <span class="type">GTimeZone</span> of the clock. </p>
 <p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
 </div>
 </div>
@@ -205,14 +205,14 @@ gnome_wall_clock_get_timezone (<em class="parameter"><code><a class="link" href=
 <a name="gnome-wall-clock-string-for-datetime"></a><h3>gnome_wall_clock_string_for_datetime ()</h3>
 <pre class="programlisting"><span class="returnvalue">char</span> *
 gnome_wall_clock_string_for_datetime (<em class="parameter"><code><a class="link" href="GnomeWallClock.html" title="GnomeWallClock"><span class="type">GnomeWallClock</span></a> *self</code></em>,
-                                      <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-GDateTime.html#GDateTime"><span class="type">GDateTime</span></a> *now</code></em>,
+                                      <em class="parameter"><code><span class="type">GDateTime</span> *now</code></em>,
                                       <em class="parameter"><code><span class="type">GDesktopClockFormat</span> clock_format</code></em>,
-                                      <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> show_weekday</code></em>,
-                                      <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> show_full_date</code></em>,
-                                      <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> show_seconds</code></em>);</pre>
+                                      <em class="parameter"><code><span class="type">gboolean</span> show_weekday</code></em>,
+                                      <em class="parameter"><code><span class="type">gboolean</span> show_full_date</code></em>,
+                                      <em class="parameter"><code><span class="type">gboolean</span> show_seconds</code></em>);</pre>
 <div class="refsect3">
 <a name="gnome-wall-clock-string-for-datetime.returns"></a><h4>Returns</h4>
-<p> a newly allocated string representing the date &amp; time
+<p>a newly allocated string representing the date &amp; time
 passed, with the options applied. </p>
 <p><span class="annotation">[<acronym title="Exposed in C code, not necessarily available in other languages."><span class="acronym">skip</span></acronym>]</span></p>
 </div>
@@ -237,7 +237,7 @@ passed, with the options applied. </p>
 <a name="GnomeWallClock.property-details"></a><h2>Property Details</h2>
 <div class="refsect2">
 <a name="GnomeWallClock--clock"></a><h3>The <code class="literal">“clock”</code> property</h3>
-<pre class="programlisting">  “clock”                    <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
+<pre class="programlisting">  “clock”                    <span class="type">gchar</span> *</pre>
 <p>A formatted string representing the current clock display.</p>
 <p>Flags: Read</p>
 <p>Default value: NULL</p>
@@ -245,8 +245,8 @@ passed, with the options applied. </p>
 <hr>
 <div class="refsect2">
 <a name="GnomeWallClock--time-only"></a><h3>The <code class="literal">“time-only”</code> property</h3>
-<pre class="programlisting">  “time-only”                <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a></pre>
-<p>If <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>, the formatted clock will never include a date or the
+<pre class="programlisting">  “time-only”                <span class="type">gboolean</span></pre>
+<p>If <code class="literal">TRUE</code>, the formatted clock will never include a date or the
 day of the week, irrespective of configuration.</p>
 <p>Flags: Read / Write</p>
 <p>Default value: FALSE</p>
@@ -254,13 +254,13 @@ day of the week, irrespective of configuration.</p>
 <hr>
 <div class="refsect2">
 <a name="GnomeWallClock--timezone"></a><h3>The <code class="literal">“timezone”</code> property</h3>
-<pre class="programlisting">  “timezone”                 <a href="https://developer.gnome.org/glib/unstable/glib-GTimeZone.html#GTimeZone"><span class="type">GTimeZone</span></a> *</pre>
+<pre class="programlisting">  “timezone”                 <span class="type">GTimeZone</span> *</pre>
 <p>The timezone used for this clock</p>
 <p>Flags: Read</p>
 </div>
 </div>
 </div>
 <div class="footer">
-<hr>Generated by GTK-Doc V1.25.1</div>
+<hr>Generated by GTK-Doc V1.27</div>
 </body>
 </html>

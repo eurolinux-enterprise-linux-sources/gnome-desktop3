@@ -1,0 +1,189 @@
+# Kazakh translation of gnome-desktop.
+# Copyright (C) 2010 HZ
+# This file is distributed under the same license as the gnome-desktop package.
+# Baurzhan Muftakhidinov <baurthefirst@gmail.com>, 2010.
+# Moldabekov Margulan <moldabekov@gmail.com>, 2008
+# Erzhan Shaniev <erzhan.jktl@gmail.com>, 2008
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
+"desktop&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2013-08-27 10:49+0000\n"
+"PO-Revision-Date: 2013-08-31 15:59+0600\n"
+"Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
+"Language-Team: Kazakh <kk_KZ@googlegroups.com>\n"
+"Language: kk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 1.5.4\n"
+
+#: ../libgnome-desktop/gnome-languages.c:804
+msgid "Unspecified"
+msgstr "Анықталмаған"
+
+#: ../libgnome-desktop/gnome-rr-config.c:743
+#, c-format
+msgid "CRTC %d cannot drive output %s"
+msgstr "CRT %d контроллері %s шығысын басқара алмайды"
+
+#: ../libgnome-desktop/gnome-rr-config.c:750
+#, c-format
+msgid "output %s does not support mode %dx%d@%dHz"
+msgstr "%s шығысы %dx%d@%dГц режимін қолдамайды"
+
+#: ../libgnome-desktop/gnome-rr-config.c:761
+#, c-format
+#| msgid "CRTC %d does not support rotation=%s"
+msgid "CRTC %d does not support rotation=%d"
+msgstr "CRT %d rotation=%d қолдамайды"
+
+#: ../libgnome-desktop/gnome-rr-config.c:774
+#, c-format
+#| msgid ""
+#| "output %s does not have the same parameters as another cloned output:\n"
+#| "existing mode = %d, new mode = %d\n"
+#| "existing coordinates = (%d, %d), new coordinates = (%d, %d)\n"
+#| "existing rotation = %s, new rotation = %s"
+msgid ""
+"output %s does not have the same parameters as another cloned output:\n"
+"existing mode = %d, new mode = %d\n"
+"existing coordinates = (%d, %d), new coordinates = (%d, %d)\n"
+"existing rotation = %d, new rotation = %d"
+msgstr ""
+"%s шығысының баптаулары басқа клондалған баптауларынан өзгеше:\n"
+"бар режимі = %d, жаңа режим = %d\n"
+"бар координаттар = (%d, %d), жаңа координаттар = (%d, %d)\n"
+"бар айналдыру = %d, жаңа айналдыру = %d"
+
+#: ../libgnome-desktop/gnome-rr-config.c:789
+#, c-format
+msgid "cannot clone to output %s"
+msgstr "%s шығысына клондау мүмкін емес"
+
+#: ../libgnome-desktop/gnome-rr-config.c:915
+#, c-format
+msgid "Trying modes for CRTC %d\n"
+msgstr "CRT %d контроллері үшін режимдерді тексеру\n"
+
+#: ../libgnome-desktop/gnome-rr-config.c:939
+#, c-format
+msgid "CRTC %d: trying mode %dx%d@%dHz with output at %dx%d@%dHz (pass %d)\n"
+msgstr "CRTC %d: %dx%d@%dГц режимін көру, %dx%d@%dГц шығысымен (%d-талабы)\n"
+
+#: ../libgnome-desktop/gnome-rr-config.c:986
+#, c-format
+msgid ""
+"could not assign CRTCs to outputs:\n"
+"%s"
+msgstr ""
+"шығыстар үшін CRT контроллерларын орнату сәтсіз:\n"
+"%s"
+
+#: ../libgnome-desktop/gnome-rr-config.c:990
+#, c-format
+msgid ""
+"none of the selected modes were compatible with the possible modes:\n"
+"%s"
+msgstr ""
+"таңдалған режимдердің ешқайсысы да мүмкін режиммен үйлеспейді:\n"
+"%s"
+
+#. Translators: the "requested", "minimum", and
+#. * "maximum" words here are not keywords; please
+#. * translate them as usual.
+#: ../libgnome-desktop/gnome-rr-config.c:1071
+#, c-format
+msgid ""
+"required virtual size does not fit available size: requested=(%d, %d), "
+"minimum=(%d, %d), maximum=(%d, %d)"
+msgstr ""
+"сұралған виртуалды өлшемі қолжетерлік өлшемге сыймайды: сұралған=(%d, %d), "
+"минимум=(%d, %d), максимум=(%d, %d)"
+
+#. Translators: This is the time format with full date used
+#. in 24-hour mode.
+#: ../libgnome-desktop/gnome-wall-clock.c:270
+msgid "%a %b %e, %R:%S"
+msgstr "%a %b %e, %R:%S"
+
+#: ../libgnome-desktop/gnome-wall-clock.c:271
+msgid "%a %b %e, %R"
+msgstr "%a %b %e, %R"
+
+#. Translators: This is the time format with day used
+#. in 24-hour mode.
+#: ../libgnome-desktop/gnome-wall-clock.c:275
+msgid "%a %R:%S"
+msgstr "%a %R:%S"
+
+#: ../libgnome-desktop/gnome-wall-clock.c:276
+msgid "%a %R"
+msgstr "%a %R"
+
+#. Translators: This is the time format without date used
+#. in 24-hour mode.
+#: ../libgnome-desktop/gnome-wall-clock.c:280
+msgid "%R:%S"
+msgstr "%R:%S"
+
+#: ../libgnome-desktop/gnome-wall-clock.c:280
+msgid "%R"
+msgstr "%R"
+
+#. Translators: This is a time format with full date used
+#. for AM/PM.
+#: ../libgnome-desktop/gnome-wall-clock.c:286
+msgid "%a %b %e, %l:%M:%S %p"
+msgstr "%a %b %e, %l:%M:%S %p"
+
+#: ../libgnome-desktop/gnome-wall-clock.c:287
+msgid "%a %b %e, %l:%M %p"
+msgstr "%a %b %e, %l:%M %p"
+
+#. Translators: This is a time format with day used
+#. for AM/PM.
+#: ../libgnome-desktop/gnome-wall-clock.c:291
+msgid "%a %l:%M:%S %p"
+msgstr "%a %l:%M:%S %p"
+
+#: ../libgnome-desktop/gnome-wall-clock.c:292
+msgid "%a %l:%M %p"
+msgstr "%a %l:%M %p"
+
+#. Translators: This is a time format without date used
+#. for AM/PM.
+#: ../libgnome-desktop/gnome-wall-clock.c:296
+msgid "%l:%M:%S %p"
+msgstr "%l:%M:%S %p"
+
+#: ../libgnome-desktop/gnome-wall-clock.c:297
+msgid "%l:%M %p"
+msgstr "%l:%M %p"
+
+#~ msgctxt "Monitor vendor"
+#~ msgid "Unknown"
+#~ msgstr "Белгісіз"
+
+#~ msgid "could not get the screen resources (CRTCs, outputs, modes)"
+#~ msgstr "экран ресурстарына қатынау мүмкін емес (CRTC, шығыстар, режимдер)"
+
+#~ msgid "unhandled X error while getting the range of screen sizes"
+#~ msgstr "экранның мүмкін өлшемдер шегін алу кезінде қате орын алды"
+
+#~ msgid "could not get the range of screen sizes"
+#~ msgstr "экран шеттерінің шегін анықтау мүмкін емес"
+
+#~ msgid "RANDR extension is not present"
+#~ msgstr "RANDR кеңейтілуі жоқ"
+
+#~ msgid "could not get information about output %d"
+#~ msgstr "%d шығысы жөнінде ақпаратты алу мүмкін емес"
+
+#~ msgid "Built-in Display"
+#~ msgstr "Құрамындағы дисплей"
+
+#~ msgid "%s Display"
+#~ msgstr "%s дисплейі"

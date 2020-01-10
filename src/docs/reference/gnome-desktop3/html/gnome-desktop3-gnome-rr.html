@@ -1,0 +1,1617 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GNOME Desktop Library Reference Manual: gnome-rr</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="GNOME Desktop Library Reference Manual">
+<link rel="up" href="randr.html" title="Part III. Monitor Configuration">
+<link rel="prev" href="randr.html" title="Part III. Monitor Configuration">
+<link rel="next" href="gnome-desktop3-gnome-rr-config.html" title="gnome-rr-config">
+<meta name="generator" content="GTK-Doc V1.21 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
+<td width="100%" align="left" class="shortcuts">
+<a href="#" class="shortcut">Top</a><span id="nav_description">  <span class="dim">|</span> 
+                  <a href="#gnome-desktop3-gnome-rr.description" class="shortcut">Description</a></span>
+</td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
+<td><a accesskey="u" href="randr.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="randr.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
+<td><a accesskey="n" href="gnome-desktop3-gnome-rr-config.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="gnome-desktop3-gnome-rr"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gnome-desktop3-gnome-rr.top_of_page"></a>gnome-rr</span></h2>
+<p>gnome-rr</p>
+</td>
+<td class="gallery_image" valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="gnome-desktop3-gnome-rr.functions"></a><h2>Functions</h2>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="functions_return">
+<col class="functions_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="gnome-desktop3-gnome-rr.html#GNOME-RR-ERROR:CAPS" title="GNOME_RR_ERROR">GNOME_RR_ERROR</a></td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Quarks.html#GQuark"><span class="returnvalue">GQuark</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-error-quark" title="gnome_rr_error_quark ()">gnome_rr_error_quark</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRScreen" title="GnomeRRScreen"><span class="returnvalue">GnomeRRScreen</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-screen-new" title="gnome_rr_screen_new ()">gnome_rr_screen_new</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-screen-new-async" title="gnome_rr_screen_new_async ()">gnome_rr_screen_new_async</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRScreen" title="GnomeRRScreen"><span class="returnvalue">GnomeRRScreen</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-screen-new-finish" title="gnome_rr_screen_new_finish ()">gnome_rr_screen_new_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput"><span class="returnvalue">GnomeRROutput</span></a> **
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-screen-list-outputs" title="gnome_rr_screen_list_outputs ()">gnome_rr_screen_list_outputs</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRCrtc" title="GnomeRRCrtc"><span class="returnvalue">GnomeRRCrtc</span></a> **
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-screen-list-crtcs" title="gnome_rr_screen_list_crtcs ()">gnome_rr_screen_list_crtcs</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRMode" title="GnomeRRMode"><span class="returnvalue">GnomeRRMode</span></a> **
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-screen-list-modes" title="gnome_rr_screen_list_modes ()">gnome_rr_screen_list_modes</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRMode" title="GnomeRRMode"><span class="returnvalue">GnomeRRMode</span></a> **
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-screen-list-clone-modes" title="gnome_rr_screen_list_clone_modes ()">gnome_rr_screen_list_clone_modes</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRCrtc" title="GnomeRRCrtc"><span class="returnvalue">GnomeRRCrtc</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-screen-get-crtc-by-id" title="gnome_rr_screen_get_crtc_by_id ()">gnome_rr_screen_get_crtc_by_id</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-screen-refresh" title="gnome_rr_screen_refresh ()">gnome_rr_screen_refresh</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput"><span class="returnvalue">GnomeRROutput</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-screen-get-output-by-id" title="gnome_rr_screen_get_output_by_id ()">gnome_rr_screen_get_output_by_id</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput"><span class="returnvalue">GnomeRROutput</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-screen-get-output-by-name" title="gnome_rr_screen_get_output_by_name ()">gnome_rr_screen_get_output_by_name</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-screen-get-ranges" title="gnome_rr_screen_get_ranges ()">gnome_rr_screen_get_ranges</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-screen-get-dpms-mode" title="gnome_rr_screen_get_dpms_mode ()">gnome_rr_screen_get_dpms_mode</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-screen-set-dpms-mode" title="gnome_rr_screen_set_dpms_mode ()">gnome_rr_screen_set_dpms_mode</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#guint32"><span class="returnvalue">guint32</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-output-get-id" title="gnome_rr_output_get_id ()">gnome_rr_output_get_id</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <span class="returnvalue">char</span> *
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-output-get-name" title="gnome_rr_output_get_name ()">gnome_rr_output_get_name</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#guint8"><span class="returnvalue">guint8</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-output-get-edid-data" title="gnome_rr_output_get_edid_data ()">gnome_rr_output_get_edid_data</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRCrtc" title="GnomeRRCrtc"><span class="returnvalue">GnomeRRCrtc</span></a> **
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-output-get-possible-crtcs" title="gnome_rr_output_get_possible_crtcs ()">gnome_rr_output_get_possible_crtcs</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRMode" title="GnomeRRMode"><span class="returnvalue">GnomeRRMode</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-output-get-current-mode" title="gnome_rr_output_get_current_mode ()">gnome_rr_output_get_current_mode</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRCrtc" title="GnomeRRCrtc"><span class="returnvalue">GnomeRRCrtc</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-output-get-crtc" title="gnome_rr_output_get_crtc ()">gnome_rr_output_get_crtc</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-output-is-builtin-display" title="gnome_rr_output_is_builtin_display ()">gnome_rr_output_is_builtin_display</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-output-get-position" title="gnome_rr_output_get_position ()">gnome_rr_output_get_position</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-output-can-clone" title="gnome_rr_output_can_clone ()">gnome_rr_output_can_clone</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRMode" title="GnomeRRMode"><span class="returnvalue">GnomeRRMode</span></a> **
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-output-list-modes" title="gnome_rr_output_list_modes ()">gnome_rr_output_list_modes</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRMode" title="GnomeRRMode"><span class="returnvalue">GnomeRRMode</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-output-get-preferred-mode" title="gnome_rr_output_get_preferred_mode ()">gnome_rr_output_get_preferred_mode</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-output-supports-mode" title="gnome_rr_output_supports_mode ()">gnome_rr_output_supports_mode</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-output-get-is-primary" title="gnome_rr_output_get_is_primary ()">gnome_rr_output_get_is_primary</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-output-get-backlight" title="gnome_rr_output_get_backlight ()">gnome_rr_output_get_backlight</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-output-set-backlight" title="gnome_rr_output_set_backlight ()">gnome_rr_output_set_backlight</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <span class="returnvalue">char</span> *
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-output-get-display-name" title="gnome_rr_output_get_display_name ()">gnome_rr_output_get_display_name</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-output-get-ids-from-edid" title="gnome_rr_output_get_ids_from_edid ()">gnome_rr_output_get_ids_from_edid</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-output-get-min-backlight-step" title="gnome_rr_output_get_min_backlight_step ()">gnome_rr_output_get_min_backlight_step</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-output-get-physical-size" title="gnome_rr_output_get_physical_size ()">gnome_rr_output_get_physical_size</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#guint32"><span class="returnvalue">guint32</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-mode-get-id" title="gnome_rr_mode_get_id ()">gnome_rr_mode_get_id</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-mode-get-width" title="gnome_rr_mode_get_width ()">gnome_rr_mode_get_width</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-mode-get-height" title="gnome_rr_mode_get_height ()">gnome_rr_mode_get_height</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">int</span>
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-mode-get-freq" title="gnome_rr_mode_get_freq ()">gnome_rr_mode_get_freq</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#guint32"><span class="returnvalue">guint32</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-crtc-get-id" title="gnome_rr_crtc_get_id ()">gnome_rr_crtc_get_id</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-crtc-can-drive-output" title="gnome_rr_crtc_can_drive_output ()">gnome_rr_crtc_can_drive_output</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRMode" title="GnomeRRMode"><span class="returnvalue">GnomeRRMode</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-crtc-get-current-mode" title="gnome_rr_crtc_get_current_mode ()">gnome_rr_crtc_get_current_mode</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-crtc-get-position" title="gnome_rr_crtc_get_position ()">gnome_rr_crtc_get_position</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRRotation" title="enum GnomeRRRotation"><span class="returnvalue">GnomeRRRotation</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-crtc-get-current-rotation" title="gnome_rr_crtc_get_current_rotation ()">gnome_rr_crtc_get_current_rotation</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRRotation" title="enum GnomeRRRotation"><span class="returnvalue">GnomeRRRotation</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-crtc-get-rotations" title="gnome_rr_crtc_get_rotations ()">gnome_rr_crtc_get_rotations</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-crtc-supports-rotation" title="gnome_rr_crtc_supports_rotation ()">gnome_rr_crtc_supports_rotation</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-crtc-get-gamma" title="gnome_rr_crtc_get_gamma ()">gnome_rr_crtc_get_gamma</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="gnome-desktop3-gnome-rr.html#gnome-rr-crtc-set-gamma" title="gnome_rr_crtc_set_gamma ()">gnome_rr_crtc_set_gamma</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="gnome-desktop3-gnome-rr.other"></a><h2>Types and Values</h2>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="name">
+<col class="description">
+</colgroup>
+<tbody>
+<tr>
+<td class="datatype_keyword"> </td>
+<td class="function_name"><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRScreen" title="GnomeRRScreen">GnomeRRScreen</a></td>
+</tr>
+<tr>
+<td class="datatype_keyword"> </td>
+<td class="function_name"><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRScreenClass" title="GnomeRRScreenClass">GnomeRRScreenClass</a></td>
+</tr>
+<tr>
+<td class="typedef_keyword">typedef</td>
+<td class="function_name"><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput">GnomeRROutput</a></td>
+</tr>
+<tr>
+<td class="typedef_keyword">typedef</td>
+<td class="function_name"><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRCrtc" title="GnomeRRCrtc">GnomeRRCrtc</a></td>
+</tr>
+<tr>
+<td class="datatype_keyword">enum</td>
+<td class="function_name"><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRDpmsMode" title="enum GnomeRRDpmsMode">GnomeRRDpmsMode</a></td>
+</tr>
+<tr>
+<td class="typedef_keyword">typedef</td>
+<td class="function_name"><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRMode" title="GnomeRRMode">GnomeRRMode</a></td>
+</tr>
+<tr>
+<td class="datatype_keyword">enum</td>
+<td class="function_name"><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRRotation" title="enum GnomeRRRotation">GnomeRRRotation</a></td>
+</tr>
+<tr>
+<td class="datatype_keyword">enum</td>
+<td class="function_name"><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRError" title="enum GnomeRRError">GnomeRRError</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="gnome-desktop3-gnome-rr.html#GNOME-RR-CONNECTOR-TYPE-PANEL:CAPS" title="GNOME_RR_CONNECTOR_TYPE_PANEL">GNOME_RR_CONNECTOR_TYPE_PANEL</a></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="gnome-desktop3-gnome-rr.description"></a><h2>Description</h2>
+<p>
+</p>
+</div>
+<div class="refsect1">
+<a name="gnome-desktop3-gnome-rr.functions_details"></a><h2>Functions</h2>
+<div class="refsect2">
+<a name="GNOME-RR-ERROR:CAPS"></a><h3>GNOME_RR_ERROR</h3>
+<pre class="programlisting">#define GNOME_RR_ERROR (gnome_rr_error_quark ())
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-error-quark"></a><h3>gnome_rr_error_quark ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Quarks.html#GQuark"><span class="returnvalue">GQuark</span></a>
+gnome_rr_error_quark (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>Returns the <a href="https://developer.gnome.org/glib/unstable/glib-Quarks.html#GQuark"><span class="type">GQuark</span></a> that will be used for <a href="https://developer.gnome.org/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> values returned by the
+GnomeRR API.</p>
+<div class="refsect3">
+<a name="id-1.4.2.6.3.5"></a><h4>Returns</h4>
+<p> a <a href="https://developer.gnome.org/glib/unstable/glib-Quarks.html#GQuark"><span class="type">GQuark</span></a> used to identify errors coming from the GnomeRR API.</p>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-screen-new"></a><h3>gnome_rr_screen_new ()</h3>
+<pre class="programlisting"><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRScreen" title="GnomeRRScreen"><span class="returnvalue">GnomeRRScreen</span></a> *
+gnome_rr_screen_new (<em class="parameter"><code><a href="http://developer.gnome.org/gdk2/GdkScreen.html"><span class="type">GdkScreen</span></a> *screen</code></em>,
+                     <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Creates a unique <a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRScreen" title="GnomeRRScreen"><span class="type">GnomeRRScreen</span></a> instance for the specified <em class="parameter"><code>screen</code></em>
+.</p>
+<div class="refsect3">
+<a name="id-1.4.2.6.4.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>screen</p></td>
+<td class="parameter_description"><p>the <a href="http://developer.gnome.org/gdk2/GdkScreen.html"><span class="type">GdkScreen</span></a> on which to operate</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>will be set if XRandR is not supported</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.4.2.6.4.6"></a><h4>Returns</h4>
+<p> a unique <a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRScreen" title="GnomeRRScreen"><span class="type">GnomeRRScreen</span></a> instance, specific to the <em class="parameter"><code>screen</code></em>
+, or NULL
+if this could not be created, for instance if the driver does not support
+Xrandr 1.2.  Each <a href="http://developer.gnome.org/gdk2/GdkScreen.html"><span class="type">GdkScreen</span></a> thus has a single instance of <a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRScreen" title="GnomeRRScreen"><span class="type">GnomeRRScreen</span></a>.</p>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-screen-new-async"></a><h3>gnome_rr_screen_new_async ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+gnome_rr_screen_new_async (<em class="parameter"><code><a href="http://developer.gnome.org/gdk2/GdkScreen.html"><span class="type">GdkScreen</span></a> *screen</code></em>,
+                           <em class="parameter"><code><a href="https://developer.gnome.org/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                           <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-screen-new-finish"></a><h3>gnome_rr_screen_new_finish ()</h3>
+<pre class="programlisting"><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRScreen" title="GnomeRRScreen"><span class="returnvalue">GnomeRRScreen</span></a> *
+gnome_rr_screen_new_finish (<em class="parameter"><code><a href="https://developer.gnome.org/gio/unstable/GAsyncResult.html"><span class="type">GAsyncResult</span></a> *result</code></em>,
+                            <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>
+</p>
+<div class="refsect3">
+<a name="id-1.4.2.6.6.5"></a><h4>Returns</h4>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-screen-list-outputs"></a><h3>gnome_rr_screen_list_outputs ()</h3>
+<pre class="programlisting"><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput"><span class="returnvalue">GnomeRROutput</span></a> **
+gnome_rr_screen_list_outputs (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRScreen" title="GnomeRRScreen"><span class="type">GnomeRRScreen</span></a> *screen</code></em>);</pre>
+<p>List all outputs</p>
+<div class="refsect3">
+<a name="id-1.4.2.6.7.5"></a><h4>Returns</h4>
+<p>. </p>
+<p><span class="annotation">[<a href="http://foldoc.org/array"><span class="acronym">array</span></a> zero-terminated=1][<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-screen-list-crtcs"></a><h3>gnome_rr_screen_list_crtcs ()</h3>
+<pre class="programlisting"><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRCrtc" title="GnomeRRCrtc"><span class="returnvalue">GnomeRRCrtc</span></a> **
+gnome_rr_screen_list_crtcs (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRScreen" title="GnomeRRScreen"><span class="type">GnomeRRScreen</span></a> *screen</code></em>);</pre>
+<p>List all CRTCs</p>
+<div class="refsect3">
+<a name="id-1.4.2.6.8.5"></a><h4>Returns</h4>
+<p>. </p>
+<p><span class="annotation">[<a href="http://foldoc.org/array"><span class="acronym">array</span></a> zero-terminated=1][<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-screen-list-modes"></a><h3>gnome_rr_screen_list_modes ()</h3>
+<pre class="programlisting"><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRMode" title="GnomeRRMode"><span class="returnvalue">GnomeRRMode</span></a> **
+gnome_rr_screen_list_modes (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRScreen" title="GnomeRRScreen"><span class="type">GnomeRRScreen</span></a> *screen</code></em>);</pre>
+<p>List available XRandR modes</p>
+<div class="refsect3">
+<a name="id-1.4.2.6.9.5"></a><h4>Returns</h4>
+<p>. </p>
+<p><span class="annotation">[<a href="http://foldoc.org/array"><span class="acronym">array</span></a> zero-terminated=1][<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-screen-list-clone-modes"></a><h3>gnome_rr_screen_list_clone_modes ()</h3>
+<pre class="programlisting"><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRMode" title="GnomeRRMode"><span class="returnvalue">GnomeRRMode</span></a> **
+gnome_rr_screen_list_clone_modes (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRScreen" title="GnomeRRScreen"><span class="type">GnomeRRScreen</span></a> *screen</code></em>);</pre>
+<p>List available XRandR clone modes</p>
+<div class="refsect3">
+<a name="id-1.4.2.6.10.5"></a><h4>Returns</h4>
+<p>. </p>
+<p><span class="annotation">[<a href="http://foldoc.org/array"><span class="acronym">array</span></a> zero-terminated=1][<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-screen-get-crtc-by-id"></a><h3>gnome_rr_screen_get_crtc_by_id ()</h3>
+<pre class="programlisting"><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRCrtc" title="GnomeRRCrtc"><span class="returnvalue">GnomeRRCrtc</span></a> *
+gnome_rr_screen_get_crtc_by_id (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRScreen" title="GnomeRRScreen"><span class="type">GnomeRRScreen</span></a> *screen</code></em>,
+                                <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#guint32"><span class="type">guint32</span></a> id</code></em>);</pre>
+<div class="refsect3">
+<a name="id-1.4.2.6.11.4"></a><h4>Returns</h4>
+<p> the CRTC identified by <em class="parameter"><code>id</code></em>
+. </p>
+<p><span class="annotation">[<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-screen-refresh"></a><h3>gnome_rr_screen_refresh ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+gnome_rr_screen_refresh (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRScreen" title="GnomeRRScreen"><span class="type">GnomeRRScreen</span></a> *screen</code></em>,
+                         <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Refreshes the screen configuration, and calls the screen's callback if it
+exists and if the screen's configuration changed.</p>
+<div class="refsect3">
+<a name="id-1.4.2.6.12.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>screen</p></td>
+<td class="parameter_description"><p>a <a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRScreen" title="GnomeRRScreen"><span class="type">GnomeRRScreen</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>location to store error, or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.4.2.6.12.6"></a><h4>Returns</h4>
+<p> TRUE if the screen's configuration changed; otherwise, the
+function returns FALSE and a NULL error if the configuration didn't change,
+or FALSE and a non-NULL error if there was an error while refreshing the
+configuration.</p>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-screen-get-output-by-id"></a><h3>gnome_rr_screen_get_output_by_id ()</h3>
+<pre class="programlisting"><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput"><span class="returnvalue">GnomeRROutput</span></a> *
+gnome_rr_screen_get_output_by_id (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRScreen" title="GnomeRRScreen"><span class="type">GnomeRRScreen</span></a> *screen</code></em>,
+                                  <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#guint32"><span class="type">guint32</span></a> id</code></em>);</pre>
+<div class="refsect3">
+<a name="id-1.4.2.6.13.4"></a><h4>Returns</h4>
+<p> the output identified by <em class="parameter"><code>id</code></em>
+. </p>
+<p><span class="annotation">[<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-screen-get-output-by-name"></a><h3>gnome_rr_screen_get_output_by_name ()</h3>
+<pre class="programlisting"><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput"><span class="returnvalue">GnomeRROutput</span></a> *
+gnome_rr_screen_get_output_by_name (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRScreen" title="GnomeRRScreen"><span class="type">GnomeRRScreen</span></a> *screen</code></em>,
+                                    <em class="parameter"><code>const <span class="type">char</span> *name</code></em>);</pre>
+<div class="refsect3">
+<a name="id-1.4.2.6.14.4"></a><h4>Returns</h4>
+<p> the output identified by <em class="parameter"><code>name</code></em>
+. </p>
+<p><span class="annotation">[<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-screen-get-ranges"></a><h3>gnome_rr_screen_get_ranges ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+gnome_rr_screen_get_ranges (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRScreen" title="GnomeRRScreen"><span class="type">GnomeRRScreen</span></a> *screen</code></em>,
+                            <em class="parameter"><code><span class="type">int</span> *min_width</code></em>,
+                            <em class="parameter"><code><span class="type">int</span> *max_width</code></em>,
+                            <em class="parameter"><code><span class="type">int</span> *min_height</code></em>,
+                            <em class="parameter"><code><span class="type">int</span> *max_height</code></em>);</pre>
+<p>Get the ranges of the screen</p>
+<div class="refsect3">
+<a name="id-1.4.2.6.15.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>screen</p></td>
+<td class="parameter_description"><p>a <a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRScreen" title="GnomeRRScreen"><span class="type">GnomeRRScreen</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>min_width</p></td>
+<td class="parameter_description"><p> the minimum width. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<a href="http://foldoc.org/out"><span class="acronym">out</span></a>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>max_width</p></td>
+<td class="parameter_description"><p> the maximum width. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<a href="http://foldoc.org/out"><span class="acronym">out</span></a>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>min_height</p></td>
+<td class="parameter_description"><p> the minimum height. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<a href="http://foldoc.org/out"><span class="acronym">out</span></a>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>max_height</p></td>
+<td class="parameter_description"><p> the maximum height. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<a href="http://foldoc.org/out"><span class="acronym">out</span></a>]</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-screen-get-dpms-mode"></a><h3>gnome_rr_screen_get_dpms_mode ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+gnome_rr_screen_get_dpms_mode (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRScreen" title="GnomeRRScreen"><span class="type">GnomeRRScreen</span></a> *screen</code></em>,
+                               <em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRDpmsMode" title="enum GnomeRRDpmsMode"><span class="type">GnomeRRDpmsMode</span></a> *mode</code></em>,
+                               <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<div class="refsect3">
+<a name="id-1.4.2.6.16.4"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>mode</p></td>
+<td class="parameter_description"><p> The current <a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRDpmsMode" title="enum GnomeRRDpmsMode"><span class="type">GnomeRRDpmsMode</span></a> of this screen. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<a href="http://foldoc.org/out"><span class="acronym">out</span></a>]</span></td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.4.2.6.16.5"></a><h4>Returns</h4>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-screen-set-dpms-mode"></a><h3>gnome_rr_screen_set_dpms_mode ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+gnome_rr_screen_set_dpms_mode (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRScreen" title="GnomeRRScreen"><span class="type">GnomeRRScreen</span></a> *screen</code></em>,
+                               <em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRDpmsMode" title="enum GnomeRRDpmsMode"><span class="type">GnomeRRDpmsMode</span></a> mode</code></em>,
+                               <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>This method also disables the DPMS timeouts.</p>
+<div class="refsect3">
+<a name="id-1.4.2.6.17.5"></a><h4>Returns</h4>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-output-get-id"></a><h3>gnome_rr_output_get_id ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#guint32"><span class="returnvalue">guint32</span></a>
+gnome_rr_output_get_id (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput"><span class="type">GnomeRROutput</span></a> *output</code></em>);</pre>
+<p>
+</p>
+<div class="refsect3">
+<a name="id-1.4.2.6.18.5"></a><h4>Returns</h4>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-output-get-name"></a><h3>gnome_rr_output_get_name ()</h3>
+<pre class="programlisting">const <span class="returnvalue">char</span> *
+gnome_rr_output_get_name (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput"><span class="type">GnomeRROutput</span></a> *output</code></em>);</pre>
+<p>
+</p>
+<div class="refsect3">
+<a name="id-1.4.2.6.19.5"></a><h4>Returns</h4>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-output-get-edid-data"></a><h3>gnome_rr_output_get_edid_data ()</h3>
+<pre class="programlisting">const <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#guint8"><span class="returnvalue">guint8</span></a> *
+gnome_rr_output_get_edid_data (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput"><span class="type">GnomeRROutput</span></a> *output</code></em>,
+                               <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gsize"><span class="type">gsize</span></a> *size</code></em>);</pre>
+<p>
+</p>
+<div class="refsect3">
+<a name="id-1.4.2.6.20.5"></a><h4>Returns</h4>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-output-get-possible-crtcs"></a><h3>gnome_rr_output_get_possible_crtcs ()</h3>
+<pre class="programlisting"><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRCrtc" title="GnomeRRCrtc"><span class="returnvalue">GnomeRRCrtc</span></a> **
+gnome_rr_output_get_possible_crtcs (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput"><span class="type">GnomeRROutput</span></a> *output</code></em>);</pre>
+<div class="refsect3">
+<a name="id-1.4.2.6.21.4"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>output</p></td>
+<td class="parameter_description"><p>a <a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput"><span class="type">GnomeRROutput</span></a>
+Returns: (array zero-terminated=1) (transfer none):</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.4.2.6.21.5"></a><h4>Returns</h4>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-output-get-current-mode"></a><h3>gnome_rr_output_get_current_mode ()</h3>
+<pre class="programlisting"><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRMode" title="GnomeRRMode"><span class="returnvalue">GnomeRRMode</span></a> *
+gnome_rr_output_get_current_mode (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput"><span class="type">GnomeRROutput</span></a> *output</code></em>);</pre>
+<div class="refsect3">
+<a name="id-1.4.2.6.22.4"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>output</p></td>
+<td class="parameter_description"><p>a <a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput"><span class="type">GnomeRROutput</span></a>
+Returns: (transfer none): the current mode of this output</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.4.2.6.22.5"></a><h4>Returns</h4>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-output-get-crtc"></a><h3>gnome_rr_output_get_crtc ()</h3>
+<pre class="programlisting"><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRCrtc" title="GnomeRRCrtc"><span class="returnvalue">GnomeRRCrtc</span></a> *
+gnome_rr_output_get_crtc (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput"><span class="type">GnomeRROutput</span></a> *output</code></em>);</pre>
+<div class="refsect3">
+<a name="id-1.4.2.6.23.4"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>output</p></td>
+<td class="parameter_description"><p>a <a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput"><span class="type">GnomeRROutput</span></a>
+Returns: (transfer none):</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.4.2.6.23.5"></a><h4>Returns</h4>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-output-is-builtin-display"></a><h3>gnome_rr_output_is_builtin_display ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+gnome_rr_output_is_builtin_display (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput"><span class="type">GnomeRROutput</span></a> *output</code></em>);</pre>
+<p>
+</p>
+<div class="refsect3">
+<a name="id-1.4.2.6.24.5"></a><h4>Returns</h4>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-output-get-position"></a><h3>gnome_rr_output_get_position ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+gnome_rr_output_get_position (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput"><span class="type">GnomeRROutput</span></a> *output</code></em>,
+                              <em class="parameter"><code><span class="type">int</span> *x</code></em>,
+                              <em class="parameter"><code><span class="type">int</span> *y</code></em>);</pre>
+<div class="refsect3">
+<a name="id-1.4.2.6.25.4"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>output</p></td>
+<td class="parameter_description"><p>a <a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput"><span class="type">GnomeRROutput</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>x</p></td>
+<td class="parameter_description"><p>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<a href="http://foldoc.org/out"><span class="acronym">out</span></a>][<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>y</p></td>
+<td class="parameter_description"><p>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<a href="http://foldoc.org/out"><span class="acronym">out</span></a>][<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-output-can-clone"></a><h3>gnome_rr_output_can_clone ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+gnome_rr_output_can_clone (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput"><span class="type">GnomeRROutput</span></a> *output</code></em>,
+                           <em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput"><span class="type">GnomeRROutput</span></a> *clone</code></em>);</pre>
+<p>
+</p>
+<div class="refsect3">
+<a name="id-1.4.2.6.26.5"></a><h4>Returns</h4>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-output-list-modes"></a><h3>gnome_rr_output_list_modes ()</h3>
+<pre class="programlisting"><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRMode" title="GnomeRRMode"><span class="returnvalue">GnomeRRMode</span></a> **
+gnome_rr_output_list_modes (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput"><span class="type">GnomeRROutput</span></a> *output</code></em>);</pre>
+<div class="refsect3">
+<a name="id-1.4.2.6.27.4"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>output</p></td>
+<td class="parameter_description"><p>a <a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput"><span class="type">GnomeRROutput</span></a>
+Returns: (array zero-terminated=1) (transfer none):</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.4.2.6.27.5"></a><h4>Returns</h4>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-output-get-preferred-mode"></a><h3>gnome_rr_output_get_preferred_mode ()</h3>
+<pre class="programlisting"><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRMode" title="GnomeRRMode"><span class="returnvalue">GnomeRRMode</span></a> *
+gnome_rr_output_get_preferred_mode (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput"><span class="type">GnomeRROutput</span></a> *output</code></em>);</pre>
+<div class="refsect3">
+<a name="id-1.4.2.6.28.4"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>output</p></td>
+<td class="parameter_description"><p>a <a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput"><span class="type">GnomeRROutput</span></a>
+Returns: (transfer none):</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.4.2.6.28.5"></a><h4>Returns</h4>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-output-supports-mode"></a><h3>gnome_rr_output_supports_mode ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+gnome_rr_output_supports_mode (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput"><span class="type">GnomeRROutput</span></a> *output</code></em>,
+                               <em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRMode" title="GnomeRRMode"><span class="type">GnomeRRMode</span></a> *mode</code></em>);</pre>
+<p>
+</p>
+<div class="refsect3">
+<a name="id-1.4.2.6.29.5"></a><h4>Returns</h4>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-output-get-is-primary"></a><h3>gnome_rr_output_get_is_primary ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+gnome_rr_output_get_is_primary (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput"><span class="type">GnomeRROutput</span></a> *output</code></em>);</pre>
+<p>
+</p>
+<div class="refsect3">
+<a name="id-1.4.2.6.30.5"></a><h4>Returns</h4>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-output-get-backlight"></a><h3>gnome_rr_output_get_backlight ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>
+gnome_rr_output_get_backlight (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput"><span class="type">GnomeRROutput</span></a> *output</code></em>);</pre>
+<div class="refsect3">
+<a name="id-1.4.2.6.31.4"></a><h4>Returns</h4>
+<p> The currently set backlight brightness</p>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-output-set-backlight"></a><h3>gnome_rr_output_set_backlight ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+gnome_rr_output_set_backlight (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput"><span class="type">GnomeRROutput</span></a> *output</code></em>,
+                               <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> value</code></em>,
+                               <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<div class="refsect3">
+<a name="id-1.4.2.6.32.4"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>value</p></td>
+<td class="parameter_description"><p>the absolute value which is 0 &gt;= this &lt;= 100</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.4.2.6.32.5"></a><h4>Returns</h4>
+<p> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> for success</p>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-output-get-display-name"></a><h3>gnome_rr_output_get_display_name ()</h3>
+<pre class="programlisting">const <span class="returnvalue">char</span> *
+gnome_rr_output_get_display_name (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput"><span class="type">GnomeRROutput</span></a> *output</code></em>);</pre>
+<p>
+</p>
+<div class="refsect3">
+<a name="id-1.4.2.6.33.5"></a><h4>Returns</h4>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-output-get-ids-from-edid"></a><h3>gnome_rr_output_get_ids_from_edid ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+gnome_rr_output_get_ids_from_edid (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput"><span class="type">GnomeRROutput</span></a> *output</code></em>,
+                                   <em class="parameter"><code><span class="type">char</span> **vendor</code></em>,
+                                   <em class="parameter"><code><span class="type">char</span> **product</code></em>,
+                                   <em class="parameter"><code><span class="type">char</span> **serial</code></em>);</pre>
+<div class="refsect3">
+<a name="id-1.4.2.6.34.4"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>output</p></td>
+<td class="parameter_description"><p>a <a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput"><span class="type">GnomeRROutput</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>vendor</p></td>
+<td class="parameter_description"><p>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<a href="http://foldoc.org/out"><span class="acronym">out</span></a>][<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>product</p></td>
+<td class="parameter_description"><p>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<a href="http://foldoc.org/out"><span class="acronym">out</span></a>][<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>serial</p></td>
+<td class="parameter_description"><p>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<a href="http://foldoc.org/out"><span class="acronym">out</span></a>][<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-output-get-min-backlight-step"></a><h3>gnome_rr_output_get_min_backlight_step ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>
+gnome_rr_output_get_min_backlight_step
+                               (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput"><span class="type">GnomeRROutput</span></a> *output</code></em>);</pre>
+<div class="refsect3">
+<a name="id-1.4.2.6.35.4"></a><h4>Returns</h4>
+<p> The minimum backlight step available in percent</p>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-output-get-physical-size"></a><h3>gnome_rr_output_get_physical_size ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+gnome_rr_output_get_physical_size (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput"><span class="type">GnomeRROutput</span></a> *output</code></em>,
+                                   <em class="parameter"><code><span class="type">int</span> *width_mm</code></em>,
+                                   <em class="parameter"><code><span class="type">int</span> *height_mm</code></em>);</pre>
+<div class="refsect3">
+<a name="id-1.4.2.6.36.4"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>output</p></td>
+<td class="parameter_description"><p>a <a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput"><span class="type">GnomeRROutput</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>width_mm</p></td>
+<td class="parameter_description"><p>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<a href="http://foldoc.org/out"><span class="acronym">out</span></a>][<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>height_mm</p></td>
+<td class="parameter_description"><p>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<a href="http://foldoc.org/out"><span class="acronym">out</span></a>][<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-mode-get-id"></a><h3>gnome_rr_mode_get_id ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#guint32"><span class="returnvalue">guint32</span></a>
+gnome_rr_mode_get_id (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRMode" title="GnomeRRMode"><span class="type">GnomeRRMode</span></a> *mode</code></em>);</pre>
+<p>
+</p>
+<div class="refsect3">
+<a name="id-1.4.2.6.37.5"></a><h4>Returns</h4>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-mode-get-width"></a><h3>gnome_rr_mode_get_width ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>
+gnome_rr_mode_get_width (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRMode" title="GnomeRRMode"><span class="type">GnomeRRMode</span></a> *mode</code></em>);</pre>
+<p>
+</p>
+<div class="refsect3">
+<a name="id-1.4.2.6.38.5"></a><h4>Returns</h4>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-mode-get-height"></a><h3>gnome_rr_mode_get_height ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>
+gnome_rr_mode_get_height (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRMode" title="GnomeRRMode"><span class="type">GnomeRRMode</span></a> *mode</code></em>);</pre>
+<p>
+</p>
+<div class="refsect3">
+<a name="id-1.4.2.6.39.5"></a><h4>Returns</h4>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-mode-get-freq"></a><h3>gnome_rr_mode_get_freq ()</h3>
+<pre class="programlisting"><span class="returnvalue">int</span>
+gnome_rr_mode_get_freq (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRMode" title="GnomeRRMode"><span class="type">GnomeRRMode</span></a> *mode</code></em>);</pre>
+<p>
+</p>
+<div class="refsect3">
+<a name="id-1.4.2.6.40.5"></a><h4>Returns</h4>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-crtc-get-id"></a><h3>gnome_rr_crtc_get_id ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#guint32"><span class="returnvalue">guint32</span></a>
+gnome_rr_crtc_get_id (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRCrtc" title="GnomeRRCrtc"><span class="type">GnomeRRCrtc</span></a> *crtc</code></em>);</pre>
+<p>
+</p>
+<div class="refsect3">
+<a name="id-1.4.2.6.41.5"></a><h4>Returns</h4>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-crtc-can-drive-output"></a><h3>gnome_rr_crtc_can_drive_output ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+gnome_rr_crtc_can_drive_output (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRCrtc" title="GnomeRRCrtc"><span class="type">GnomeRRCrtc</span></a> *crtc</code></em>,
+                                <em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRROutput" title="GnomeRROutput"><span class="type">GnomeRROutput</span></a> *output</code></em>);</pre>
+<p>
+</p>
+<div class="refsect3">
+<a name="id-1.4.2.6.42.5"></a><h4>Returns</h4>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-crtc-get-current-mode"></a><h3>gnome_rr_crtc_get_current_mode ()</h3>
+<pre class="programlisting"><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRMode" title="GnomeRRMode"><span class="returnvalue">GnomeRRMode</span></a> *
+gnome_rr_crtc_get_current_mode (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRCrtc" title="GnomeRRCrtc"><span class="type">GnomeRRCrtc</span></a> *crtc</code></em>);</pre>
+<div class="refsect3">
+<a name="id-1.4.2.6.43.4"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>crtc</p></td>
+<td class="parameter_description"><p>a <a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRCrtc" title="GnomeRRCrtc"><span class="type">GnomeRRCrtc</span></a>
+Returns: (transfer none): the current mode of this crtc</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.4.2.6.43.5"></a><h4>Returns</h4>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-crtc-get-position"></a><h3>gnome_rr_crtc_get_position ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+gnome_rr_crtc_get_position (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRCrtc" title="GnomeRRCrtc"><span class="type">GnomeRRCrtc</span></a> *crtc</code></em>,
+                            <em class="parameter"><code><span class="type">int</span> *x</code></em>,
+                            <em class="parameter"><code><span class="type">int</span> *y</code></em>);</pre>
+<div class="refsect3">
+<a name="id-1.4.2.6.44.4"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>crtc</p></td>
+<td class="parameter_description"><p>a <a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRCrtc" title="GnomeRRCrtc"><span class="type">GnomeRRCrtc</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>x</p></td>
+<td class="parameter_description"><p>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<a href="http://foldoc.org/out"><span class="acronym">out</span></a>][<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>y</p></td>
+<td class="parameter_description"><p>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<a href="http://foldoc.org/out"><span class="acronym">out</span></a>][<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-crtc-get-current-rotation"></a><h3>gnome_rr_crtc_get_current_rotation ()</h3>
+<pre class="programlisting"><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRRotation" title="enum GnomeRRRotation"><span class="returnvalue">GnomeRRRotation</span></a>
+gnome_rr_crtc_get_current_rotation (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRCrtc" title="GnomeRRCrtc"><span class="type">GnomeRRCrtc</span></a> *crtc</code></em>);</pre>
+<p>
+</p>
+<div class="refsect3">
+<a name="id-1.4.2.6.45.5"></a><h4>Returns</h4>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-crtc-get-rotations"></a><h3>gnome_rr_crtc_get_rotations ()</h3>
+<pre class="programlisting"><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRRotation" title="enum GnomeRRRotation"><span class="returnvalue">GnomeRRRotation</span></a>
+gnome_rr_crtc_get_rotations (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRCrtc" title="GnomeRRCrtc"><span class="type">GnomeRRCrtc</span></a> *crtc</code></em>);</pre>
+<p>
+</p>
+<div class="refsect3">
+<a name="id-1.4.2.6.46.5"></a><h4>Returns</h4>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-crtc-supports-rotation"></a><h3>gnome_rr_crtc_supports_rotation ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+gnome_rr_crtc_supports_rotation (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRCrtc" title="GnomeRRCrtc"><span class="type">GnomeRRCrtc</span></a> *crtc</code></em>,
+                                 <em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRRotation" title="enum GnomeRRRotation"><span class="type">GnomeRRRotation</span></a> rotation</code></em>);</pre>
+<p>
+</p>
+<div class="refsect3">
+<a name="id-1.4.2.6.47.5"></a><h4>Returns</h4>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-crtc-get-gamma"></a><h3>gnome_rr_crtc_get_gamma ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+gnome_rr_crtc_get_gamma (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRCrtc" title="GnomeRRCrtc"><span class="type">GnomeRRCrtc</span></a> *crtc</code></em>,
+                         <em class="parameter"><code><span class="type">int</span> *size</code></em>,
+                         <em class="parameter"><code>unsigned <span class="type">short</span> **red</code></em>,
+                         <em class="parameter"><code>unsigned <span class="type">short</span> **green</code></em>,
+                         <em class="parameter"><code>unsigned <span class="type">short</span> **blue</code></em>);</pre>
+<div class="refsect3">
+<a name="id-1.4.2.6.48.4"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>crtc</p></td>
+<td class="parameter_description"><p>a <a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRCrtc" title="GnomeRRCrtc"><span class="type">GnomeRRCrtc</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>red</p></td>
+<td class="parameter_description"><p> the minimum width. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<a href="http://foldoc.org/out"><span class="acronym">out</span></a>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>green</p></td>
+<td class="parameter_description"><p> the maximum width. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<a href="http://foldoc.org/out"><span class="acronym">out</span></a>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>blue</p></td>
+<td class="parameter_description"><p> the minimum height. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<a href="http://foldoc.org/out"><span class="acronym">out</span></a>]</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.4.2.6.48.5"></a><h4>Returns</h4>
+<p> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> for success</p>
+<p></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-rr-crtc-set-gamma"></a><h3>gnome_rr_crtc_set_gamma ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+gnome_rr_crtc_set_gamma (<em class="parameter"><code><a class="link" href="gnome-desktop3-gnome-rr.html#GnomeRRCrtc" title="GnomeRRCrtc"><span class="type">GnomeRRCrtc</span></a> *crtc</code></em>,
+                         <em class="parameter"><code><span class="type">int</span> size</code></em>,
+                         <em class="parameter"><code>unsigned <span class="type">short</span> *red</code></em>,
+                         <em class="parameter"><code>unsigned <span class="type">short</span> *green</code></em>,
+                         <em class="parameter"><code>unsigned <span class="type">short</span> *blue</code></em>);</pre>
+<p>
+</p>
+<div class="refsect3">
+<a name="id-1.4.2.6.49.5"></a><h4>Returns</h4>
+<p></p>
+</div>
+</div>
+</div>
+<div class="refsect1">
+<a name="gnome-desktop3-gnome-rr.other_details"></a><h2>Types and Values</h2>
+<div class="refsect2">
+<a name="GnomeRRScreen"></a><h3>GnomeRRScreen</h3>
+<pre class="programlisting">typedef struct {
+	GObject parent;
+
+	GnomeRRScreenPrivate* priv;
+} GnomeRRScreen;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GnomeRRScreenClass"></a><h3>GnomeRRScreenClass</h3>
+<pre class="programlisting">typedef struct {
+	GObjectClass parent_class;
+
+        void (*changed)                (GnomeRRScreen *screen);
+        void (*output_connected)       (GnomeRRScreen *screen, GnomeRROutput *output);
+        void (*output_disconnected)    (GnomeRRScreen *screen, GnomeRROutput *output);
+} GnomeRRScreenClass;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GnomeRROutput"></a><h3>GnomeRROutput</h3>
+<pre class="programlisting">typedef struct GnomeRROutput GnomeRROutput;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GnomeRRCrtc"></a><h3>GnomeRRCrtc</h3>
+<pre class="programlisting">typedef struct GnomeRRCrtc GnomeRRCrtc;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GnomeRRDpmsMode"></a><h3>enum GnomeRRDpmsMode</h3>
+<p>
+</p>
+<div class="refsect3">
+<a name="id-1.4.2.7.6.4"></a><h4>Members</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="300px" class="enum_members_name">
+<col class="enum_members_description">
+<col width="200px" class="enum_members_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="enum_member_name"><p><a name="GNOME-RR-DPMS-ON:CAPS"></a>GNOME_RR_DPMS_ON</p></td>
+<td class="enum_member_description"> </td>
+<td class="enum_member_annotations"> </td>
+</tr>
+<tr>
+<td class="enum_member_name"><p><a name="GNOME-RR-DPMS-STANDBY:CAPS"></a>GNOME_RR_DPMS_STANDBY</p></td>
+<td class="enum_member_description"> </td>
+<td class="enum_member_annotations"> </td>
+</tr>
+<tr>
+<td class="enum_member_name"><p><a name="GNOME-RR-DPMS-SUSPEND:CAPS"></a>GNOME_RR_DPMS_SUSPEND</p></td>
+<td class="enum_member_description"> </td>
+<td class="enum_member_annotations"> </td>
+</tr>
+<tr>
+<td class="enum_member_name"><p><a name="GNOME-RR-DPMS-OFF:CAPS"></a>GNOME_RR_DPMS_OFF</p></td>
+<td class="enum_member_description"> </td>
+<td class="enum_member_annotations"> </td>
+</tr>
+<tr>
+<td class="enum_member_name"><p><a name="GNOME-RR-DPMS-DISABLED:CAPS"></a>GNOME_RR_DPMS_DISABLED</p></td>
+<td class="enum_member_description"> </td>
+<td class="enum_member_annotations"> </td>
+</tr>
+<tr>
+<td class="enum_member_name"><p><a name="GNOME-RR-DPMS-UNKNOWN:CAPS"></a>GNOME_RR_DPMS_UNKNOWN</p></td>
+<td class="enum_member_description"> </td>
+<td class="enum_member_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GnomeRRMode"></a><h3>GnomeRRMode</h3>
+<pre class="programlisting">typedef struct GnomeRRMode GnomeRRMode;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GnomeRRRotation"></a><h3>enum GnomeRRRotation</h3>
+<p>
+</p>
+<div class="refsect3">
+<a name="id-1.4.2.7.8.4"></a><h4>Members</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="300px" class="enum_members_name">
+<col class="enum_members_description">
+<col width="200px" class="enum_members_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="enum_member_name"><p><a name="GNOME-RR-ROTATION-NEXT:CAPS"></a>GNOME_RR_ROTATION_NEXT</p></td>
+<td class="enum_member_description"> </td>
+<td class="enum_member_annotations"> </td>
+</tr>
+<tr>
+<td class="enum_member_name"><p><a name="GNOME-RR-ROTATION-0:CAPS"></a>GNOME_RR_ROTATION_0</p></td>
+<td class="enum_member_description"> </td>
+<td class="enum_member_annotations"> </td>
+</tr>
+<tr>
+<td class="enum_member_name"><p><a name="GNOME-RR-ROTATION-90:CAPS"></a>GNOME_RR_ROTATION_90</p></td>
+<td class="enum_member_description"> </td>
+<td class="enum_member_annotations"> </td>
+</tr>
+<tr>
+<td class="enum_member_name"><p><a name="GNOME-RR-ROTATION-180:CAPS"></a>GNOME_RR_ROTATION_180</p></td>
+<td class="enum_member_description"> </td>
+<td class="enum_member_annotations"> </td>
+</tr>
+<tr>
+<td class="enum_member_name"><p><a name="GNOME-RR-ROTATION-270:CAPS"></a>GNOME_RR_ROTATION_270</p></td>
+<td class="enum_member_description"> </td>
+<td class="enum_member_annotations"> </td>
+</tr>
+<tr>
+<td class="enum_member_name"><p><a name="GNOME-RR-REFLECT-X:CAPS"></a>GNOME_RR_REFLECT_X</p></td>
+<td class="enum_member_description"> </td>
+<td class="enum_member_annotations"> </td>
+</tr>
+<tr>
+<td class="enum_member_name"><p><a name="GNOME-RR-REFLECT-Y:CAPS"></a>GNOME_RR_REFLECT_Y</p></td>
+<td class="enum_member_description"> </td>
+<td class="enum_member_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GnomeRRError"></a><h3>enum GnomeRRError</h3>
+<p>
+</p>
+<div class="refsect3">
+<a name="id-1.4.2.7.9.4"></a><h4>Members</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="300px" class="enum_members_name">
+<col class="enum_members_description">
+<col width="200px" class="enum_members_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="enum_member_name"><p><a name="GNOME-RR-ERROR-UNKNOWN:CAPS"></a>GNOME_RR_ERROR_UNKNOWN</p></td>
+<td class="enum_member_description"> </td>
+<td class="enum_member_annotations"> </td>
+</tr>
+<tr>
+<td class="enum_member_name"><p><a name="GNOME-RR-ERROR-NO-RANDR-EXTENSION:CAPS"></a>GNOME_RR_ERROR_NO_RANDR_EXTENSION</p></td>
+<td class="enum_member_description"> </td>
+<td class="enum_member_annotations"> </td>
+</tr>
+<tr>
+<td class="enum_member_name"><p><a name="GNOME-RR-ERROR-RANDR-ERROR:CAPS"></a>GNOME_RR_ERROR_RANDR_ERROR</p></td>
+<td class="enum_member_description"> </td>
+<td class="enum_member_annotations"> </td>
+</tr>
+<tr>
+<td class="enum_member_name"><p><a name="GNOME-RR-ERROR-BOUNDS-ERROR:CAPS"></a>GNOME_RR_ERROR_BOUNDS_ERROR</p></td>
+<td class="enum_member_description"> </td>
+<td class="enum_member_annotations"> </td>
+</tr>
+<tr>
+<td class="enum_member_name"><p><a name="GNOME-RR-ERROR-CRTC-ASSIGNMENT:CAPS"></a>GNOME_RR_ERROR_CRTC_ASSIGNMENT</p></td>
+<td class="enum_member_description"> </td>
+<td class="enum_member_annotations"> </td>
+</tr>
+<tr>
+<td class="enum_member_name"><p><a name="GNOME-RR-ERROR-NO-MATCHING-CONFIG:CAPS"></a>GNOME_RR_ERROR_NO_MATCHING_CONFIG</p></td>
+<td class="enum_member_description"> </td>
+<td class="enum_member_annotations"> </td>
+</tr>
+<tr>
+<td class="enum_member_name"><p><a name="GNOME-RR-ERROR-NO-DPMS-EXTENSION:CAPS"></a>GNOME_RR_ERROR_NO_DPMS_EXTENSION</p></td>
+<td class="enum_member_description"> </td>
+<td class="enum_member_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GNOME-RR-CONNECTOR-TYPE-PANEL:CAPS"></a><h3>GNOME_RR_CONNECTOR_TYPE_PANEL</h3>
+<pre class="programlisting">#define GNOME_RR_CONNECTOR_TYPE_PANEL "Panel"  /* This is a built-in LCD */
+</pre>
+<p>
+</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.21</div>
+</body>
+</html>

@@ -1,0 +1,859 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GNOME Desktop Library Reference Manual: GnomeDesktopThumbnailFactory</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="GNOME Desktop Library Reference Manual">
+<link rel="up" href="thumbnail.html" title="Part IV. Thumbnails">
+<link rel="prev" href="thumbnail.html" title="Part IV. Thumbnails">
+<link rel="next" href="idle-monitor.html" title="Part V. Idle Monitor">
+<meta name="generator" content="GTK-Doc V1.21 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
+<td width="100%" align="left" class="shortcuts">
+<a href="#" class="shortcut">Top</a><span id="nav_description">  <span class="dim">|</span> 
+                  <a href="#GnomeDesktopThumbnailFactory.description" class="shortcut">Description</a></span><span id="nav_hierarchy">  <span class="dim">|</span> 
+                  <a href="#GnomeDesktopThumbnailFactory.object-hierarchy" class="shortcut">Object Hierarchy</a></span>
+</td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
+<td><a accesskey="u" href="thumbnail.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="thumbnail.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
+<td><a accesskey="n" href="idle-monitor.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="GnomeDesktopThumbnailFactory"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="GnomeDesktopThumbnailFactory.top_of_page"></a>GnomeDesktopThumbnailFactory</span></h2>
+<p>GnomeDesktopThumbnailFactory — Generates and looks up thumbnails of files and
+directories</p>
+</td>
+<td class="gallery_image" valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="GnomeDesktopThumbnailFactory.stability-level"></a><h2>Stability Level</h2>
+<a href="http://foldoc.org/Unstable"><span class="acronym">Unstable</span></a>, unless otherwise indicated
+</div>
+<div class="refsect1">
+<a name="GnomeDesktopThumbnailFactory.functions"></a><h2>Functions</h2>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="functions_return">
+<col class="functions_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="function_type">
+<a class="link" href="GnomeDesktopThumbnailFactory.html" title="GnomeDesktopThumbnailFactory"><span class="returnvalue">GnomeDesktopThumbnailFactory</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="GnomeDesktopThumbnailFactory.html#gnome-desktop-thumbnail-factory-new" title="gnome_desktop_thumbnail_factory_new ()">gnome_desktop_thumbnail_factory_new</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">char</span> *
+</td>
+<td class="function_name">
+<a class="link" href="GnomeDesktopThumbnailFactory.html#gnome-desktop-thumbnail-factory-lookup" title="gnome_desktop_thumbnail_factory_lookup ()">gnome_desktop_thumbnail_factory_lookup</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="GnomeDesktopThumbnailFactory.html#gnome-desktop-thumbnail-factory-has-valid-failed-thumbnail" title="gnome_desktop_thumbnail_factory_has_valid_failed_thumbnail ()">gnome_desktop_thumbnail_factory_has_valid_failed_thumbnail</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="GnomeDesktopThumbnailFactory.html#gnome-desktop-thumbnail-factory-can-thumbnail" title="gnome_desktop_thumbnail_factory_can_thumbnail ()">gnome_desktop_thumbnail_factory_can_thumbnail</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="http://library.gnome.org/devel/gdk-pixbuf/unstable/gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="returnvalue">GdkPixbuf</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="GnomeDesktopThumbnailFactory.html#gnome-desktop-thumbnail-factory-generate-thumbnail" title="gnome_desktop_thumbnail_factory_generate_thumbnail ()">gnome_desktop_thumbnail_factory_generate_thumbnail</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="GnomeDesktopThumbnailFactory.html#gnome-desktop-thumbnail-factory-save-thumbnail" title="gnome_desktop_thumbnail_factory_save_thumbnail ()">gnome_desktop_thumbnail_factory_save_thumbnail</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="GnomeDesktopThumbnailFactory.html#gnome-desktop-thumbnail-factory-create-failed-thumbnail" title="gnome_desktop_thumbnail_factory_create_failed_thumbnail ()">gnome_desktop_thumbnail_factory_create_failed_thumbnail</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="GnomeDesktopThumbnailFactory.html#gnome-desktop-thumbnail-has-uri" title="gnome_desktop_thumbnail_has_uri ()">gnome_desktop_thumbnail_has_uri</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="GnomeDesktopThumbnailFactory.html#gnome-desktop-thumbnail-is-valid" title="gnome_desktop_thumbnail_is_valid ()">gnome_desktop_thumbnail_is_valid</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">char</span> *
+</td>
+<td class="function_name">
+<a class="link" href="GnomeDesktopThumbnailFactory.html#gnome-desktop-thumbnail-md5" title="gnome_desktop_thumbnail_md5 ()">gnome_desktop_thumbnail_md5</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">char</span> *
+</td>
+<td class="function_name">
+<a class="link" href="GnomeDesktopThumbnailFactory.html#gnome-desktop-thumbnail-path-for-uri" title="gnome_desktop_thumbnail_path_for_uri ()">gnome_desktop_thumbnail_path_for_uri</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="http://library.gnome.org/devel/gdk-pixbuf/unstable/gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="returnvalue">GdkPixbuf</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="GnomeDesktopThumbnailFactory.html#gnome-desktop-thumbnail-scale-down-pixbuf" title="gnome_desktop_thumbnail_scale_down_pixbuf ()">gnome_desktop_thumbnail_scale_down_pixbuf</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="GnomeDesktopThumbnailFactory.other"></a><h2>Types and Values</h2>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="name">
+<col class="description">
+</colgroup>
+<tbody>
+<tr>
+<td class="datatype_keyword">enum</td>
+<td class="function_name"><a class="link" href="GnomeDesktopThumbnailFactory.html#GnomeDesktopThumbnailSize" title="enum GnomeDesktopThumbnailSize">GnomeDesktopThumbnailSize</a></td>
+</tr>
+<tr>
+<td class="datatype_keyword">struct</td>
+<td class="function_name"><a class="link" href="GnomeDesktopThumbnailFactory.html#GnomeDesktopThumbnailFactory-struct" title="struct GnomeDesktopThumbnailFactory">GnomeDesktopThumbnailFactory</a></td>
+</tr>
+<tr>
+<td class="datatype_keyword">struct</td>
+<td class="function_name"><a class="link" href="GnomeDesktopThumbnailFactory.html#GnomeDesktopThumbnailFactoryClass" title="struct GnomeDesktopThumbnailFactoryClass">GnomeDesktopThumbnailFactoryClass</a></td>
+</tr>
+<tr>
+<td class="datatype_keyword"> </td>
+<td class="function_name"><a class="link" href="GnomeDesktopThumbnailFactory.html#GnomeDesktopThumbnailFactoryPrivate" title="GnomeDesktopThumbnailFactoryPrivate">GnomeDesktopThumbnailFactoryPrivate</a></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="GnomeDesktopThumbnailFactory.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="screen">    <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+    <span class="lineart">╰──</span> GnomeDesktopThumbnailFactory
+</pre>
+</div>
+<div class="refsect1">
+<a name="GnomeDesktopThumbnailFactory.includes"></a><h2>Includes</h2>
+<pre class="synopsis">#include &lt;libgnome-desktop/gnome-desktop-thumbnail.h&gt;
+</pre>
+</div>
+<div class="refsect1">
+<a name="GnomeDesktopThumbnailFactory.description"></a><h2>Description</h2>
+<p><a class="link" href="GnomeDesktopThumbnailFactory.html" title="GnomeDesktopThumbnailFactory"><span class="type">GnomeDesktopThumbnailFactory</span></a> allows generation and loading of thumbnails for
+local and remote files and directories. It uses a collection of programs
+called <em class="firstterm">thumbnailers</em>, each one generating thumbnails
+for a specific set of content-types of files. For example,</p>
+<span class="application">totem-video-thumbnailer</span> generates thumbnails for
+<p>video files using GStreamer; <span class="application">evince-thumbnailer</span>
+generates thumbnails for PDFs and other document files. If no specific
+thumbnailer exists for a file, or if the thumbnailer fails, gdk-pixbuf is
+used as a fallback.</p>
+<p>To generate a thumbnail, an appropriate thumbnailer program is selected then
+executed, passing it the URI of the file to thumbnail, plus a path to write
+the thumbnail image to. If thumbnailing succeeds, the thumbnailer should have
+written the image to disk before terminating; but if thumbnailing fails, no
+image should be written, and the thumbnailer should return a non-zero exit
+status. <a class="link" href="GnomeDesktopThumbnailFactory.html" title="GnomeDesktopThumbnailFactory"><span class="type">GnomeDesktopThumbnailFactory</span></a> will then fall back to using gdk-pixbuf
+to generate a thumbnail, if possible.</p>
+<p>Thumbnailers are chosen by examining a series of
+<code class="filename">.thumbnailer</code> files in
+<code class="filename"><em class="replaceable"><code>$PREFIX</code></em>/share/thumbnailers</code>.
+Each is in a simple key-file format:</p>
+<div class="informalexample">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1
+2
+3
+4</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="symbol">[</span><span class="usertype">Thumbnailer</span><span class="normal"> Entry</span><span class="symbol">]</span>
+<span class="normal">TryExec</span><span class="symbol">=</span><span class="normal">evince</span><span class="symbol">-</span><span class="normal">thumbnailer</span>
+<span class="normal">Exec</span><span class="symbol">=</span><span class="normal">evince</span><span class="symbol">-</span><span class="normal">thumbnailer </span><span class="symbol">-</span><span class="normal">s </span><span class="symbol">%</span><span class="normal">s </span><span class="symbol">%</span><span class="normal">u </span><span class="symbol">%</span><span class="normal">o</span>
+<span class="normal">MimeType</span><span class="symbol">=</span><span class="normal">application</span><span class="symbol">/</span><span class="normal">pdf</span><span class="symbol">;</span><span class="normal">application</span><span class="symbol">/</span><span class="normal">x</span><span class="symbol">-</span><span class="normal">bzpdf</span><span class="symbol">;</span><span class="normal">application</span><span class="symbol">/</span><span class="normal">x</span><span class="symbol">-</span><span class="normal">gzpdf</span><span class="symbol">;</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>The <code class="filename">.thumbnailer</code> format supports three keys:</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><code class="code">TryExec</code></span></p></td>
+<td><p>
+Optional. The name of the the thumbnailer program in the current
+<code class="envar">$PATH</code>. This allows the calling code to quickly check whether
+the thumbnailer exists before trying to execute it.
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="code">Exec</code></span></p></td>
+<td><p>
+Required. The command to execute the thumbnailer. It supports a few different
+parameters which are replaced before calling the thumbnailer:
+<em class="replaceable"><code><code class="literal">u</code></code></em> is the URI of the file being thumbnailed;
+<em class="replaceable"><code><code class="literal">i</code></code></em> is its path; <em class="replaceable"><code><code class="literal">o</code></code></em>
+is the path of the image file to be written to;
+<em class="replaceable"><code><code class="literal">s</code></code></em> is the maximum desired size of the thumbnail
+image (the maximum width or height, in pixels); and
+<em class="replaceable"><code>%%</code></em> is a literal percent character.
+</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="code">MimeType</code></span></p></td>
+<td><p>
+Required. A semicolon-separated list of MIME types which the thumbnailer
+supports generating thumbnails for.
+</p></td>
+</tr>
+</tbody>
+</table></div>
+<p>So in the example <code class="filename">.thumbnailer</code> file above, the command
+passes the requested thumbnail size, then the input file’s URI, then the
+path for the output image file to</p>
+<span class="application">evince-thumbnailer</span>.
+<p>The code to examine and call a thumbnailer is contained in
+<a class="link" href="GnomeDesktopThumbnailFactory.html" title="GnomeDesktopThumbnailFactory"><span class="type">GnomeDesktopThumbnailFactory</span></a>, which handles looking up the right thumbnailer
+script, building and executing the command for it, and loading the resulting
+thumbnail image into a <a href="http://library.gnome.org/devel/gdk-pixbuf/unstable/gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a>.</p>
+<p>Thumbnail caching is also supported by <a class="link" href="GnomeDesktopThumbnailFactory.html" title="GnomeDesktopThumbnailFactory"><span class="type">GnomeDesktopThumbnailFactory</span></a>. When
+calling a thumbnailer, the path passed for the output image file is in
+<code class="filename"><code class="envar">$XDG_CACHE_HOME</code>/thumbnails/
+<em class="replaceable"><code>$SIZE</code></em>/</code>. The cached image file is given
+a (probably) unique filename, generated by hashing the original file’s URI,
+so the thumbnail can be looked up in future. <a class="link" href="GnomeDesktopThumbnailFactory.html" title="GnomeDesktopThumbnailFactory"><span class="type">GnomeDesktopThumbnailFactory</span></a>
+supports two sizes of thumbnails: <a class="link" href="GnomeDesktopThumbnailFactory.html#GNOME-DESKTOP-THUMBNAIL-SIZE-NORMAL:CAPS"><code class="literal">GNOME_DESKTOP_THUMBNAIL_SIZE_NORMAL</code></a> and
+<a class="link" href="GnomeDesktopThumbnailFactory.html#GNOME-DESKTOP-THUMBNAIL-SIZE-LARGE:CAPS"><code class="literal">GNOME_DESKTOP_THUMBNAIL_SIZE_LARGE</code></a>. Normal thumbnails are up to 128×128
+pixels, whereas large thumbnails are up to 256×256 pixels. Thumbnails which
+are larger than this are scaled down before being cached, and non-square
+thumbnails are scaled so their largest dimension is at most 128 or 256
+pixels.</p>
+<p><a class="link" href="GnomeDesktopThumbnailFactory.html" title="GnomeDesktopThumbnailFactory"><span class="type">GnomeDesktopThumbnailFactory</span></a> also handles failed thumbnails. If a
+thumbnailer can’t generate a thumbnail for a file (e.g. because the file is
+corrupt or because the right video codecs aren’t available), it returns a
+non-zero exit status. The thumbnail factory then writes an entry to
+<code class="filename"><code class="envar">$XDG_CACHE_HOME</code>/thumbnails/fail/
+gnome-thumbnail-factory/</code> which is named after the hash of the
+input file URI (just like a successful cached thumbnail). For future queries
+for thumbnails for that file, <a class="link" href="GnomeDesktopThumbnailFactory.html" title="GnomeDesktopThumbnailFactory"><span class="type">GnomeDesktopThumbnailFactory</span></a> can immediately
+return an error after looking up the fail entry.</p>
+<p>If a file changes content, <a class="link" href="GnomeDesktopThumbnailFactory.html" title="GnomeDesktopThumbnailFactory"><span class="type">GnomeDesktopThumbnailFactory</span></a> will generate a new
+thumbnail because each cached image has associated metadata (stored as PNG
+tEXt keys) storing the full URI of the thumbnailed file (to check for hash
+collisions) and its last modification time at the point of thumbnailing. If
+the stored modification time doesn’t match the file’s current one, a new
+thumbnail is generated.</p>
+</div>
+<div class="refsect1">
+<a name="GnomeDesktopThumbnailFactory.functions_details"></a><h2>Functions</h2>
+<div class="refsect2">
+<a name="gnome-desktop-thumbnail-factory-new"></a><h3>gnome_desktop_thumbnail_factory_new ()</h3>
+<pre class="programlisting"><a class="link" href="GnomeDesktopThumbnailFactory.html" title="GnomeDesktopThumbnailFactory"><span class="returnvalue">GnomeDesktopThumbnailFactory</span></a> *
+gnome_desktop_thumbnail_factory_new (<em class="parameter"><code><a class="link" href="GnomeDesktopThumbnailFactory.html#GnomeDesktopThumbnailSize" title="enum GnomeDesktopThumbnailSize"><span class="type">GnomeDesktopThumbnailSize</span></a> size</code></em>);</pre>
+<p>Creates a new <a class="link" href="GnomeDesktopThumbnailFactory.html" title="GnomeDesktopThumbnailFactory"><span class="type">GnomeDesktopThumbnailFactory</span></a>.</p>
+<p>This function must be called on the main thread.</p>
+<div class="refsect3">
+<a name="id-1.5.2.9.2.6"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>size</p></td>
+<td class="parameter_description"><p>The thumbnail size to use</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.5.2.9.2.7"></a><h4>Returns</h4>
+<p> a new <a class="link" href="GnomeDesktopThumbnailFactory.html" title="GnomeDesktopThumbnailFactory"><span class="type">GnomeDesktopThumbnailFactory</span></a></p>
+<p></p>
+</div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-desktop-thumbnail-factory-lookup"></a><h3>gnome_desktop_thumbnail_factory_lookup ()</h3>
+<pre class="programlisting"><span class="returnvalue">char</span> *
+gnome_desktop_thumbnail_factory_lookup
+                               (<em class="parameter"><code><a class="link" href="GnomeDesktopThumbnailFactory.html" title="GnomeDesktopThumbnailFactory"><span class="type">GnomeDesktopThumbnailFactory</span></a> *factory</code></em>,
+                                <em class="parameter"><code>const <span class="type">char</span> *uri</code></em>,
+                                <em class="parameter"><code><span class="type">time_t</span> mtime</code></em>);</pre>
+<p>Tries to locate an existing thumbnail for the file specified.</p>
+<p>Usage of this function is threadsafe.</p>
+<div class="refsect3">
+<a name="id-1.5.2.9.3.6"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>factory</p></td>
+<td class="parameter_description"><p>a <a class="link" href="GnomeDesktopThumbnailFactory.html" title="GnomeDesktopThumbnailFactory"><span class="type">GnomeDesktopThumbnailFactory</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>uri</p></td>
+<td class="parameter_description"><p>the uri of a file</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>mtime</p></td>
+<td class="parameter_description"><p>the mtime of the file</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.5.2.9.3.7"></a><h4>Returns</h4>
+<p> The absolute path of the thumbnail, or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if none exist.</p>
+<p></p>
+</div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-desktop-thumbnail-factory-has-valid-failed-thumbnail"></a><h3>gnome_desktop_thumbnail_factory_has_valid_failed_thumbnail ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+gnome_desktop_thumbnail_factory_has_valid_failed_thumbnail
+                               (<em class="parameter"><code><a class="link" href="GnomeDesktopThumbnailFactory.html" title="GnomeDesktopThumbnailFactory"><span class="type">GnomeDesktopThumbnailFactory</span></a> *factory</code></em>,
+                                <em class="parameter"><code>const <span class="type">char</span> *uri</code></em>,
+                                <em class="parameter"><code><span class="type">time_t</span> mtime</code></em>);</pre>
+<p>Tries to locate an failed thumbnail for the file specified. Writing
+and looking for failed thumbnails is important to avoid to try to
+thumbnail e.g. broken images several times.</p>
+<p>Usage of this function is threadsafe.</p>
+<div class="refsect3">
+<a name="id-1.5.2.9.4.6"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>factory</p></td>
+<td class="parameter_description"><p>a <a class="link" href="GnomeDesktopThumbnailFactory.html" title="GnomeDesktopThumbnailFactory"><span class="type">GnomeDesktopThumbnailFactory</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>uri</p></td>
+<td class="parameter_description"><p>the uri of a file</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>mtime</p></td>
+<td class="parameter_description"><p>the mtime of the file</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.5.2.9.4.7"></a><h4>Returns</h4>
+<p> TRUE if there is a failed thumbnail for the file.</p>
+<p></p>
+</div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-desktop-thumbnail-factory-can-thumbnail"></a><h3>gnome_desktop_thumbnail_factory_can_thumbnail ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+gnome_desktop_thumbnail_factory_can_thumbnail
+                               (<em class="parameter"><code><a class="link" href="GnomeDesktopThumbnailFactory.html" title="GnomeDesktopThumbnailFactory"><span class="type">GnomeDesktopThumbnailFactory</span></a> *factory</code></em>,
+                                <em class="parameter"><code>const <span class="type">char</span> *uri</code></em>,
+                                <em class="parameter"><code>const <span class="type">char</span> *mime_type</code></em>,
+                                <em class="parameter"><code><span class="type">time_t</span> mtime</code></em>);</pre>
+<p>Returns TRUE if this GnomeIconFactory can (at least try) to thumbnail
+this file. Thumbnails or files with failed thumbnails won't be thumbnailed.</p>
+<p>Usage of this function is threadsafe.</p>
+<div class="refsect3">
+<a name="id-1.5.2.9.5.6"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>factory</p></td>
+<td class="parameter_description"><p>a <a class="link" href="GnomeDesktopThumbnailFactory.html" title="GnomeDesktopThumbnailFactory"><span class="type">GnomeDesktopThumbnailFactory</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>uri</p></td>
+<td class="parameter_description"><p>the uri of a file</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>mime_type</p></td>
+<td class="parameter_description"><p>the mime type of the file</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>mtime</p></td>
+<td class="parameter_description"><p>the mtime of the file</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.5.2.9.5.7"></a><h4>Returns</h4>
+<p> TRUE if the file can be thumbnailed.</p>
+<p></p>
+</div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-desktop-thumbnail-factory-generate-thumbnail"></a><h3>gnome_desktop_thumbnail_factory_generate_thumbnail ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/gdk-pixbuf/unstable/gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="returnvalue">GdkPixbuf</span></a> *
+gnome_desktop_thumbnail_factory_generate_thumbnail
+                               (<em class="parameter"><code><a class="link" href="GnomeDesktopThumbnailFactory.html" title="GnomeDesktopThumbnailFactory"><span class="type">GnomeDesktopThumbnailFactory</span></a> *factory</code></em>,
+                                <em class="parameter"><code>const <span class="type">char</span> *uri</code></em>,
+                                <em class="parameter"><code>const <span class="type">char</span> *mime_type</code></em>);</pre>
+<p>Tries to generate a thumbnail for the specified file. If it succeeds
+it returns a pixbuf that can be used as a thumbnail.</p>
+<p>Usage of this function is threadsafe.</p>
+<div class="refsect3">
+<a name="id-1.5.2.9.6.6"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>factory</p></td>
+<td class="parameter_description"><p>a <a class="link" href="GnomeDesktopThumbnailFactory.html" title="GnomeDesktopThumbnailFactory"><span class="type">GnomeDesktopThumbnailFactory</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>uri</p></td>
+<td class="parameter_description"><p>the uri of a file</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>mime_type</p></td>
+<td class="parameter_description"><p>the mime type of the file</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.5.2.9.6.7"></a><h4>Returns</h4>
+<p> thumbnail pixbuf if thumbnailing succeeded, <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> otherwise. </p>
+<p><span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span></p>
+</div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-desktop-thumbnail-factory-save-thumbnail"></a><h3>gnome_desktop_thumbnail_factory_save_thumbnail ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+gnome_desktop_thumbnail_factory_save_thumbnail
+                               (<em class="parameter"><code><a class="link" href="GnomeDesktopThumbnailFactory.html" title="GnomeDesktopThumbnailFactory"><span class="type">GnomeDesktopThumbnailFactory</span></a> *factory</code></em>,
+                                <em class="parameter"><code><a href="http://library.gnome.org/devel/gdk-pixbuf/unstable/gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a> *thumbnail</code></em>,
+                                <em class="parameter"><code>const <span class="type">char</span> *uri</code></em>,
+                                <em class="parameter"><code><span class="type">time_t</span> original_mtime</code></em>);</pre>
+<p>Saves <em class="parameter"><code>thumbnail</code></em>
+ at the right place. If the save fails a
+failed thumbnail is written.</p>
+<p>Usage of this function is threadsafe.</p>
+<div class="refsect3">
+<a name="id-1.5.2.9.7.6"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>factory</p></td>
+<td class="parameter_description"><p>a <a class="link" href="GnomeDesktopThumbnailFactory.html" title="GnomeDesktopThumbnailFactory"><span class="type">GnomeDesktopThumbnailFactory</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>thumbnail</p></td>
+<td class="parameter_description"><p>the thumbnail as a pixbuf </p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>uri</p></td>
+<td class="parameter_description"><p>the uri of a file</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>original_mtime</p></td>
+<td class="parameter_description"><p>the modification time of the original file </p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-desktop-thumbnail-factory-create-failed-thumbnail"></a><h3>gnome_desktop_thumbnail_factory_create_failed_thumbnail ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+gnome_desktop_thumbnail_factory_create_failed_thumbnail
+                               (<em class="parameter"><code><a class="link" href="GnomeDesktopThumbnailFactory.html" title="GnomeDesktopThumbnailFactory"><span class="type">GnomeDesktopThumbnailFactory</span></a> *factory</code></em>,
+                                <em class="parameter"><code>const <span class="type">char</span> *uri</code></em>,
+                                <em class="parameter"><code><span class="type">time_t</span> mtime</code></em>);</pre>
+<p>Creates a failed thumbnail for the file so that we don't try
+to re-thumbnail the file later.</p>
+<p>Usage of this function is threadsafe.</p>
+<div class="refsect3">
+<a name="id-1.5.2.9.8.6"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>factory</p></td>
+<td class="parameter_description"><p>a <a class="link" href="GnomeDesktopThumbnailFactory.html" title="GnomeDesktopThumbnailFactory"><span class="type">GnomeDesktopThumbnailFactory</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>uri</p></td>
+<td class="parameter_description"><p>the uri of a file</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>mtime</p></td>
+<td class="parameter_description"><p>the modification time of the file</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-desktop-thumbnail-has-uri"></a><h3>gnome_desktop_thumbnail_has_uri ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+gnome_desktop_thumbnail_has_uri (<em class="parameter"><code><a href="http://library.gnome.org/devel/gdk-pixbuf/unstable/gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a> *pixbuf</code></em>,
+                                 <em class="parameter"><code>const <span class="type">char</span> *uri</code></em>);</pre>
+<p>Returns whether the thumbnail has the correct uri embedded in the
+Thumb::URI option in the png.</p>
+<div class="refsect3">
+<a name="id-1.5.2.9.9.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>pixbuf</p></td>
+<td class="parameter_description"><p>an loaded thumbnail pixbuf</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>uri</p></td>
+<td class="parameter_description"><p>a uri</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.5.2.9.9.6"></a><h4>Returns</h4>
+<p> TRUE if the thumbnail is for <em class="parameter"><code>uri</code></em>
+</p>
+<p></p>
+</div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-desktop-thumbnail-is-valid"></a><h3>gnome_desktop_thumbnail_is_valid ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+gnome_desktop_thumbnail_is_valid (<em class="parameter"><code><a href="http://library.gnome.org/devel/gdk-pixbuf/unstable/gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a> *pixbuf</code></em>,
+                                  <em class="parameter"><code>const <span class="type">char</span> *uri</code></em>,
+                                  <em class="parameter"><code><span class="type">time_t</span> mtime</code></em>);</pre>
+<p>Returns whether the thumbnail has the correct uri and mtime embedded in the
+png options.</p>
+<div class="refsect3">
+<a name="id-1.5.2.9.10.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>pixbuf</p></td>
+<td class="parameter_description"><p>an loaded thumbnail <a href="http://library.gnome.org/devel/gdk-pixbuf/unstable/gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>uri</p></td>
+<td class="parameter_description"><p>a uri</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>mtime</p></td>
+<td class="parameter_description"><p>the mtime</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.5.2.9.10.6"></a><h4>Returns</h4>
+<p> TRUE if the thumbnail has the right <em class="parameter"><code>uri</code></em>
+and <em class="parameter"><code>mtime</code></em>
+</p>
+<p></p>
+</div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-desktop-thumbnail-md5"></a><h3>gnome_desktop_thumbnail_md5 ()</h3>
+<pre class="programlisting"><span class="returnvalue">char</span> *
+gnome_desktop_thumbnail_md5 (<em class="parameter"><code>const <span class="type">char</span> *uri</code></em>);</pre>
+<div class="warning">
+<p><code class="literal">gnome_desktop_thumbnail_md5</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use <a href="https://developer.gnome.org/glib/unstable/glib-Data-Checksums.html#GChecksum"><span class="type">GChecksum</span></a> instead</p>
+</div>
+<p>Calculates the MD5 checksum of the uri. This can be useful
+if you want to manually handle thumbnail files.</p>
+<div class="refsect3">
+<a name="id-1.5.2.9.11.7"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>uri</p></td>
+<td class="parameter_description"><p>an uri</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.5.2.9.11.8"></a><h4>Returns</h4>
+<p> A string with the MD5 digest of the uri string.</p>
+<p></p>
+</div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-desktop-thumbnail-path-for-uri"></a><h3>gnome_desktop_thumbnail_path_for_uri ()</h3>
+<pre class="programlisting"><span class="returnvalue">char</span> *
+gnome_desktop_thumbnail_path_for_uri (<em class="parameter"><code>const <span class="type">char</span> *uri</code></em>,
+                                      <em class="parameter"><code><a class="link" href="GnomeDesktopThumbnailFactory.html#GnomeDesktopThumbnailSize" title="enum GnomeDesktopThumbnailSize"><span class="type">GnomeDesktopThumbnailSize</span></a> size</code></em>);</pre>
+<p>Returns the filename that a thumbnail of size <em class="parameter"><code>size</code></em>
+ for <em class="parameter"><code>uri</code></em>
+ would have.</p>
+<div class="refsect3">
+<a name="id-1.5.2.9.12.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>uri</p></td>
+<td class="parameter_description"><p>an uri</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>size</p></td>
+<td class="parameter_description"><p>a thumbnail size</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.5.2.9.12.6"></a><h4>Returns</h4>
+<p> an absolute filename</p>
+<p></p>
+</div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gnome-desktop-thumbnail-scale-down-pixbuf"></a><h3>gnome_desktop_thumbnail_scale_down_pixbuf ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/gdk-pixbuf/unstable/gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="returnvalue">GdkPixbuf</span></a> *
+gnome_desktop_thumbnail_scale_down_pixbuf
+                               (<em class="parameter"><code><a href="http://library.gnome.org/devel/gdk-pixbuf/unstable/gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a> *pixbuf</code></em>,
+                                <em class="parameter"><code><span class="type">int</span> dest_width</code></em>,
+                                <em class="parameter"><code><span class="type">int</span> dest_height</code></em>);</pre>
+<p>Scales the pixbuf to the desired size. This function
+is a lot faster than gdk-pixbuf when scaling down by
+large amounts.</p>
+<div class="refsect3">
+<a name="id-1.5.2.9.13.5"></a><h4>Parameters</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>pixbuf</p></td>
+<td class="parameter_description"><p>a <a href="http://library.gnome.org/devel/gdk-pixbuf/unstable/gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>dest_width</p></td>
+<td class="parameter_description"><p>the desired new width</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>dest_height</p></td>
+<td class="parameter_description"><p>the desired new height</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="id-1.5.2.9.13.6"></a><h4>Returns</h4>
+<p> a scaled pixbuf. </p>
+<p><span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span></p>
+</div>
+<p class="since">Since 2.2</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="GnomeDesktopThumbnailFactory.other_details"></a><h2>Types and Values</h2>
+<div class="refsect2">
+<a name="GnomeDesktopThumbnailSize"></a><h3>enum GnomeDesktopThumbnailSize</h3>
+<p>
+</p>
+<div class="refsect3">
+<a name="id-1.5.2.10.2.4"></a><h4>Members</h4>
+<div class="informaltable"><table width="100%" border="0">
+<colgroup>
+<col width="300px" class="enum_members_name">
+<col class="enum_members_description">
+<col width="200px" class="enum_members_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="enum_member_name"><p><a name="GNOME-DESKTOP-THUMBNAIL-SIZE-NORMAL:CAPS"></a>GNOME_DESKTOP_THUMBNAIL_SIZE_NORMAL</p></td>
+<td class="enum_member_description"> </td>
+<td class="enum_member_annotations"> </td>
+</tr>
+<tr>
+<td class="enum_member_name"><p><a name="GNOME-DESKTOP-THUMBNAIL-SIZE-LARGE:CAPS"></a>GNOME_DESKTOP_THUMBNAIL_SIZE_LARGE</p></td>
+<td class="enum_member_description"> </td>
+<td class="enum_member_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GnomeDesktopThumbnailFactory-struct"></a><h3>struct GnomeDesktopThumbnailFactory</h3>
+<pre class="programlisting">struct GnomeDesktopThumbnailFactory;</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GnomeDesktopThumbnailFactoryClass"></a><h3>struct GnomeDesktopThumbnailFactoryClass</h3>
+<pre class="programlisting">struct GnomeDesktopThumbnailFactoryClass {
+	GObjectClass parent;
+};
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GnomeDesktopThumbnailFactoryPrivate"></a><h3>GnomeDesktopThumbnailFactoryPrivate</h3>
+<pre class="programlisting">typedef struct _GnomeDesktopThumbnailFactoryPrivate GnomeDesktopThumbnailFactoryPrivate;</pre>
+<p>
+</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.21</div>
+</body>
+</html>

@@ -1,93 +1,84 @@
-%global gdk_pixbuf2_version               2.36.5
-%global gtk3_version                      3.3.6
-%global glib2_version                     2.53.0
-%global gtk_doc_version                   1.14
-%global gsettings_desktop_schemas_version 3.27.0
-%global po_package                        gnome-desktop-3.0
+%define gtk3_version                      3.3.6
+%define glib2_version                     2.35.0
+%define startup_notification_version      0.5
+%define gtk_doc_version                   1.9
+%define gsettings_desktop_schemas_version 3.5.91
+%define po_package                        gnome-desktop-3.0
 
-Name: gnome-desktop3
-Version: 3.28.2
-Release: 2%{?dist}
 Summary: Shared code among gnome-panel, gnome-session, nautilus, etc
+Name: gnome-desktop3
+Version: 3.8.4
+Release: 1%{?dist}
+URL: http://www.gnome.org
+Source0: http://download.gnome.org/sources/gnome-desktop/3.8/gnome-desktop-%{version}.tar.xz
+Patch0: 0001-default-input-sources-Switch-ja_JP-default-to-ibus-k.patch
 
 License: GPLv2+ and LGPLv2+
-URL: http://www.gnome.org
-Source0: http://download.gnome.org/sources/gnome-desktop/3.28/gnome-desktop-%{version}.tar.xz
+Group: System Environment/Libraries
 
-BuildRequires: pkgconfig(gdk-pixbuf-2.0) >= %{gdk_pixbuf2_version}
-BuildRequires: pkgconfig(gio-2.0) >= %{glib2_version}
-BuildRequires: pkgconfig(glib-2.0) >= %{glib2_version}
-BuildRequires: pkgconfig(gobject-introspection-1.0)
-BuildRequires: pkgconfig(gsettings-desktop-schemas) >= %{gsettings_desktop_schemas_version}
-BuildRequires: pkgconfig(gtk+-3.0) >= %{gtk3_version}
-BuildRequires: pkgconfig(iso-codes)
-BuildRequires: pkgconfig(libseccomp)
-BuildRequires: pkgconfig(libudev)
-BuildRequires: pkgconfig(xkeyboard-config)
-BuildRequires: gettext
-BuildRequires: gtk-doc >= %{gtk_doc_version}
-BuildRequires: intltool
-BuildRequires: itstool
-BuildRequires: gnome-desktop3
-
-Requires: gdk-pixbuf2%{?_isa} >= %{gdk_pixbuf2_version}
-Requires: glib2%{?_isa} >= %{glib2_version}
-# Make sure that gnome-themes-standard gets pulled in for upgrades
-Requires: gnome-themes-standard
 # needed for GnomeWallClock
 Requires: gsettings-desktop-schemas >= %{gsettings_desktop_schemas_version}
 
-# Replace standalone bwrap with flatpak's
-Requires: flatpak
-Patch0: 0001-Use-flatpak-s-bwrap.patch
+Requires: redhat-menus
+
+# Make sure to update libgnome schema when changing this
+Requires: system-backgrounds-gnome
+
+# Make sure that gnome-themes-standard gets pulled in for upgrades
+Requires: gnome-themes-standard
+
+BuildRequires: gnome-common
+BuildRequires: gtk3-devel >= %{gtk3_version}
+BuildRequires: gobject-introspection-devel
+BuildRequires: gsettings-desktop-schemas-devel >= %{gsettings_desktop_schemas_version}
+BuildRequires: glib2-devel >= %{glib2_version}
+BuildRequires: startup-notification-devel >= %{startup_notification_version}
+BuildRequires: libxkbfile-devel
+BuildRequires: xkeyboard-config-devel
+BuildRequires: gettext
+BuildRequires: gtk-doc >= %{gtk_doc_version}
+BuildRequires: automake autoconf libtool intltool
+BuildRequires: itstool
+BuildRequires: iso-codes-devel
 
 # GnomeIdleMonitor API change breaks older gnome-shell versions
 Conflicts: gnome-shell < 3.7.90
 
-%if 0%{?fedora}
-# From rhughes-f20-gnome-3-12 copr
-Obsoletes: compat-gnome-desktop310 < 3.12
-%endif
-
 %description
 
-The %{name} package contains an internal library
+The gnome-desktop package contains an internal library
 (libgnomedesktop) used to implement some portions of the GNOME
 desktop, and also some data files and other shared components of the
 GNOME user environment.
 
 %package devel
-Summary: Libraries and headers for %{name}
+Summary: Libraries and headers for libgnome-desktop
 License: LGPLv2+
-Requires: %{name}%{?_isa} = %{version}-%{release}
+Group: Development/Libraries
+Requires: %name = %{version}-%{release}
+
+Requires: gtk3-devel >= %{gtk3_version}
+Requires: glib2-devel >= %{glib2_version}
+Requires: startup-notification-devel >= %{startup_notification_version}
 
 %description devel
 Libraries and header files for the GNOME-internal private library
 libgnomedesktop.
 
-%package  tests
-Summary:  Tests for the %{name} package
-Requires: %{name}%{?_isa} = %{version}-%{release}
-
-%description tests
-The %{name}-tests package contains tests that can be used to verify
-the functionality of the installed %{name} package.
-
 %prep
-%autosetup -p1 -n gnome-desktop-%{version}
+%setup -q -n gnome-desktop-%{version}
+%patch0 -p1
 
 %build
-%configure --enable-installed-tests
+%configure --with-pnp-ids-path="/usr/share/hwdata/pnp.ids"
 make %{?_smp_mflags}
 
 %install
-%make_install
+make install DESTDIR=$RPM_BUILD_ROOT
 
 # stuff we don't want
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
-
-# copy over previous soname for temporary ABI compat
-cp -a %{_libdir}/libgnome-desktop-3.so.12* $RPM_BUILD_ROOT%{_libdir}
+rm -f $RPM_BUILD_ROOT%{_libdir}/*.a
 
 %find_lang %{po_package} --all-name --with-gnome
 
@@ -96,13 +87,11 @@ cp -a %{_libdir}/libgnome-desktop-3.so.12* $RPM_BUILD_ROOT%{_libdir}
 %postun -p /sbin/ldconfig
 
 %files -f %{po_package}.lang
-%doc AUTHORS NEWS README
-%license COPYING COPYING.LIB
+%doc AUTHORS COPYING COPYING.LIB NEWS README
 %{_datadir}/gnome/gnome-version.xml
 %{_libexecdir}/gnome-rr-debug
 # LGPL
-%{_libdir}/libgnome-desktop-3.so.12*
-%{_libdir}/libgnome-desktop-3.so.17*
+%{_libdir}/lib*.so.*
 %{_libdir}/girepository-1.0/GnomeDesktop-3.0.typelib
 
 %files devel
@@ -114,42 +103,7 @@ cp -a %{_libdir}/libgnome-desktop-3.so.12* $RPM_BUILD_ROOT%{_libdir}
 %dir %{_datadir}/gtk-doc/html/
 %doc %{_datadir}/gtk-doc/html/gnome-desktop3/
 
-%files tests
-%{_libexecdir}/installed-tests/gnome-desktop
-%{_datadir}/installed-tests
-
 %changelog
-* Mon Jun 04 2018 Bastien Nocera <bnocera@redhat.com> - 3.28.2-2
-+ gnome-desktop3-3.28.2-2
-- Bump release to build with flatpak's bwrap
-- Related: #1567479
-
-* Thu May 10 2018 Kalev Lember <klember@redhat.com> - 3.28.2-1
-- Update to 3.28.2
-- Resolves: #1567479
-
-* Wed Apr 19 2017 Rui Matos <rmatos@redhat.com> - 3.22.2-2
-- Fix a crash
-  Resolves: #1437059
-
-* Tue Nov 15 2016 Kalev Lember <klember@redhat.com> - 3.22.2-1
-- Update to 3.22.2
-- Resolves: #1386887
-
-* Wed Nov 12 2014 Kalev Lember <kalevlember@gmail.com> - 3.14.2-1
-- Update to 3.14.2
-- Resolves: #1174444
-
-* Fri Jan 31 2014 Ray Strode <rstrode@redhat.com> 3.8.4-4
-- Don't use glibc internal locale archive.
-  Resolves: #1045405
-
-* Fri Jan 24 2014 Daniel Mach <dmach@redhat.com> - 3.8.4-3
-- Mass rebuild 2014-01-24
-
-* Fri Dec 27 2013 Daniel Mach <dmach@redhat.com> - 3.8.4-2
-- Mass rebuild 2013-12-27
-
 * Wed Sep  4 2013 Rui Matos <rmatos@redhat.com> - 3.8.4-1
 - Update to 3.8.4
 

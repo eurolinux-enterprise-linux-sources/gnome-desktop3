@@ -15,7 +15,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, see <http://www.gnu.org/licenses/>.
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
  * Authors: William Jon McCann <mccann@jhu.edu>
  */
@@ -54,8 +55,6 @@ struct _GnomeIdleMonitorClass
         GObjectClass          parent_class;
 };
 
-G_DEFINE_AUTOPTR_CLEANUP_FUNC(GnomeIdleMonitor, g_object_unref)
-
 typedef void (*GnomeIdleMonitorWatchFunc) (GnomeIdleMonitor      *monitor,
                                            guint                  id,
                                            gpointer               user_data);
@@ -63,8 +62,7 @@ typedef void (*GnomeIdleMonitorWatchFunc) (GnomeIdleMonitor      *monitor,
 GType              gnome_idle_monitor_get_type     (void);
 
 GnomeIdleMonitor * gnome_idle_monitor_new          (void);
-GnomeIdleMonitor * gnome_idle_monitor_new_for_device (GdkDevice  *device,
-						      GError    **error);
+GnomeIdleMonitor * gnome_idle_monitor_new_for_device (GdkDevice *device);
 
 guint              gnome_idle_monitor_add_idle_watch    (GnomeIdleMonitor         *monitor,
 							 guint64                   interval_msec,
@@ -80,7 +78,7 @@ guint              gnome_idle_monitor_add_user_active_watch (GnomeIdleMonitor   
 void               gnome_idle_monitor_remove_watch (GnomeIdleMonitor         *monitor,
                                                     guint                     id);
 
-guint64            gnome_idle_monitor_get_idletime (GnomeIdleMonitor         *monitor);
+gint64             gnome_idle_monitor_get_idletime (GnomeIdleMonitor         *monitor);
 
 G_END_DECLS
 

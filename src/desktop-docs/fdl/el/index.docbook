@@ -37,20 +37,7 @@
     
     <othercredit class="translator">
       <personname>
-        <firstname>Ελληνική μεταφραστική ομάδα GNOME</firstname>
-      </personname>
-      <email>team@gnome.gr</email>
-    </othercredit>
-    <copyright>
-      
-        <year>2009</year>
-      
-      <holder>Ελληνική μεταφραστική ομάδα GNOME</holder>
-    </copyright>
-  
-    <othercredit class="translator">
-      <personname>
-        <firstname>Τζένη Πετούμενου</firstname>
+        <firstname> Τζένη Πετούμενου</firstname>
       </personname>
       <email>epetoumenou@gmail.com</email>
     </othercredit>
@@ -58,7 +45,7 @@
       
         <year>2009</year>
       
-      <holder>Τζένη Πετούμενου</holder>
+      <holder> Τζένη Πετούμενου</holder>
     </copyright>
   </articleinfo>
       

@@ -1,8 +1,8 @@
 typedef struct
 {
-  const gchar *const locale;
-  const gchar *const type;
-  const gchar *const id;
+  const gchar const *locale;
+  const gchar const *type;
+  const gchar const *id;
 } DefaultInputSource;
 
 static DefaultInputSource default_input_sources[] =
@@ -12,7 +12,6 @@ static DefaultInputSource default_input_sources[] =
   { "ast_ES",   "xkb",          "es+ast" },
   { "az_AZ",    "xkb",          "az" },
   { "be_BY",    "xkb",          "by" },
-  { "bg_BG",    "xkb",          "bg+phonetic" },
   { "bn_IN",    "ibus",         "m17n:bn:inscript" },
   { "cat_ES",   "xkb",          "es+cat" },
   { "cs_CZ",    "xkb",          "cz" },
@@ -24,9 +23,6 @@ static DefaultInputSource default_input_sources[] =
   { "en_US",    "xkb",          "us" },
   { "en_ZA",    "xkb",          "za" },
   { "es_ES",    "xkb",          "es" },
-  { "es_GT",    "xkb",          "latam" },
-  { "es_MX",    "xkb",          "latam" },
-  { "fr_BE",    "xkb",          "be" },
   { "fr_CH",    "xkb",          "ch+fr" },
   { "fr_FR",    "xkb",          "fr+oss" },
   { "gl_ES",    "xkb",          "es" },
@@ -34,7 +30,7 @@ static DefaultInputSource default_input_sources[] =
   { "he_IL",    "xkb",          "il" },
   { "hi_IN",    "ibus",         "m17n:hi:inscript" },
   { "it_IT",    "xkb",          "it" },
-  { "ja_JP",    "ibus",         "kkc" },
+  { "ja_JP",    "ibus",         "anthy" },
   { "kn_IN",    "ibus",         "m17n:kn:kgp" },
   { "ko_KR",    "ibus",         "hangul" },
   { "mai_IN",   "ibus",         "m17n:mai:inscript" },
@@ -54,6 +50,6 @@ static DefaultInputSource default_input_sources[] =
   { "ur_IN",    "ibus",         "m17n:ur:phonetic" },
   { "zh_CN",    "ibus",         "libpinyin" },
   { "zh_HK",    "ibus",         "cangjie" },
-  { "zh_TW",    "ibus",         "libzhuyin" },
+  { "zh_TW",    "ibus",         "chewing" },
   { NULL,       NULL,           NULL }
 };

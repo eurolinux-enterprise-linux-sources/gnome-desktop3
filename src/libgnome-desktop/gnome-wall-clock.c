@@ -25,6 +25,7 @@
 #include "config.h"
 
 #include <glib/gi18n-lib.h>
+#include <langinfo.h>
 
 #define GNOME_DESKTOP_USE_UNSTABLE_API
 #include "gnome-wall-clock.h"
@@ -42,6 +43,7 @@ struct _GnomeWallClockPrivate {
 	GSettings    *desktop_settings;
 
 	gboolean time_only;
+	gboolean ampm_available;
 };
 
 enum {
@@ -68,6 +70,7 @@ static void
 gnome_wall_clock_init (GnomeWallClock *self)
 {
 	GFile *tz;
+	const char *ampm;
 
 	self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self, GNOME_TYPE_WALL_CLOCK, GnomeWallClockPrivate);
 
@@ -84,11 +87,15 @@ gnome_wall_clock_init (GnomeWallClock *self)
 	self->priv->desktop_settings = g_settings_new ("org.gnome.desktop.interface");
 	g_signal_connect (self->priv->desktop_settings, "changed", G_CALLBACK (on_schema_change), self);
 
+	ampm = nl_langinfo (AM_STR);
+	if (ampm != NULL && *ampm != '\0')
+		self->priv->ampm_available = TRUE;
+
 	update_clock (self);
 }
 
 static void
-gnome_wall_clock_finalize (GObject *object)
+gnome_wall_clock_dispose (GObject *object)
 {
 	GnomeWallClock *self = GNOME_WALL_CLOCK (object);
 
@@ -97,8 +104,24 @@ gnome_wall_clock_finalize (GObject *object)
 		self->priv->clock_update_id = 0;
 	}
 
-	g_clear_object (&self->priv->tz_monitor);
-	g_clear_object (&self->priv->desktop_settings);
+	if (self->priv->tz_monitor != NULL) {
+		g_object_unref (self->priv->tz_monitor);
+		self->priv->tz_monitor = NULL;
+	}
+
+	if (self->priv->desktop_settings != NULL) {
+		g_object_unref (self->priv->desktop_settings);
+		self->priv->desktop_settings = NULL;
+	}
+
+	G_OBJECT_CLASS (gnome_wall_clock_parent_class)->dispose (object);
+}
+
+static void
+gnome_wall_clock_finalize (GObject *object)
+{
+	GnomeWallClock *self = GNOME_WALL_CLOCK (object);
+
 	g_time_zone_unref (self->priv->timezone);
 	g_free (self->priv->clock_string);
 
@@ -160,6 +183,7 @@ gnome_wall_clock_class_init (GnomeWallClockClass *klass)
 
 	gobject_class->get_property = gnome_wall_clock_get_property;
 	gobject_class->set_property = gnome_wall_clock_set_property;
+	gobject_class->dispose = gnome_wall_clock_dispose;
 	gobject_class->finalize = gnome_wall_clock_finalize;
 
 	/**
@@ -205,111 +229,12 @@ gnome_wall_clock_class_init (GnomeWallClockClass *klass)
 	g_type_class_add_private (gobject_class, sizeof (GnomeWallClockPrivate));
 }
 
-/* Replace 'target' with 'replacement' in the input string. */
-static char *
-string_replace (const char *input,
-                const char *target,
-                const char *replacement)
-{
-	char **pieces = NULL;
-	char *output = NULL;
-
-	pieces = g_strsplit (input, target, -1);
-	output = g_strjoinv (replacement, pieces);
-	g_strfreev (pieces);
-	return output;
-}
-
-/* This function wraps g_date_time_format, replacing colon with the ratio
- * character as it looks visually better in time strings.
- */
-static char *
-date_time_format (GDateTime *datetime,
-                  const char *format)
-{
-	char *format_with_colon;
-	char *ret;
-	char *tmp;
-	gboolean is_utf8;
-
-	is_utf8 = g_get_charset (NULL);
-
-	/* First, replace ratio with plain colon before passing it to
-	 * g_date_time_format.  */
-	tmp = string_replace (format, "∶", ":");
-	format_with_colon = g_date_time_format (datetime, tmp);
-	g_free (tmp);
-
-	/* Then, after formatting, replace the plain colon with ratio, and
-	 * prepend it with an LTR marker to force direction. */
-	if (is_utf8)
-		ret = string_replace (format_with_colon, ":", "\xE2\x80\x8E∶");
-	else
-		ret = g_strdup (format_with_colon);
-
-	g_free (format_with_colon);
-	return ret;
-}
-
-/**
- * gnome_wall_clock_string_for_datetime:
- *
- * Returns: (skip): a newly allocated string representing the date & time
- * passed, with the options applied.
- */
-char *
-gnome_wall_clock_string_for_datetime (GnomeWallClock      *self,
-				      GDateTime           *now,
-				      GDesktopClockFormat  clock_format,
-				      gboolean             show_weekday,
-				      gboolean             show_full_date,
-				      gboolean             show_seconds)
-{
-	const char *format_string;
-
-	if (clock_format == G_DESKTOP_CLOCK_FORMAT_24H) {
-		if (show_full_date) {
-			/* Translators: This is the time format with full date used
-			   in 24-hour mode. */
-			format_string = show_seconds ? _("%a %b %e, %R:%S")
-				: _("%a %b %e, %R");
-		} else if (show_weekday) {
-			/* Translators: This is the time format with day used
-			   in 24-hour mode. */
-			format_string = show_seconds ? _("%a %R:%S")
-				: _("%a %R");
-		} else {
-			/* Translators: This is the time format without date used
-			   in 24-hour mode. */
-			format_string = show_seconds ? _("%R:%S") : _("%R");
-		}
-	} else {
-		if (show_full_date) {
-			/* Translators: This is a time format with full date used
-			   for AM/PM. */
-			format_string = show_seconds ? _("%a %b %e, %l:%M:%S %p")
-				: _("%a %b %e, %l:%M %p");
-		} else if (show_weekday) {
-			/* Translators: This is a time format with day used
-			   for AM/PM. */
-			format_string = show_seconds ? _("%a %l:%M:%S %p")
-				: _("%a %l:%M %p");
-		} else {
-			/* Translators: This is a time format without date used
-			   for AM/PM. */
-			format_string = show_seconds ? _("%l:%M:%S %p")
-				: _("%l:%M %p");
-		}
-	}
-
-	return date_time_format (now, format_string);
-}
-
 static gboolean
 update_clock (gpointer data)
 {
 	GnomeWallClock   *self = data;
 	GDesktopClockFormat clock_format;
+	const char *format_string;
 	gboolean show_full_date;
 	gboolean show_weekday;
 	gboolean show_seconds;
@@ -318,8 +243,8 @@ update_clock (gpointer data)
 	GDateTime *expiry;
 
 	clock_format = g_settings_get_enum (self->priv->desktop_settings, "clock-format");
-	show_weekday = !self->priv->time_only && g_settings_get_boolean (self->priv->desktop_settings, "clock-show-weekday");
-	show_full_date = !self->priv->time_only && g_settings_get_boolean (self->priv->desktop_settings, "clock-show-date");
+	show_weekday = !self->priv->time_only;
+	show_full_date = show_weekday && g_settings_get_boolean (self->priv->desktop_settings, "clock-show-date");
 	show_seconds = g_settings_get_boolean (self->priv->desktop_settings, "clock-show-seconds");
 
 	now = g_date_time_new_now (self->priv->timezone);
@@ -327,7 +252,7 @@ update_clock (gpointer data)
 		expiry = g_date_time_add_seconds (now, 1);
 	else
 		expiry = g_date_time_add_seconds (now, 60 - g_date_time_get_second (now));
-
+  
 	if (self->priv->clock_update_id)
 		g_source_remove (self->priv->clock_update_id);
 
@@ -337,17 +262,57 @@ update_clock (gpointer data)
 	self->priv->clock_update_id = g_source_attach (source, NULL);
 	g_source_unref (source);
 
+	if (clock_format == G_DESKTOP_CLOCK_FORMAT_24H ||
+	    self->priv->ampm_available == FALSE) {
+		if (show_full_date) {
+			/* Translators: This is the time format with full date used
+			   in 24-hour mode.
+                           The character between %R and %S is U+2236 RATIO */
+			format_string = show_seconds ? _("%a %b %e, %R∶%S")
+				: _("%a %b %e, %R");
+		} else if (show_weekday) {
+			/* Translators: This is the time format with day used
+			   in 24-hour mode.
+                           The character between %R and %S is U+2236 RATIO */
+			format_string = show_seconds ? _("%a %R∶%S")
+				: _("%a %R");
+		} else {
+			/* Translators: This is the time format without date used
+			   in 24-hour mode.
+                           The character between %R and %S is U+2236 RATIO */
+			format_string = show_seconds ? _("%R∶%S") : _("%R");
+		}
+	} else {
+		if (show_full_date) {
+			/* Translators: This is a time format with full date used
+			   for AM/PM.
+                           The Unicode characters are U+2236 RATIO and
+                           U+2009 THIN SPACE */
+			format_string = show_seconds ? _("%a %b %e, %l∶%M∶%S %p")
+				: _("%a %b %e, %l∶%M %p");
+		} else if (show_weekday) {
+			/* Translators: This is a time format with day used
+			   for AM/PM.
+                           The Unicode characters are U+2236 RATIO and
+                           U+2009 THIN SPACE */
+			format_string = show_seconds ? _("%a %l∶%M∶%S %p")
+				: _("%a %l∶%M %p");
+		} else {
+			/* Translators: This is a time format without date used
+			   for AM/PM.
+                           The Unicode characters are U+2236 RATIO and
+                           U+2009 THIN SPACE */
+			format_string = show_seconds ? _("%l∶%M∶%S %p")
+				: _("%l∶%M %p");
+		}
+	}
+
 	g_free (self->priv->clock_string);
-	self->priv->clock_string = gnome_wall_clock_string_for_datetime (self,
-									 now,
-									 clock_format,
-									 show_weekday,
-									 show_full_date,
-									 show_seconds);
+	self->priv->clock_string = g_date_time_format (now, format_string);
 
 	g_date_time_unref (now);
 	g_date_time_unref (expiry);
-
+      
 	g_object_notify ((GObject*)self, "clock");
 
 	return FALSE;
@@ -371,12 +336,6 @@ on_schema_change (GSettings *schema,
                   const char *key,
                   gpointer user_data)
 {
-	if (g_strcmp0 (key, "clock-format") != 0 &&
-	    g_strcmp0 (key, "clock-show-seconds") != 0 &&
-	    g_strcmp0 (key, "clock-show-date") != 0) {
-		return;
-	}
-
 	g_debug ("Updating clock because schema changed");
 	update_clock (user_data);
 }

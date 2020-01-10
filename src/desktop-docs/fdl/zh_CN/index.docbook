@@ -196,13 +196,7 @@
     <title>文档的收集</title>
     <para>您可以制作含有<link linkend="fdl-document">文档</link>以及其它以本许可证发行文件的收集品，并且将本许可证对不同文件中的个别副本，以单一个包括在收集品的副本取代，其条件是要遵循在其它方面，给予一个文件逐字复制的允许本许可证的规则。</para>
     
-    <para>
-      You may extract a single document from such a collection, and
-      distribute it individually under this License, provided you
-      insert a copy of this License into the extracted document, and
-      follow this License in all other respects regarding verbatim
-      copying of that document.
-    </para>
+    <para>您可以从这样的一个收集品中抽取出一份单一的文档，并且在本许可证下将它单独地发布，其条件是要在抽取出的文件中插入本许可证的一份副本，并且在关于那份文件的逐字复制的所有其它方面，遵循本许可证。</para>
     </sect1>
     
   <sect1 id="fdl-section7" label="7">

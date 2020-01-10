@@ -13,56 +13,39 @@
     <title>Llicència de documentació lliure de GNU</title>
       <releaseinfo>Versió 1.1, Març de 2000</releaseinfo>
       
-      <copyright><year>2000</year><holder>Free Software Foundation, Inc.</holder></copyright>
+      <copyright>
+	<year>2000</year><holder>Free Software Foundation, Inc.</holder>
+      </copyright>
 
-      <author><surname>Free Software Foundation</surname></author>
+      <author>
+        <surname>Free Software Foundation</surname>
+      </author>
 
       <publisher role="maintainer">
         <publishername>Projecte de documentació del GNOME</publishername>
       </publisher>
 
       <revhistory>
-        <revision><revnumber>1.1</revnumber> <date>2000-03</date></revision>
+        <revision>
+          <revnumber>1.1</revnumber>
+          <date>2000-03</date>
+        </revision>
       </revhistory>
       
       <legalnotice id="legalnotice">
-	<para><address>Free Software Foundation, Inc. 
+	<para>
+	  <address>Free Software Foundation, Inc. 
              <street>51 Franklin Street, Fifth Floor</street>, 
              <city>Boston</city>, 
              <state>MA</state> <postcode>02110-1301</postcode>
-	    <country>USA</country></address>. Es permet la còpia i la redistribució de còpies exactes d'aquesta llicència, però no se'n permet la modificació.</para>
+	    <country>USA</country></address>. Everyone is permitted to
+	    copy and distribute verbatim copies of this license
+	    document, but changing it is not allowed.
+	</para>
       </legalnotice>
 
       <abstract role="description"><para>La finalitat d'aquesta Llicència és crear manuals, llibres de text o altres documents escrits <quote>lliures</quote> pel que fa a la llibertat; per assegurar tothom la llibertat real de copiar-los i redistribuir-los, modificant-los o no, amb finalitats comercials o no. Addicionalment, aquesta Llicència assegura l'autor i l'editor una manera d'obtenir crèdit per la seva obra sense ser considerat responsables de les modificacions fetes pels altres.</para></abstract>
-    
-    <othercredit class="translator">
-      <personname>
-        <firstname>Joan Duran</firstname>
-      </personname>
-      <email>jodufi@gmail.com</email>
-    </othercredit>
-    <copyright>
-      
-        <year>2009</year>
-      
-      <holder>Joan Duran</holder>
-    </copyright>
-  
-    <othercredit class="translator">
-      <personname>
-        <firstname>Gil Forcada</firstname>
-      </personname>
-      <email>gilforcada@guifi.net</email>
-    </othercredit>
-    <copyright>
-      
-        <year>2011</year>
-      
-        <year>2013</year>
-      
-      <holder>Gil Forcada</holder>
-    </copyright>
-  </articleinfo>
+    </articleinfo>
       
 
   <sect1 id="fdl-preamble" label="0">
@@ -194,13 +177,7 @@
     <title>RECOPILACIONS DE DOCUMENTS</title>
     <para>Podeu crear una recopilació que estigui formada pel <link linkend="fdl-document">Document</link> i altres documents publicats sota aquesta Llicència, i reemplaçar les còpies individuals d'aquesta Llicència dels diversos documents per una de sola que quedi inclosa a la recopilació, sempre que seguiu les normes d'aquesta Llicència pel que fa a la còpia literal de cadascun dels documents en tots els altres aspectes.</para>
     
-    <para>
-      You may extract a single document from such a collection, and
-      distribute it individually under this License, provided you
-      insert a copy of this License into the extracted document, and
-      follow this License in all other respects regarding verbatim
-      copying of that document.
-    </para>
+    <para>Podeu extreure un document individual d'aquesta col·lecció i distribuir-lo individualment sota aquesta Llicència, sempre que inseriu una còpia d'aquesta Llicència en el document que ha estat extret i que seguiu aquesta Llicència en tots els altres aspectes relatius a la còpia literal del document.</para>
     </sect1>
     
   <sect1 id="fdl-section7" label="7">

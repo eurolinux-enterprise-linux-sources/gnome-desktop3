@@ -11,25 +11,35 @@
 <article id="index" lang="ca">
   <articleinfo>
     <title>Llicència pública general de GNU</title>    
-    <copyright><year>2000</year> <holder>Free Software Foundation, Inc.</holder></copyright>
+    <copyright>
+      <year>2000</year>
+      <holder>Free Software Foundation, Inc.</holder>
+    </copyright>
 
-      <author><surname>Free Software Foundation</surname></author>
+      <author>
+        <surname>Free Software Foundation</surname>
+      </author>
 
       <publisher role="maintainer">
         <publishername>Projecte de documentació del GNOME</publishername>
       </publisher>
 
       <revhistory>
-        <revision><revnumber>2</revnumber> <date>1991-06</date></revision>
+        <revision>
+          <revnumber>2</revnumber>
+          <date>1991-06</date>
+        </revision>
       </revhistory>
 
     <legalnotice id="legalnotice">
-      <para><address>Free Software Foundation, Inc. 
+      <para>
+	<address>Free Software Foundation, Inc. 
 	  <street>51 Franklin Street, Fifth Floor</street>, 
 	  <city>Boston</city>, 
 	  <state>MA</state> <postcode>02110-1301</postcode>
 	  <country>USA</country>
-	</address>.</para>
+	</address>.
+      </para>
 
       <para>Tothom pot copiar i distribuir còpies literals d'aquest document de llicència, però no es permet de fer-hi modificacions.</para>
     </legalnotice>
@@ -37,32 +47,6 @@
     <releaseinfo>Versió 2, Juny de 1991</releaseinfo>
 
     <abstract role="description"><para>Les llicències de la majoria de programari estan dissenyades per a prendre-us la llibertat de compartir-lo i modificar-lo. Contràriament, la Llicència pública general de GNU està pensada per a garantir-vos la llibertat de compartir i modificar el programari lliure, per tal d'assegurar que el programari sigui lliure per a tots els seus usuaris i usuàries.</para></abstract>
-  
-    <othercredit class="translator">
-      <personname>
-        <firstname>Sílvia Miranda</firstname>
-      </personname>
-      <email>silviamira@gmail.com</email>
-    </othercredit>
-    <copyright>
-      
-        <year>2007.</year>
-      
-      <holder>Sílvia Miranda</holder>
-    </copyright>
-  
-    <othercredit class="translator">
-      <personname>
-        <firstname>Gil Forcada</firstname>
-      </personname>
-      <email>gilforcada@guifi.net</email>
-    </othercredit>
-    <copyright>
-      
-        <year>2013</year>
-      
-      <holder>Gil Forcada</holder>
-    </copyright>
   </articleinfo>
 
   <sect1 id="preamble" label="none">
@@ -76,14 +60,23 @@
 
     <para>Per exemple, si distribuïu còpies d'un programa, tant si el distribuïu de franc com si en feu pagar un preu, heu de donar als destinataris els mateixos drets que teniu vós. Us heu d'assegurar que ells també en rebin o puguin aconseguir-ne el codi font, i els heu de fer saber aquests termes per tal que coneguin els seus drets. </para>
 
-    <para>Protegim els vostres drets amb dos passos: <orderedlist numeration="arabic">
+    <para>
+      We protect your rights with two steps:
+
+      <orderedlist numeration="arabic">
 	<listitem>
-	  <para>Ens reservem el copyright del programari, i </para>
+	  <para>
+	    copyright the software, and
+	  </para>
 	</listitem>
 	<listitem>
-	  <para>us oferim aquesta llicència que us dóna permís legal per a copiar, distribuir i/o modificar el programari. </para>
+	  <para>
+	    offer you this license which gives you legal permission to copy, 
+	    distribute and/or modify the software.
+	  </para>
 	</listitem>
-      </orderedlist></para>
+      </orderedlist>
+    </para>
 
     <para>A més a més, per protegir-nos i protegir l'autor o autora, volem estar segurs que tothom entén que no hi ha cap garantia per a aquest programari lliure. Si algú modifica el programari i el passa, volem que els destinataris sàpiguen que el que tenen no és l'original, per tal que qualsevol problema que hagin pogut introduir terceres persones no repercuteixi en la reputació de l'autor o autora original. </para>
 
@@ -112,20 +105,50 @@
 
     <sect2 id="sect2" label="2">
       <title>Secció 2</title>
-      <para>Podeu modificar la còpia o còpies del programa o qualsevol tros del programa i, així, fer una obra basada en el programa, i podeu copiar i distribuir aquestes modificacions o obres sota els termes de la <link linkend="sect1">Secció 1</link> anterior, sempre que també compliu les  condicions següents: <orderedlist numeration="loweralpha">
+      <para>
+	You may modify your copy or copies of the Program or any portion of it, thus 
+	forming a work based on the Program, and copy and distribute such modifications 
+	or work under the terms of <link linkend="sect1">Section 1</link> above, provided 
+	that you also meet all of these conditions:
+
+	<orderedlist numeration="loweralpha">
 	  <listitem>
-	    <para>Heu de fer que els fitxers modificats portin indicacions ben visibles que diguin que heu modificat els fitxers, i hi heu d'escriure la data de la modificació.</para>
+	    <para>
+	      You must cause the modified files to carry prominent notices stating that 
+	      you changed the files and the date of any change.
+	    </para>
 	  </listitem>
 	  <listitem>
-	    <para>Heu d'atorgar gratuïtament a totes les terceres parts els termes d'aquesta mateixa llicència sobre la totalitat de qualsevol obra que distribuïu o publiqueu, que completament o en part contingui o sigui un derivat del programa o qualsevol part del programa.</para>
+	    <para>
+	      You must cause any work that you distribute or publish, that in whole or 
+	      in part contains or is derived from the Program or any part thereof, to be 
+	      licensed as a whole at no charge to all third parties under the terms of 
+	      this License.
+	    </para>
 	  </listitem>
 	  <listitem>
-	    <para>Si el programa modificat normalment llegeix instruccions interactivament quan s'executa, heu de fer que quan s'arrenqui per a aquest ús interactiu de la manera més habitual, imprimeixi o mostri un missatge que inclogui una nota de copyright adient i un avís de que no hi ha garantia (o, si no, que digui que la garantia l'oferiu vós mateix) i que els usuaris poden redistribuir el programa sota aquestes condicions, i que indiqui a l'usuari o usuària com veure una còpia d'aquesta llicència. <note>
-		<title>Excepció:</title>
-		<para>Si el programa és interactiu però normalment no porta cap indicació com la que s'ha descrit, tampoc cal que les obres que feu basades en el programa en portin cap. </para>
-	      </note></para>
+	    <para>
+	      If the modified program normally reads commands interactively when run, you 
+	      must cause it, when started running for such interactive use in the most 
+	      ordinary way, to print or display an announcement including an appropriate 
+	      copyright notice and a notice that there is no warranty (or else, saying 
+	      that you provide a warranty) and that users may redistribute the program 
+	      under these conditions, and telling the user how to view a copy of this 
+	      License. 
+
+	      <note>
+		<title>Exception:</title>
+		<para>
+		  If the Program itself is interactive but does not normally print such an 
+		  announcement, your work based on the Program is not required to print an 
+		  announcement. 
+		</para>
+	      </note>
+
+	    </para>
 	  </listitem>
-	</orderedlist></para>
+	</orderedlist>
+      </para>
 
       <para>Aquests requeriments afecten l'obra modificada com un tot. Si hi ha parts identificables que no estan derivades del programa, i es poden considerar raonablement com a obres independents i separades en si mateixes, aleshores aquesta llicència i els seus termes no s'apliquen a aquelles parts quan les distribuïu com a obres separades. Però quan distribuïu aquestes mateixes parts integrades en un tot que sigui una obra basada en el programa, la distribució del tot s'ha de fer d'acord amb els termes d'aquesta llicència, i els permisos atorgats a altres beneficiaris abasten el tot sencer i, per tant, totes i cadascuna de les parts, independentment de qui les hagi escrites. </para>
 
@@ -137,17 +160,39 @@
     <sect2 id="sect3" label="3">
       <title>Secció 3</title>
 
-      <para>Podeu copiar i distribuir el programa (o una obra basada en el programa, segons la <link linkend="sect2">secció 2</link>) en forma executable o de codi objecte d'acord amb els termes de les <link linkend="sect1">seccions 1</link> i <link linkend="sect2">2</link> anteriors, amb la condició que també feu una de les coses següents: <orderedlist numeration="loweralpha">
+      <para>
+	You may copy and distribute the Program (or a work based on it, under 
+	<link linkend="sect2">Section 2</link>) in object code or executable form under the terms of 
+	<link linkend="sect1">Sections 1</link> and <link linkend="sect2">2</link> above provided that 
+	you also do one of the following:
+
+	<orderedlist numeration="loweralpha">
 	  <listitem>
-	    <para>L'acompanyeu amb el codi font complet corresponent, capaç de ser llegit per un ordinador, que es distribuirà d'acord amb els termes de les <link linkend="sect1">seccions 1</link> i <link linkend="sect2">2</link> anteriors en un mitjà utilitzat habitualment per a l'intercanvi de programari; o, </para>
+	    <para>
+	      Accompany it with the complete corresponding machine-readable source code, which 
+	      must be distributed under the terms of <link linkend="sect1">Sections 1</link> and <link linkend="sect2">2</link> above on a medium 
+	      customarily used for software interchange; or,
+	    </para>
 	  </listitem>
 	  <listitem>
-	    <para>L'acompanyeu amb un oferiment per escrit, amb validesa com a mínim fins al cap de tres anys, de subministrar a tota tercera part, i per un preu no superior al que us costi físicament realitzar la distribució, el codi font complet corresponent, que es distribuirà d'acord amb els termes de les seccions 1 i 2 anteriors en un mitjà utilitzat habitualment per a l'intercanvi de programari; o, </para>
+	    <para>
+	      Accompany it with a written offer, valid for at least three years, to give any 
+	      third party, for a charge no more than your cost of physically performing source 
+	      distribution, a complete machine-readable copy of the corresponding source code, 
+	      to be distributed under the terms of Sections 1 and 2 above on a medium customarily 
+	      used for software interchange; or,
+	    </para>
 	  </listitem>
 	  <listitem>
-	    <para>L'acompanyeu amb la informació que hagueu rebut de l'oferiment de distribuir el codi font corresponent (aquesta alternativa només és permesa per a la distribució no comercial i només si heu rebut el programa en forma executable o de codi objecte amb aquest oferiment, d'acord amb la subsecció b anterior).</para>
+	    <para>
+	      Accompany it with the information you received as to the offer to distribute 
+	      corresponding source code. (This alternative is allowed only for noncommercial 
+	      distribution and only if you received the program in object code or executable form 
+	      with such an offer, in accord with Subsection b above.)
+	    </para>
 	  </listitem>
-	</orderedlist></para>
+	</orderedlist>
+      </para>
 
       <para>El codi font per a una obra vol dir la forma preferida de l'obra per a fer-hi modificacions. Per una obra executable, el codi font complet vol dir tot el codi font per a tots els mòduls que conté, més tots els fitxers de definició d'interfícies associats si s'escau, més els scripts que es facin servir per a controlar la compilació i la instal·lació de l'executable si s'escau. Tanmateix, com a excepció especial, el codi font que es distribueixi no cal que inclogui res del que normalment es distribueixi (sia en forma binària o de codi font) amb els components principals (compilador, nucli o similars) del sistema operatiu en què s'executa el programa, tret que el component en qüestió acompanyi l'executable.</para>
       

@@ -54,15 +54,13 @@ typedef struct _GnomeDesktopThumbnailFactoryPrivate GnomeDesktopThumbnailFactory
 
 struct _GnomeDesktopThumbnailFactory {
 	GObject parent;
-
+	
 	GnomeDesktopThumbnailFactoryPrivate *priv;
 };
 
 struct _GnomeDesktopThumbnailFactoryClass {
 	GObjectClass parent;
 };
-
-G_DEFINE_AUTOPTR_CLEANUP_FUNC(GnomeDesktopThumbnailFactory, g_object_unref)
 
 GType                  gnome_desktop_thumbnail_factory_get_type (void);
 GnomeDesktopThumbnailFactory *gnome_desktop_thumbnail_factory_new      (GnomeDesktopThumbnailSize     size);
@@ -91,11 +89,21 @@ void                   gnome_desktop_thumbnail_factory_create_failed_thumbnail (
 
 
 /* Thumbnailing utils: */
+gboolean   gnome_desktop_thumbnail_has_uri           (GdkPixbuf          *pixbuf,
+						      const char         *uri);
 gboolean   gnome_desktop_thumbnail_is_valid          (GdkPixbuf          *pixbuf,
 						      const char         *uri,
 						      time_t              mtime);
+char *     gnome_desktop_thumbnail_md5               (const char         *uri);
 char *     gnome_desktop_thumbnail_path_for_uri      (const char         *uri,
 						      GnomeDesktopThumbnailSize  size);
+
+
+/* Pixbuf utils */
+
+GdkPixbuf *gnome_desktop_thumbnail_scale_down_pixbuf (GdkPixbuf          *pixbuf,
+						      int                 dest_width,
+						      int                 dest_height);
 
 G_END_DECLS
 

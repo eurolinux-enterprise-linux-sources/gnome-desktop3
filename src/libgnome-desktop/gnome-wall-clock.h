@@ -31,7 +31,6 @@
 #endif
 
 #include <gio/gio.h>
-#include <gdesktop-enums.h>
 
 G_BEGIN_DECLS
 
@@ -58,8 +57,6 @@ struct _GnomeWallClockClass
 	GObjectClass parent_class;
 };
 
-G_DEFINE_AUTOPTR_CLEANUP_FUNC(GnomeWallClock, g_object_unref)
-
 GType             gnome_wall_clock_get_type      (void);
 
 GnomeWallClock *  gnome_wall_clock_new           (void);
@@ -67,13 +64,6 @@ GnomeWallClock *  gnome_wall_clock_new           (void);
 const char *      gnome_wall_clock_get_clock     (GnomeWallClock *clock);
 
 GTimeZone *       gnome_wall_clock_get_timezone  (GnomeWallClock *clock);
-
-char *            gnome_wall_clock_string_for_datetime (GnomeWallClock      *self,
-							GDateTime           *now,
-							GDesktopClockFormat  clock_format,
-							gboolean             show_weekday,
-							gboolean             show_full_date,
-							gboolean             show_seconds);
 
 G_END_DECLS
 

@@ -25,7 +25,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <gio/gio.h>
+#include <X11/XKBlib.h>
+#include <X11/extensions/XKBrules.h>
+
+#include <gdk/gdkx.h>
 
 #include <glib/gi18n-lib.h>
 #define XKEYBOARD_CONFIG_(String) ((char *) g_dgettext ("xkeyboard-config", String))
@@ -37,6 +40,12 @@
 #ifndef XKB_RULES_FILE
 #define XKB_RULES_FILE "evdev"
 #endif
+#ifndef XKB_LAYOUT
+#define XKB_LAYOUT "us"
+#endif
+#ifndef XKB_MODEL
+#define XKB_MODEL "pc105+inet"
+#endif
 
 typedef struct _Layout Layout;
 struct _Layout
@@ -47,8 +56,6 @@ struct _Layout
   gchar *description;
   gboolean is_variant;
   const Layout *main_layout;
-  GSList *iso639Ids;
-  GSList *iso3166Ids;
 };
 
 typedef struct _XkbOption XkbOption;
@@ -97,8 +104,6 @@ free_layout (gpointer data)
   g_free (layout->xkb_name);
   g_free (layout->short_desc);
   g_free (layout->description);
-  g_slist_free_full (layout->iso639Ids, g_free);
-  g_slist_free_full (layout->iso3166Ids, g_free);
   g_slice_free (Layout, layout);
 }
 
@@ -127,13 +132,88 @@ free_option_group (gpointer data)
   g_slice_free (XkbOptionGroup, group);
 }
 
+/**
+ * gnome_xkb_info_get_var_defs: (skip)
+ * @rules: (out) (transfer full): location to store the rules file
+ * path. Use g_free() when it's no longer needed
+ * @var_defs: (out) (transfer full): location to store a
+ * #XkbRF_VarDefsRec pointer. Use gnome_xkb_info_free_var_defs() to
+ * free it
+ *
+ * Gets both the XKB rules file path and the current XKB parameters in
+ * use by the X server.
+ *
+ * Since: 3.6
+ */
+void
+gnome_xkb_info_get_var_defs (gchar            **rules,
+                             XkbRF_VarDefsRec **var_defs)
+{
+  Display *display = GDK_DISPLAY_XDISPLAY (gdk_display_get_default ());
+  char *tmp;
+
+  g_return_if_fail (rules != NULL);
+  g_return_if_fail (var_defs != NULL);
+
+  *rules = NULL;
+  *var_defs = g_new0 (XkbRF_VarDefsRec, 1);
+
+  gdk_error_trap_push ();
+
+  /* Get it from the X property or fallback on defaults */
+  if (!XkbRF_GetNamesProp (display, rules, *var_defs) || !*rules)
+    {
+      *rules = strdup (XKB_RULES_FILE);
+      (*var_defs)->model = strdup (XKB_MODEL);
+      (*var_defs)->layout = strdup (XKB_LAYOUT);
+      (*var_defs)->variant = NULL;
+      (*var_defs)->options = NULL;
+    }
+
+  gdk_error_trap_pop_ignored ();
+
+  tmp = *rules;
+
+  if (*rules[0] == '/')
+    *rules = g_strdup (*rules);
+  else
+    *rules = g_build_filename (XKB_BASE, "rules", *rules, NULL);
+
+  free (tmp);
+}
+
+/**
+ * gnome_xkb_info_free_var_defs: (skip)
+ * @var_defs: #XkbRF_VarDefsRec instance to free
+ *
+ * Frees an #XkbRF_VarDefsRec instance allocated by
+ * gnome_xkb_info_get_var_defs().
+ *
+ * Since: 3.6
+ */
+void
+gnome_xkb_info_free_var_defs (XkbRF_VarDefsRec *var_defs)
+{
+  g_return_if_fail (var_defs != NULL);
+
+  free (var_defs->model);
+  free (var_defs->layout);
+  free (var_defs->variant);
+  free (var_defs->options);
+
+  g_free (var_defs);
+}
+
 static gchar *
 get_xml_rules_file_path (const gchar *suffix)
 {
+  XkbRF_VarDefsRec *xkb_var_defs;
   gchar *rules_file;
   gchar *xml_rules_file;
 
-  rules_file = g_build_filename (XKB_BASE, "rules", XKB_RULES_FILE, NULL);
+  gnome_xkb_info_get_var_defs (&rules_file, &xkb_var_defs);
+  gnome_xkb_info_free_var_defs (xkb_var_defs);
+
   xml_rules_file = g_strdup_printf ("%s%s", rules_file, suffix);
   g_free (rules_file);
 
@@ -287,7 +367,7 @@ add_layout_to_table (GHashTable  *table,
 {
   GHashTable *set;
 
-  if (!layout->id)
+  if (!layout->xkb_name)
     return;
 
   set = g_hash_table_lookup (table, key);
@@ -298,64 +378,10 @@ add_layout_to_table (GHashTable  *table,
     }
   else
     {
-      if (g_hash_table_contains (set, layout->id))
+      if (g_hash_table_contains (set, layout->xkb_name))
         return;
     }
-  g_hash_table_replace (set, layout->id, layout);
-}
-
-static void
-add_layout_to_locale_tables (Layout     *layout,
-                             GHashTable *layouts_by_language,
-                             GHashTable *layouts_by_country)
-{
-  GSList *l, *lang_codes, *country_codes;
-  gchar *language, *country;
-
-  lang_codes = layout->iso639Ids;
-  country_codes = layout->iso3166Ids;
-
-  if (layout->is_variant)
-    {
-      if (!lang_codes)
-        lang_codes = layout->main_layout->iso639Ids;
-      if (!country_codes)
-        country_codes = layout->main_layout->iso3166Ids;
-    }
-
-  for (l = lang_codes; l; l = l->next)
-    {
-      language = gnome_get_language_from_code ((gchar *) l->data, NULL);
-      if (language)
-        {
-          add_layout_to_table (layouts_by_language, language, layout);
-          g_free (language);
-        }
-    }
-
-  for (l = country_codes; l; l = l->next)
-    {
-      country = gnome_get_country_from_code ((gchar *) l->data, NULL);
-      if (country)
-        {
-          add_layout_to_table (layouts_by_country, country, layout);
-          g_free (country);
-        }
-    }
-}
-
-static void
-add_iso639 (Layout *layout,
-            gchar  *id)
-{
-  layout->iso639Ids = g_slist_prepend (layout->iso639Ids, id);
-}
-
-static void
-add_iso3166 (Layout *layout,
-             gchar  *id)
-{
-  layout->iso3166Ids = g_slist_prepend (layout->iso3166Ids, id);
+  g_hash_table_replace (set, layout->xkb_name, layout);
 }
 
 static void
@@ -386,9 +412,6 @@ parse_end_element (GMarkupParseContext  *context,
       g_hash_table_replace (priv->layouts_table,
                             priv->current_parser_layout->id,
                             priv->current_parser_layout);
-      add_layout_to_locale_tables (priv->current_parser_layout,
-                                   priv->layouts_by_language,
-                                   priv->layouts_by_country);
       priv->current_parser_layout = NULL;
     }
   else if (strcmp (element_name, "variant") == 0)
@@ -405,22 +428,15 @@ parse_end_element (GMarkupParseContext  *context,
                                                     priv->current_parser_variant->xkb_name,
                                                     NULL);
 
-      if (g_hash_table_contains (priv->layouts_table, priv->current_parser_variant->id))
-        {
-          g_clear_pointer (&priv->current_parser_variant, free_layout);
-          return;
-        }
-
       g_hash_table_replace (priv->layouts_table,
                             priv->current_parser_variant->id,
                             priv->current_parser_variant);
-      add_layout_to_locale_tables (priv->current_parser_variant,
-                                   priv->layouts_by_language,
-                                   priv->layouts_by_country);
       priv->current_parser_variant = NULL;
     }
   else if (strcmp (element_name, "iso639Id") == 0)
     {
+      gchar *language;
+
       if (!priv->current_parser_iso639Id)
         {
           g_set_error (error, G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT,
@@ -428,15 +444,23 @@ parse_end_element (GMarkupParseContext  *context,
           return;
         }
 
-      if (priv->current_parser_variant)
-        add_iso639 (priv->current_parser_variant, priv->current_parser_iso639Id);
-      else if (priv->current_parser_layout)
-        add_iso639 (priv->current_parser_layout, priv->current_parser_iso639Id);
+      language = gnome_get_language_from_code (priv->current_parser_iso639Id, NULL);
+      if (language)
+        {
+          if (priv->current_parser_variant)
+            add_layout_to_table (priv->layouts_by_language, language, priv->current_parser_variant);
+          else if (priv->current_parser_layout)
+            add_layout_to_table (priv->layouts_by_language, language, priv->current_parser_layout);
 
-      priv->current_parser_iso639Id = NULL;
+          g_free (language);
+        }
+
+      g_clear_pointer (&priv->current_parser_iso639Id, g_free);
     }
   else if (strcmp (element_name, "iso3166Id") == 0)
     {
+      gchar *country;
+
       if (!priv->current_parser_iso3166Id)
         {
           g_set_error (error, G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT,
@@ -444,12 +468,18 @@ parse_end_element (GMarkupParseContext  *context,
           return;
         }
 
-      if (priv->current_parser_variant)
-        add_iso3166 (priv->current_parser_variant, priv->current_parser_iso3166Id);
-      else if (priv->current_parser_layout)
-        add_iso3166 (priv->current_parser_layout, priv->current_parser_iso3166Id);
+      country = gnome_get_country_from_code (priv->current_parser_iso3166Id, NULL);
+      if (country)
+        {
+          if (priv->current_parser_variant)
+            add_layout_to_table (priv->layouts_by_country, country, priv->current_parser_variant);
+          else if (priv->current_parser_layout)
+            add_layout_to_table (priv->layouts_by_country, country, priv->current_parser_layout);
 
-      priv->current_parser_iso3166Id = NULL;
+          g_free (country);
+        }
+
+      g_clear_pointer (&priv->current_parser_iso3166Id, g_free);
     }
   else if (strcmp (element_name, "group") == 0)
     {
@@ -1005,57 +1035,6 @@ gnome_xkb_info_get_layouts_for_country (GnomeXkbInfo *self,
 
   list = NULL;
   g_hash_table_foreach (layouts_for_country, collect_layout_ids, &list);
-
-  return list;
-}
-
-static void
-collect_languages (gpointer value,
-                   gpointer data)
-{
-  gchar *language = value;
-  GList **list = data;
-
-  *list = g_list_append (*list, language);
-}
-
-/**
- * gnome_xkb_info_get_languages_for_layout:
- * @self: a #GnomeXkbInfo
- * @layout_id: a layout identifier
- *
- * Returns a list of all languages supported by a layout, given by
- * @layout_id.
- *
- * Return value: (transfer container) (element-type utf8): the list of
- * ISO 639 code strings. The caller takes ownership of the #GList but
- * not of the strings themselves, those are internally allocated and
- * must not be modified.
- *
- * Since: 3.18
- */
-GList *
-gnome_xkb_info_get_languages_for_layout (GnomeXkbInfo *self,
-                                         const gchar  *layout_id)
-{
-  GnomeXkbInfoPrivate *priv;
-  Layout *layout;
-  GList *list;
-
-  g_return_val_if_fail (GNOME_IS_XKB_INFO (self), NULL);
-
-  priv = self->priv;
-
-  if (!ensure_rules_are_parsed (self))
-    return NULL;
-
-  layout = g_hash_table_lookup (priv->layouts_table, layout_id);
-
-  if (!layout)
-    return NULL;
-
-  list = NULL;
-  g_slist_foreach (layout->iso639Ids, collect_languages, &list);
 
   return list;
 }

@@ -1,4 +1,4 @@
-SUBDIRS = libgnome-desktop docs po tests
+SUBDIRS = libgnome-desktop docs po
 
 if DESKTOP_DOCS_ENABLED
 SUBDIRS += desktop-docs
@@ -6,7 +6,7 @@ endif
 
 ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
 
-AM_DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
+DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc --disable-scrollkeeper
 
 versiondir = $(datadir)/gnome
 version_DATA = gnome-version.xml
@@ -18,10 +18,7 @@ EXTRA_DIST =			\
 	HACKING			\
 	MAINTAINERS		\
 	ChangeLog.pre-git	\
-	glib-tap.mk		\
-	gnome-version.xml.in.in	\
-	tap-driver.sh		\
-	tap-test
+	gnome-version.xml.in.in
 
 CLEANFILES = \
 	$(version_DATA)

@@ -164,9 +164,8 @@ gnome_bg_slide_show_finalize (GObject *object)
 
         g_queue_free (self->priv->slides);
 
-        g_queue_free_full (self->priv->stack, g_free);
-
-        g_free (self->priv->filename);
+        g_list_foreach (self->priv->stack->head, (GFunc) g_free, NULL);
+        g_queue_free (self->priv->stack);
 }
 
 static void
@@ -503,7 +502,9 @@ now (void)
  * @file1: (out) (allow-none) (transfer none): first file in slide
  * @file2: (out) (allow-none) (transfer none): second file in slide
  *
- * Returns the current slides progress.
+ * Returns the current slides progress
+ *
+ * Return value: %TRUE if successful
  **/
 void
 gnome_bg_slide_show_get_current_slide (GnomeBGSlideShow  *self,
@@ -562,7 +563,6 @@ gnome_bg_slide_show_get_current_slide (GnomeBGSlideShow  *self,
  * @frame_number: frame number
  * @width: monitor width
  * @height: monitor height
- * @progress: (out) (allow-none): slide progress
  * @duration: (out) (allow-none): slide duration
  * @is_fixed: (out) (allow-none): if slide is fixed
  * @file1: (out) (allow-none) (transfer none): first file in slide
@@ -672,23 +672,19 @@ parse_file_contents (GnomeBGSlideShow  *self,
         g_markup_parse_context_free (context);
 
         if (!failed) {
-                guint queue_length;
+                int len;
 
                 t = mktime (&self->priv->start_tm);
 
                 self->priv->start_time = (double)t;
 
-                queue_length = g_queue_get_length (self->priv->slides);
+                len = g_queue_get_length (self->priv->slides);
 
                 /* no slides, that's not a slideshow */
-                if (queue_length == 0) {
-                        g_set_error_literal (error,
-                                             G_MARKUP_ERROR,
-                                             G_MARKUP_ERROR_INVALID_CONTENT,
-                                             "file is not a slide show since it has no slides");
+                if (len == 0) {
                         failed = TRUE;
                 /* one slide, there's no transition */
-                } else if (queue_length == 1) {
+                } else if (len == 1) {
                         Slide *slide = self->priv->slides->head->data;
                         slide->duration = self->priv->total_duration = G_MAXUINT;
                 }
@@ -741,20 +737,17 @@ on_file_loaded (GFile        *file,
 
     if (!loaded) {
             g_task_return_error (task, error);
-            g_object_unref (task);
             return;
     }
 
     if (!parse_file_contents (g_task_get_source_object (task), contents, length, &error)) {
             g_task_return_error (task, error);
-            g_object_unref (task);
             g_free (contents);
             return;
     }
     g_free (contents);
 
     g_task_return_boolean (task, TRUE);
-    g_object_unref (task);
 }
 
 /**

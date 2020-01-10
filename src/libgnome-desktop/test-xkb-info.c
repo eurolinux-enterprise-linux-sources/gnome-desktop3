@@ -1,3 +1,4 @@
+#include <gtk/gtk.h>
 #define GNOME_DESKTOP_USE_UNSTABLE_API
 #include <libgnome-desktop/gnome-xkb-info.h>
 int
@@ -7,6 +8,8 @@ main (int argc, char **argv)
 	GList *layouts, *l;
 	GList *option_groups, *g;
 	GList *options, *o;
+
+	gtk_init (&argc, &argv);
 
 	info = gnome_xkb_info_new ();
 

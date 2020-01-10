@@ -13,80 +13,39 @@
     <title>GNU Free Documentation License</title>
       <releaseinfo>Version 1.1, Mars 2000</releaseinfo>
       
-      <copyright><year>2000</year><holder>Free Software Foundation, Inc.</holder></copyright>
+      <copyright>
+	<year>2000</year><holder>Free Software Foundation, Inc.</holder>
+      </copyright>
 
-      <author><surname>Free Software Foundation</surname></author>
+      <author>
+        <surname>Free Software Foundation</surname>
+      </author>
 
       <publisher role="maintainer">
         <publishername>Dokumentationsprojekt för GNOME</publishername>
       </publisher>
 
       <revhistory>
-        <revision><revnumber>1.1</revnumber> <date>2000-03</date></revision>
+        <revision>
+          <revnumber>1.1</revnumber>
+          <date>2000-03</date>
+        </revision>
       </revhistory>
       
       <legalnotice id="legalnotice">
-	<para><address>Free Software Foundation, Inc. 
+	<para>
+	  <address>Free Software Foundation, Inc. 
              <street>51 Franklin Street, Fifth Floor</street>, 
              <city>Boston</city>, 
              <state>MA</state> <postcode>02110-1301</postcode>
-	    <country>USA</country></address>. Alla är tillåtna kopiera och distribuera ordagranna kopior av detta licensdokument, men att ändra det är ej tillåtet.</para>
+	    <country>USA</country></address>. Everyone is permitted to
+	    copy and distribute verbatim copies of this license
+	    document, but changing it is not allowed.
+	</para>
       </legalnotice>
 
       <abstract role="description"><para>Syftet med denna licens är att göra en handbok, bok, eller annat praktiskt och användbart dokument <quote>fritt</quote> som i frihet: att försäkra var och en den faktiska friheten att kopiera och sprida det vidare, med eller utan förändringar, antingen kommersiellt eller ideellt. Sekundärt bevarar denna licens ett sätt för författaren och förläggaren att få ära för deras arbete utan att de anses vara ansvariga för förändringar gjorda av andra.</para></abstract>
-    
-    <othercredit class="translator">
-      <personname>
-        <firstname>Anders Jonsson</firstname>
-      </personname>
-      <email>anders.jonsson@norsjovallen.se</email>
-    </othercredit>
-    <copyright>
-      
-        <year>2015</year>
-      
-      <holder>Anders Jonsson</holder>
-    </copyright>
-  
-    <othercredit class="translator">
-      <personname>
-        <firstname>Sebastian Rasmussen</firstname>
-      </personname>
-      <email>sebras@gmail.com</email>
-    </othercredit>
-    <copyright>
-      
-        <year>2014</year>
-      
-      <holder>Sebastian Rasmussen</holder>
-    </copyright>
-  
-    <othercredit class="translator">
-      <personname>
-        <firstname>Daniel Nylander</firstname>
-      </personname>
-      <email>po@danielnylander.se</email>
-    </othercredit>
-    <copyright>
-      
-        <year>2006</year>
-      
-      <holder>Daniel Nylander</holder>
-    </copyright>
-  
-    <othercredit class="translator">
-      <personname>
-        <firstname>Marcus Rejås och Alexander Nordström</firstname>
-      </personname>
-      <email>info@se.linux.org</email>
-    </othercredit>
-    <copyright>
-      
-        <year>2004</year>
-      
-      <holder>Marcus Rejås och Alexander Nordström</holder>
-    </copyright>
-  </articleinfo>
+    </articleinfo>
       
 
   <sect1 id="fdl-preamble" label="0">
@@ -200,7 +159,7 @@
     
     <para>Du äger lägga till ett avsnitt med titeln <quote>endossering</quote> (Endorsements), förutsatt att det inte innehåller något annat än endosseringar för din <link linkend="fdl-modified">förändrade version</link> från olika aktörer -- till exempel, meddelanden om utförd korrekturläsning eller att texten har godkänts av en organisation som en officiell definition av en standard.</para>
     
-    <para>Du äger lägga till ett textavsnitt på upp till fem ord som <link linkend="fdl-cover-texts">framsidestext</link>, och ett textavsnitt på upp till 25 ord som baksidestext i listan över <link linkend="fdl-cover-texts">omslagstexter</link> i den <link linkend="fdl-modified">förändrade versionen</link>. Bara ett textavsnitt med framsidestexter och ett med baksidestexter får läggas till av (eller genom försorg av) en enda juridisk person. Om <link linkend="fdl-document">dokumentet</link> redan innehåller en omslagstext för något av omslagen, tidigare tillagd av dig eller genom försorg av samma juridiska person som du företräder, äger du inte lägga till en till, men du äger ändra den gamla med tillstånd från den tidigare utgivaren som lade till den förra.</para>
+    <para>Du äger lägga till ett textavsnitt på upp till fem ord som <link linkend="fdl-cover-texts">framsidestext</link>, och ett textavsnitt på upp till 25 ord som baksidestext i listan över <link linkend="fdl-cover-texts">omslagstexter</link> i den <link linkend="fdl-modified">förändrade versionen</link>. Bara ett textavsnitt med framsidestexter och ett med baksidestexter får läggas till av (eller genom försorg av) en enda juridisk person. Om <link linkend="fdl-document">dokumentet</link> redan innehåller en omlagstext för något av omslagen, tidigare tillagd av dig eller genom försorg av samma juridiska person som du företräder, äger du inte lägga till en till, men du äger ändra den gamla med tillstånd från den tidigare utgivaren som lade till den förra.</para>
     
     <para>Författaren (författarna) och utgivaren (utgivarna) av <link linkend="fdl-document">dokumentet</link> ger inte via denna licens sitt tillstånd att använda sina namn för publicitet eller för att lägga till eller antyda endossering av någon <link linkend="fdl-modified">förändrad version</link>.</para>
   </sect1>
@@ -248,11 +207,11 @@
     <para>För att använda GNU Free Documentation License för ett dokument du har skrivit, inkludera en kopia av licensen [det engelska originalet] i dokumentet och placera följande copyrightklausul omedelbart efter titelsidan:</para>
     
     <blockquote>
-      <para>Copyright © YEAR YOUR NAME.</para>
+      <para>Copyright (c) ÅRTAL DITT NAMN.</para>
       <para>Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.1 or any later version published by the Free Software Foundation; with the <link linkend="fdl-invariant">Invariant Sections</link> being LIST THEIR TITLES, with the <link linkend="fdl-cover-texts">Front-Cover Texts</link> being LIST, and with the <link linkend="fdl-cover-texts">Back-Cover Texts</link> being LIST. A copy of the license is included in the section entitled <quote>GNU Free Documentation License</quote>.</para>
     </blockquote>
       
-    <para>Om du inte har några <link linkend="fdl-invariant">oföränderliga avsnitt</link>, skriv <quote>with no Invariant Sections</quote> istället för att ange vilka som är oföränderliga. Om du inte har några <link linkend="fdl-cover-texts">framsidestexter</link>, skriv <quote>no Front-Cover Texts</quote> istället för <quote>Front-Cover Texts being LIST</quote>; såväl som för <link linkend="fdl-cover-texts">baksidestexter</link>.</para>
+    <para>Om du inte har några <link linkend="fdl-invariant">oföränderliga avsnitt</link>, skriv <quote>utan oföränderliga avsnitt</quote> istället för att ange vilka som är oföränderliga. Om du inte har några <link linkend="fdl-cover-texts">framsidestexter</link>, skriv <quote>utan framsidestexter</quote> istället för <quote>framsidestexter som LISTAS</quote>; såväl som för <link linkend="fdl-cover-texts">baksidestexter</link>.</para>
     
     <para>Om ditt dokument innehåller icke-triviala exempel med programkod, så rekommenderar vi att du släpper dessa exempel parallellt under en, av dig vald, fri programvarulicens, som till exempel <ulink type="http" url="http://www.gnu.org/copyleft/gpl.html">GNU General Public License</ulink>, för att möjliggöra deras användning i fri programvara.</para>
   </sect1>

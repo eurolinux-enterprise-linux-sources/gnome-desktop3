@@ -48,8 +48,6 @@ G_BEGIN_DECLS
 typedef struct _GnomeBG GnomeBG;
 typedef struct _GnomeBGClass GnomeBGClass;
 
-G_DEFINE_AUTOPTR_CLEANUP_FUNC(GnomeBG, g_object_unref)
-
 GType            gnome_bg_get_type              (void);
 GnomeBG *        gnome_bg_new                   (void);
 void             gnome_bg_load_from_preferences (GnomeBG               *bg,
@@ -61,17 +59,17 @@ void             gnome_bg_set_filename          (GnomeBG               *bg,
 						 const char            *filename);
 void             gnome_bg_set_placement         (GnomeBG               *bg,
 						 GDesktopBackgroundStyle placement);
-void             gnome_bg_set_rgba              (GnomeBG               *bg,
+void             gnome_bg_set_color             (GnomeBG               *bg,
 						 GDesktopBackgroundShading type,
-						 GdkRGBA               *primary,
-						 GdkRGBA               *secondary);
+						 GdkColor              *primary,
+						 GdkColor              *secondary);
 
 /* Getters */
 GDesktopBackgroundStyle gnome_bg_get_placement  (GnomeBG               *bg);
-void		 gnome_bg_get_rgba              (GnomeBG               *bg,
+void		 gnome_bg_get_color             (GnomeBG               *bg,
 						 GDesktopBackgroundShading *type,
-						 GdkRGBA               *primary,
-						 GdkRGBA               *secondary);
+						 GdkColor              *primary,
+						 GdkColor              *secondary);
 const gchar *    gnome_bg_get_filename          (GnomeBG               *bg);
 
 /* Drawing and thumbnailing */

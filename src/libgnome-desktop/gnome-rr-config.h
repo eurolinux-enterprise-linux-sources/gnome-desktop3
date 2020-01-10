@@ -58,8 +58,6 @@ struct _GnomeRROutputInfoClass
 #define GNOME_IS_RR_OUTPUT_INFO_CLASS(klass)       (G_TYPE_CHECK_CLASS_TYPE ((klass), GNOME_TYPE_RR_OUTPUT_INFO))
 #define GNOME_RR_OUTPUT_INFO_GET_CLASS(obj)        (G_TYPE_INSTANCE_GET_CLASS ((obj), GNOME_TYPE_RR_OUTPUT_INFO, GnomeRROutputInfoClass))
 
-G_DEFINE_AUTOPTR_CLEANUP_FUNC(GnomeRROutputInfo, g_object_unref)
-
 GType gnome_rr_output_info_get_type (void);
 
 char *gnome_rr_output_info_get_name (GnomeRROutputInfo *self);
@@ -75,12 +73,11 @@ void gnome_rr_output_info_set_refresh_rate (GnomeRROutputInfo *self, int rate);
 
 GnomeRRRotation gnome_rr_output_info_get_rotation (GnomeRROutputInfo *self);
 void            gnome_rr_output_info_set_rotation (GnomeRROutputInfo *self, GnomeRRRotation rotation);
-gboolean        gnome_rr_output_info_supports_rotation (GnomeRROutputInfo *self, GnomeRRRotation rotation);
 
 gboolean gnome_rr_output_info_is_connected     (GnomeRROutputInfo *self);
-const char *gnome_rr_output_info_get_vendor    (GnomeRROutputInfo *self);
-const char *gnome_rr_output_info_get_product   (GnomeRROutputInfo *self);
-const char *gnome_rr_output_info_get_serial    (GnomeRROutputInfo *self);
+void     gnome_rr_output_info_get_vendor       (GnomeRROutputInfo *self, gchar* vendor);
+guint    gnome_rr_output_info_get_product      (GnomeRROutputInfo *self);
+guint    gnome_rr_output_info_get_serial       (GnomeRROutputInfo *self);
 double   gnome_rr_output_info_get_aspect_ratio (GnomeRROutputInfo *self);
 char    *gnome_rr_output_info_get_display_name (GnomeRROutputInfo *self);
 
@@ -89,11 +86,6 @@ void     gnome_rr_output_info_set_primary (GnomeRROutputInfo *self, gboolean pri
 
 int gnome_rr_output_info_get_preferred_width  (GnomeRROutputInfo *self);
 int gnome_rr_output_info_get_preferred_height (GnomeRROutputInfo *self);
-
-gboolean gnome_rr_output_info_get_underscanning (GnomeRROutputInfo *self);
-void     gnome_rr_output_info_set_underscanning (GnomeRROutputInfo *self, gboolean underscanning);
-
-gboolean gnome_rr_output_info_is_primary_tile (GnomeRROutputInfo *self);
 
 typedef struct _GnomeRRConfig GnomeRRConfig;
 typedef struct _GnomeRRConfigClass GnomeRRConfigClass;
@@ -119,27 +111,35 @@ struct _GnomeRRConfigClass
 #define GNOME_IS_RR_CONFIG_CLASS(klass)       (G_TYPE_CHECK_CLASS_TYPE ((klass), GNOME_TYPE_RR_CONFIG))
 #define GNOME_RR_CONFIG_GET_CLASS(obj)        (G_TYPE_INSTANCE_GET_CLASS ((obj), GNOME_TYPE_RR_CONFIG, GnomeRRConfigClass))
 
-G_DEFINE_AUTOPTR_CLEANUP_FUNC(GnomeRRConfig, g_object_unref)
-
 GType               gnome_rr_config_get_type     (void);
 
 GnomeRRConfig      *gnome_rr_config_new_current  (GnomeRRScreen  *screen,
 						  GError        **error);
-gboolean            gnome_rr_config_load_current (GnomeRRConfig  *self,
+GnomeRRConfig      *gnome_rr_config_new_stored   (GnomeRRScreen  *screen,
 						  GError        **error);
+gboolean                gnome_rr_config_load_current (GnomeRRConfig  *self,
+						      GError        **error);
+gboolean                gnome_rr_config_load_filename (GnomeRRConfig  *self,
+						       const gchar    *filename,
+						       GError        **error);
 gboolean            gnome_rr_config_match        (GnomeRRConfig  *config1,
 						  GnomeRRConfig  *config2);
 gboolean            gnome_rr_config_equal	 (GnomeRRConfig  *config1,
 						  GnomeRRConfig  *config2);
+gboolean            gnome_rr_config_save         (GnomeRRConfig  *configuration,
+						  GError        **error);
 void                gnome_rr_config_sanitize     (GnomeRRConfig  *configuration);
 gboolean            gnome_rr_config_ensure_primary (GnomeRRConfig  *configuration);
 
-gboolean	    gnome_rr_config_apply  (GnomeRRConfig  *configuration,
-					    GnomeRRScreen  *screen,
-					    GError        **error);
-gboolean	    gnome_rr_config_apply_persistent  (GnomeRRConfig  *configuration,
-						       GnomeRRScreen  *screen,
-						       GError        **error);
+gboolean	    gnome_rr_config_apply_with_time (GnomeRRConfig  *configuration,
+						     GnomeRRScreen  *screen,
+						     guint32         timestamp,
+						     GError        **error);
+
+gboolean            gnome_rr_config_apply_from_filename_with_time (GnomeRRScreen  *screen,
+								   const char     *filename,
+								   guint32         timestamp,
+								   GError        **error);
 
 gboolean            gnome_rr_config_applicable   (GnomeRRConfig  *configuration,
 						  GnomeRRScreen  *screen,
@@ -148,5 +148,8 @@ gboolean            gnome_rr_config_applicable   (GnomeRRConfig  *configuration,
 gboolean            gnome_rr_config_get_clone    (GnomeRRConfig  *configuration);
 void                gnome_rr_config_set_clone    (GnomeRRConfig  *configuration, gboolean clone);
 GnomeRROutputInfo **gnome_rr_config_get_outputs  (GnomeRRConfig  *configuration);
+
+char *gnome_rr_config_get_backup_filename (void);
+char *gnome_rr_config_get_intended_filename (void);
 
 #endif

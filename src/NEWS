@@ -1,570 +1,64 @@
-==============
-Version 3.28.2
-==============
+=============
+Version 3.8.4
+=============
 
-- Fix a memory leak in background slide shows
-- Updated translations
+* Initialize gettext before constructing a wall clock (#699325)
+* Update pnp.ids from upstream hwdata (#699730)
+* Fix crash when XRRSetCrtcConfig() fails (#703034)
+* Prevent a crash with unknown language/country codes (#705885)
+* Ensure strings from xkeyboard-config are UTF-8 (#703247)
+* Translation updates
 
-==============
-Version 3.28.1
-==============
+=============
+Version 3.8.3
+=============
 
-- Updated translations
+* Fix a memory leak (#701326)
+* Fix compile-time warning on x32 (#700548)
+* Translation updates
 
-==============
-Version 3.28.0
-==============
-
-- No changes
-
-===============
-Version 3.27.92
-===============
-
-- idle-monitor fixes
-- Several fixes for compilation warnings
-- Updated translations
-
-===============
-Version 3.27.90
-===============
-
-- Miscellaneous improvements to the thumbnailer code
-- Remove unused gnome_desktop_thumbnail_has_uri()
-- Replace GdkColor methods with GdkRGBA methods
-
-===============
-Version 3.27.2
-===============
-
-- No changes
-
-===============
-Version 3.27.1
-===============
-
-- Change default Japanish input source to KCC
-- wall-clock: respect new clock-show-weekday setting
-- Remove some obsolete API's in thumbnailer
-- Modernize autotools configuration a bit
-- Translations updates
-
-===============
-Version 3.26.0
-===============
-
-- Translation updates
-
-===============
-Version 3.25.92
-===============
-
-- Fix multiple bugs in thumbnailing
-- Disable gvfs in thumbnailer sandboxes
-- Translation updates
-
-=================
-Version 3.25.91.1
-=================
-
-- Fix multiple bugs in sandboxed thumbnailer handling,
-  including performance, and left-over files in /tmp
-- Fix a memory leak in the display handling code
-- Fix a compile-time error on x32
-
-=================
-Version 3.25.90.1
-=================
-
-- Improve error reporting in thumbnailers
-- Fix crashes in thumbnailers (#785963)
-
-===============
-Version 3.25.90
-===============
-
-- Thumbnailers are now sandboxed (#7744970, #785197)
-- Fix a crash in xkb info handling (#785320)
-- Translation updates
-
-==============
-Version 3.25.4
+=============
+Version 3.8.2
 ==============
 
-- Fix uninitialized memory in the thumbnailer (#784915)
-- Add default input source for fr_BE
+* Fix a memory leak (#695116)
+* Add some more defaults for input sources
+* Translation updates
+
+===============
+Version 3.8.0.1
+===============
+
+* Fix a potential use-after-free corruption and crash (#696719)
+
+=============
+Version 3.8.0
+=============
+
+* idle-monitor: Allow multiple watches per alarm (#696522)
+* idle-monitor: Make per-device monitor fallible (#696118)
+* Translation updates
 
 ==============
-Version 3.25.3
+Version 3.7.92
 ==============
 
-- gnome-bg: Handle exif orientations (#516177)
-- Translation upates
+* Don't store duplicated layouts in locale tables
+* Translation updates
 
 ==============
-Version 3.25.2
+Version 3.7.91
 ==============
 
-- thumbnail: Update documentation
-
-==============
-Version 3.25.1
-==============
-
-- wallclock: don't update needlessly (#780861)
-- wallclock: am/pm is always available now (#780877)
-- Translation updates
-
-==============
-Version 3.24.0
-==============
-
-- No changes
-
-===============
-Version 3.23.92
-===============
-
-- No changes
-
-===============
-Version 3.23.91
-===============
-
-- No changes
-
-===============
-Version 3.23.90
-===============
-
-- Always prefer the backend-provided preview in thumbnails (#738503)
-- Use ibus-libzhuyin as default input method for Simplified Chinese (#772674)
-- Deprecated gnome_desktop_thumbnail_scale_down_pixbuf (#775991)
-
-==============
-Version 3.23.3
-==============
-
-- Always use external gdk-pixbuf thumbnailer (#768064)
-
-================
-Version  3.23.2
-================
-
-- No changes
-
-================
-Version  3.23.1
-================
-
-- No changes
-
-================
-Version  3.22.1
-================
-
-- Translation updates
-
-================
-Version  3.22.0
-================
-
-- No changes
-
-================
-Version  3.21.92
-================
-
-- Fix a crash on non-udev platforms (#770686)
-- Translation updates
-
-================
-Version  3.21.90
-================
-
-- No changes
-
-================
-Version   3.21.4
-================
-
-- Use udev's hwdb to query PNP IDs (--disable-udev to disable this)
-- Remove dependencies on xrandr and xext
-
-================
-Version   3.21.3
-================
-
-- Translation updates
-
-================
-Version   3.21.2
-================
-
-- Add API to know if a GnomeRRMode is interlaced
-
-================
-Version   3.21.1
-================
-
-- No changes
-
-================
-Version   3.20.1
-================
-
-- No changes
-
-================
-Version   3.20.0
-================
-
-- No changes
-
-================
-Version  3.19.93
-================
-
-- Add a way to get the frequency for a mode as a floating number
-
-================
-Version  3.19.92
-================
-
-- No changes
-
-================
-Version  3.19.91
-================
-
-- Reduce log spam in thumbnailing
-- Translation updates
-
-================
-Version  3.19.90
-================
-
-- No changes
-
-================
-Version  3.19.4
-================
-
-- Capitalize language and territory names
-- Add default keyboard layout for Mexico and Guatemala
-- Avoid a crash when thumbnailing
-- Be more careful when parsing locales
-- Translation updates
-
-================
-Version  3.19.3
-================
-
-- Fix a compiler warning in gnome-rr
-
-================
-Version  3.19.2
-================
-
-- Translation updates
-
-================
-Version  3.19.1
-================
-
-- Fix turning off tiled monitors
-- Fix thumbnailing of animations
-- Translation updates
-
-================
-Version  3.18.0
-================
-
-- Translation updates
-
-================
-Version  3.17.92
-================
-
-- Support g_autoptr() for all libgnome-desktop object types
-
-================
-Version  3.17.90
-================
-
-- Translation updates
-
-================
-Version   3.17.4
-================
-
-- Remove unused EDID parsing code
-- Support underscanning
-- Export dpms information
-- Add support for tiled monitors
-- Translation updates
-
-================
-Version   3.17.3
-================
-
-- Fix build of installed-tests
-- Translation updates
-
-================
-Version   3.17.2
-================
-
-- Add support for overscan compensation in displays (#748560)
-
-================
-Version   3.16.1
-================
-
-- No changes
-
-================
-Version   3.16.0
-================
-
-- Translation updates
-
-================
-Version  3.15.92
-================
-
-- Translation updates
-
-================
-Version  3.15.91
-================
-
- - No changes
-
-================
-Version  3.15.90
-================
-
-- Drop libgsystem dependency (#680326)
-- Translation updates
-
-===============
-Version  3.15.4
-===============
-
-- Modernize gtk-doc use (#742479)
-- Fix memory handling in GnomeRR and language code (#742111, #742569)
-
-===============
-Version  3.15.3
-===============
-
-- Fix mutex handling in thumbnailing code (#740666)
-
-=================
-Version  3.15.2.1
-=================
-
-- Fix thumbnailing failures due to internal cleanups (#684026)
-
-===============
-Version  3.15.2
-===============
-
-- Add installed tests (#737140)
-- Recognize builtin monitors in Dell machines (#740289)
-- Improve thumbnail handling (#684026)
-- Translation updates
-
-===============
-Version  3.15.1
-===============
-
-- languages: Use a more broadly compatible locale codeset suffix (#710412)
-- Remove unused code in gtk-reftest (#737123)
-- Translation updates
-
-===============
-Version  3.14.1
-===============
-
-- Translation updates
-
-===============
-Version  3.14.0
-===============
-
-- Translation updates
-
-================
-Version  3.13.92
-================
-
-- Fixed the build on systems lacking openat()
-- Translation updates
-
-================
-Version  3.13.91
-================
-
-- gnome-xkb-info: Fix some layouts not being associated to a locale
-- Translation updates
-
-================
-Version  3.13.90
-================
-
-- gnome-rr: Add missing introspection annotations
-- Translation updates
-
-===============
-Version  3.13.3
-===============
-
-- wall-clock: Add ref-tests for clock output
-- wall-clock: Always use the ratio character (#726232)
-
-===============
-Version  3.13.2
-===============
-
-- gnome-rr: Output the EDID vendor/product info as well
-- gnome-rr: Add backlight output in debug
-- thumbnailer: Try harder to create a failed thumbnail (#728775)
-
-===============
-Version  3.13.1
-===============
-
-- Fix the build on OpenBSD
-- gnome-rr: Improve debug output
-
-===============
-Version  3.12.1
-===============
-
-- gnome-rr: Actually define output_get_possible_crtcs (#727034)
-- gnome-rr: Initialize GnomeRROutputInfo:rotation to GNOME_RR_ROTATION_0 (#727023)
-
-===============
-Version  3.12.0
-===============
-
-- Version bump for the GNOME 3.12.0 stable release
-
-================
-Version  3.11.91
-================
-
-- Always set the DPMS mode when requested
-- Translation updates
-
-================
-Version  3.11.90
-================
-
-- gnome-xkb-info: Remove xkbfile dependency (#719942) - API and ABI break
-- gnome-xkb-info: Apply main layout locale metadata to variants (#711291)
-
-===============
-Version  3.11.5
-===============
-
-- wall-clock: Replace ratio with colon on non-UTF-8 locales (#722664)
-
-===============
-Version  3.11.4
-===============
-
-- more new gnome-rr api
-- drop using glibc internal headers
-- docs for thumbnailers
-- idle monitor fixes
-- use newer libgsystem internally
-
-===============
-Version  3.11.2
-===============
-
-- gnome-rr: Improve debug output
-- Translation updates
-
-===============
-Version  3.11.1
-===============
-
-- Add gnome_rr_output_get_min_backlight_step() API
-
-===============
-Version  3.10.1
-===============
-
-- gnome-bg: Fix memory leaks (#709271)
-- gnome-bg: set error when parsing XML file that's not a slide show (#708877)
-- languages: Obtain supported locales from "locale -a" output (#698383)
-- thumbnailer: Bail if no pixbuf loader could be created (#709819)
-- thumbnailer: Support loading thumbnails from remote locations (#708824)
-- Translation updates
-
-===============
-Version  3.10.0
-===============
-
-- libsystem: Update from master ($708435)
-- gnome-rr: refresh when mutter restarts (#708284)
-- Translation updates
-
-===============
-Version  3.9.92
-===============
-
-- IdleMonitor: protect watches from being freed while in flight (#707396)
-- thumbnailer: Always print errors from gs_file_read_noatime() (#699252)
-- thumbnailer: Correctly check for errors (#699252)
-- thumbnailer: Check gdk_pixbuf_loader_close()'s retval (#699252)
-- Correct the transposed bits of the red chromacity in the EDID parser
-- Translation updates
-
-===============
-Version  3.9.91
-===============
-
-- gnome-rr: don't assume 'default' means built-in (#706738)
-- gnome-rr: Read back new backlight value after changes (#706729)
-- idle: Use mutter api instead of direct X clals (#706006)
-- Translation updates
-
-===============
-Version  3.9.90
-===============
-
-- gnome-rr: Add api to get physical size
-- gnome-rr: Add async constructor
-- gnome-rr: Port to mutter dbus api (#705510)
-- xkb: Prevent a crash (#705885)
-- Translation updates
-
-==============
-Version  3.9.5
-==============
-
-- xkb: Ensure strings are UTF-8
-- gnome-rr: Fix a crash
-- gnome-rr: Be more careful when parsing EDID
-- wall-clock: Initialize gettext
-- gnome-bg: Objects without a filename are not slideshows
-- gnome-xkb-info: Fix memory leaks
-- Translation updates
-
-==============
-Version  3.9.1
-==============
-
-- gnome-xkb-info: Don't store duplicated layouts in locale tables
-- idle-monitor: Make per-device monitor fallible
-- wall-clock: Move ratio from msg id's to translations
-- idle-monitor: Allow multiple watches per alarm
-- Translation updates
+* GnomeBg:
+- remove ability to not draw background (#690378)
+
+* GnomeRR:
+- use 'Built-in Display' instead of 'Laptop' (#679794)
+
+* Translation updates: Punjabi, Russian, Hebrew, Norwegian bokmål,
+  Slovak, Gujarati, Brazilian Portuguese, Vietnamese, Spanish,
+  Polish
 
 ==============
 Version 3.7.90

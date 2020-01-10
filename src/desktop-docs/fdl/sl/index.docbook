@@ -166,13 +166,7 @@
     <title>Zbirka dokumentov</title>
     <para>Dovoljeno je napraviti zbirko tega <link linkend="fdl-document">Dokumenta</link> in drugih dokumentov, izdanih pod pogoji tega dovoljenja, in nadomestiti posamezne izvode tega dovoljenja v različnih dokumentih z enim samim izvodom, ki je vključen v zbirko, upoštevajoč zahteve tega dovoljenja za dobesedno razmnoževanje vsakega od teh dokumentov v vseh drugih pogledih. </para>
     
-    <para>
-      You may extract a single document from such a collection, and
-      distribute it individually under this License, provided you
-      insert a copy of this License into the extracted document, and
-      follow this License in all other respects regarding verbatim
-      copying of that document.
-    </para>
+    <para>Iz take zbirke je dovoljeno izluščiti posamezen dokument in ga posebej razširjati pod pogoji tega dovoljenja, če je v izluščen dokument vstavljen izvod tega dovoljenja in v vseh drugih ozirih glede dobesednega razmnoževanja upoštevajoč to dovoljenje.</para>
     </sect1>
     
   <sect1 id="fdl-section7" label="7">

@@ -47,12 +47,7 @@ CFILE_GLOB=$(top_srcdir)/libgnome-desktop/*.c
 
 # Header files to ignore when scanning.
 # e.g. IGNORE_HFILES=gtkdebug.h gtkintl.h
-IGNORE_HFILES= \
-	gnome-rr-private.h \
-	libgsystem \
-	meta-dbus-idle-monitor.h \
-	meta-dbus-xrandr.h \
-	meta-xrandr-shared.h
+IGNORE_HFILES=
 
 # Images to copy into HTML directory.
 # e.g. HTML_IMAGES=$(top_srcdir)/gtk/stock-icons/stock_about_24.png
@@ -62,7 +57,7 @@ HTML_IMAGES=
 # e.g. content_files=running.sgml building.sgml changes-2.0.sgml
 content_files=
 
-# SGML files where gtk-doc abbreviations (#GtkWidget) are expanded
+# SGML files where gtk-doc abbrevations (#GtkWidget) are expanded
 # These files must be listed here *and* in content_files
 # e.g. expand_content_files=running.sgml
 expand_content_files=
@@ -70,9 +65,9 @@ expand_content_files=
 # CFLAGS and LDFLAGS for compiling gtkdoc-scangobj with your library.
 # Only needed if you are using gtkdoc-scangobj to dynamically query widget
 # signals and properties.
-# e.g. AM_CPPFLAGS=-I$(top_srcdir) -I$(top_builddir) $(GTK_DEBUG_FLAGS)
+# e.g. INCLUDES=-I$(top_srcdir) -I$(top_builddir) $(GTK_DEBUG_FLAGS)
 # e.g. GTKDOC_LIBS=$(top_builddir)/gtk/$(gtktargetlib)
-AM_CPPFLAGS=$(GNOME_DESKTOP_CFLAGS) -I$(top_srcdir)/libgnome-desktop -DGNOME_DESKTOP_USE_UNSTABLE_API
+INCLUDES=$(GNOME_DESKTOP_CFLAGS) -I$(top_srcdir)/libgnome-desktop -DGNOME_DESKTOP_USE_UNSTABLE_API
 GTKDOC_LIBS=$(GNOME_DESKTOP_LIBS) $(top_builddir)/libgnome-desktop/libgnome-desktop-3.la
 
 # This includes the standard gtk-doc make rules, copied by gtkdocize.

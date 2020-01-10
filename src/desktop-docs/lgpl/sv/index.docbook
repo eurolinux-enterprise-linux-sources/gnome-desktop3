@@ -11,54 +11,36 @@
 <article id="index" lang="sv">
     <articleinfo>
       <title>GNU Lesser General Public License</title>
-      <copyright><year>2000</year> <holder>Free Software Foundation, Inc.</holder></copyright>
-      <author><surname>Free Software Foundation</surname></author>
+      <copyright>
+	<year>2000</year>
+	<holder>Free Software Foundation, Inc.</holder>
+      </copyright>
+      <author>
+        <surname>Free Software Foundation</surname>
+      </author>
       <publisher role="maintainer">
         <publishername>Dokumentationsprojekt för GNOME</publishername>
       </publisher>
       <revhistory>
-        <revision><revnumber>2.1</revnumber> <date>1999-02</date></revision>
+        <revision>
+          <revnumber>2.1</revnumber>
+          <date>1999-02</date>
+        </revision>
       </revhistory>
       <legalnotice id="gpl-legalnotice">
-	<para><address>Free Software Foundation, Inc. 
+	<para>
+	  <address>Free Software Foundation, Inc. 
 	    <street>51 Franklin Street, Fifth Floor</street>, 
 	    <city>Boston</city>, 
 	    <state>MA</state> <postcode>02110-1301</postcode>
 	    <country>USA</country>
-	  </address>.</para>
+	  </address>.
+	</para>
 	<para>Var och en äger kopiera och distribuera exakta kopior av detta licensavtal, men att ändra det är inte tillåtet.</para>
       </legalnotice>
       <releaseinfo>Version 2.1, Februari 1999</releaseinfo>
     <abstract role="description"><para>De flesta programvarulicenser är skapade för att ta bort din frihet att ändra och dela med dig av programvaran. GNU General Public License är tvärtom skapad för att garantera din frihet att dela med dig av och förändra fri programvara - för att försäkra att programvaran är fri för alla dess användare.</para></abstract>
 
-  
-    <othercredit class="translator">
-      <personname>
-        <firstname>Daniel Nylander</firstname>
-      </personname>
-      <email>po@danielnylander.se</email>
-    </othercredit>
-    <copyright>
-      
-        <year>2006</year>
-      
-        <year>2007</year>
-      
-      <holder>Daniel Nylander</holder>
-    </copyright>
-  
-    <othercredit class="translator">
-      <personname>
-        <firstname>SpråkGruppen i Arendal AB</firstname>
-      </personname>
-      <email>http://www.sprakgbg.se</email>
-    </othercredit>
-    <copyright>
-      
-        <year>1999</year>
-      
-      <holder>SpråkGruppen i Arendal AB</holder>
-    </copyright>
   </articleinfo>
 
   <sect1 id="preamble" label="none">
@@ -74,7 +56,7 @@
 
     <para>För att skydda dina rättigheter måste vi införa begränsningar som förbjuder distributörer att hindra dig från att använda dessa rättigheter eller kräva att du skall ge upp dessa rättigheter. Dessa begränsningar motsvaras av vissa förpliktelser för dig om du distribuerar kopior av biblioteket eller om du ändrar biblioteket.</para>
 
-    <para>Om du exempelvis distribuerar kopior av biblioteket, gratis eller mot en avgift, måste du ge mottagaren alla de rättigheter du själv har. Du måste också se till att mottagaren får eller kan få källkoden. Om du länkar annan kod till biblioteket måste du tillhandahålla fullständiga objektfiler till mottagaren så att han/hon kan återlänka dem med biblioteket efter att ha gjort ändringar i biblioteket och kompilerat om det. Du måste även visa dessa licensvillkor för mottagaren så att han/hon känner till sina rättigheter.</para>
+    <para>Om du exempelvis distribuerar kopior av biblioteket, gratis eller mot en avgift, måste du ge mottagaren alla de rättigheter du själv har. Du måste också se till att mottagaren får eller kan få källkoden. Om du länkar annan kod till biblioteket måste du tillhandahålla fullständiga objektfiler till mottagaren så att han/hon kan återlänka dem med biblioteket efter att ha gjort ändringar i biblioteket och kompilerat omdet. Du måste även visa dessa licensvillkor för mottagaren så att han/hon känner till sina rättigheter.</para>
 
     <para>Vi skyddar dina rättigheter i två steg: (1) upphovsrätt till biblioteket och (2) dessa licensvillkor som ger dig laglig tillåtelse att kopiera, distribuera och/eller ändra biblioteket.</para>
 
@@ -88,7 +70,7 @@
 
     <para>Vi kallar denna licens <quote>begränsad</quote> eftersom skyddet av användarens frihet är mindre än genom ordinarie GPL. Den ger också utvecklare av fri programvara färre fördelar jämfört med konkurrerande icke-fria program. Det är dessa nackdelar som är orsaken till att vi behåller GPL för många bibliotek. Den begränsade licensen medför dock fördelar under vissa speciella omständigheter.</para>
 
-    <para>I sällsynta fall kan det finnas särskilt behov av att uppmuntra bredast möjliga användning av ett visst bibliotek så att det de facto blir standard. I syfte att uppnå detta måste icke-fria program tillåtas använda biblioteket. Vanligare är att ett fritt bibliotek utför samma uppgift som ofta använda icke-fria bibliotek. I det senare fallet finns det inte mycket att vinna på att begränsa det fria biblioteket till fri programvara enbart, så vi använder då den begränsade licensen.</para>
+    <para>I sällsynta fall kan det finnas särskilt behov av att uppmuntra bredast möjliga användning av ett visst bibliotek så att det de facto blir standard. I syfte att uppnå detta måste icke-fria program tillåtas använda biblioteket. Vanligare är att ett fritt bibliotek utför samma uppgift som ofta använda icke-fria bibliotek. I det senare fallet finns det inte mycket att vinna på att begränsa det fria biblioteket till fri programvaraenbart, så vi använder då den begränsade licensen.</para>
 
     <para>I andra fall ger tillåtelse att använda ett visst bibliotek i icke-fria program fler människor möjlighet att använda en stor mängd fria programvaror. Som exempel kan nämnas att tillåtelse att använda biblioteket GNU C i icke-fria program, gör det möjligt för fler personer att använda hela GNU-operativsystemet eller GNU/Linux-operativsystemet.</para>
 
@@ -103,7 +85,7 @@
 
     <sect2 id="sect0" label="0">
       <title>Paragraf 0</title>
-      <para>Detta licensavtal gäller samtliga programbibliotek eller andra program som innehåller en upphovsrättsklausul från upphovsrättsinnehavaren eller annan behörig part som säger att det kan distribueras enligt villkoren i Lesser General Public License (nedan även kallad <quote>Licensen</quote>). Samtliga licensinnehavare tituleras med <quote>du</quote>.</para>
+      <para>Detta licensavtal gäller samtliga programbibliotek eller andra program som innehåller en upphovsrättsklausul från upphovsrättshavaren eller annan behörig part som säger att det kan distribueras enligt villkoren i Lesser General Public License (nedan även kallad <quote>Licensen</quote>). Samtliga licensinnehavare tituleras med <quote>du</quote>. t.</para>
 
       <para>Med ett <quote>bibliotek</quote> avses en samling programfunktioner och/eller data som förberetts för att enkelt kunna länkas till applikationsprogram (som använder vissa av dessa funktioner och viss data) för att skapa körbara filer.</para>
 
@@ -124,28 +106,80 @@
 
     <sect2 id="sect2" label="2">
       <title>Paragraf 2</title>
-      <para>Du kan ändra din kopia eller dina kopior av Biblioteket eller delar av det och på så sätt skapa ett verk baserat på Biblioteket. Du kan även kopiera och distribuera dessa ändringar eller verk enligt villkoren i <link linkend="sect1">paragraf 1</link> ovan, under förutsättning att även följande villkor är uppfyllda: <orderedlist numeration="loweralpha">
-	  <listitem>
-	    <para>Det förändrade verket måste i sig själv vara ett programvarubibliotek.</para>
-	  </listitem>
-	  <listitem>
-	    <para>De ändrade filerna måste innehålla tydlig information om att du har ändrat filerna och vilket datum dessa ändringar utfördes.</para>
-	  </listitem>
-	  <listitem>
-	    <para>Hela verket måste licensieras utan kostnad till alla tredjemän enligt villkoren i Licensen.</para>
-	  </listitem>
-	  <listitem>
-	    <para>Om en modul i det ändrade Biblioteket hänvisar till en funktion eller en datatabell som skall levereras med ett applikationsprogram som använder den modulen, annat än som ett argument när modulen anropas, måste du försäkra att, i händelse av att en applikation inte tillhandahåller funktionen eller tabellen, modulen ändå fungerar och utför det den huvudsakligen syftar till.</para>
+      <para>
+	You may modify your copy or copies of the Library or any portion
+	of it, thus forming a work based on the Library, and copy and
+	distribute such modifications or work under the terms of 
+	<link linkend="sect1">Section 1</link> above, provided that 
+	you also meet all of these conditions:
 
-	    <para>(Exempelvis har en funktion i ett bibliotek som skall beräkna kvadratrötter ett klart och väldefinierat syfte oberoende av applikationen. Därför krävs att samtliga applikationsfunktioner och -tabeller som används av denna funktion, enligt paragraf 2d, måste vara valfria: om applikationen inte tillhandahåller det måste kvadratrotsfunktionen ändå beräkna kvadratrötter.)</para>
+	<orderedlist numeration="loweralpha">
+	  <listitem>
+	    <para>
+	       The modified work must itself be a software library.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      You must cause the files modified to carry prominent notices
+	      stating that you changed the files and the date of any change.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      You must cause the whole of the work to be licensed at no
+	      charge to all third parties under the terms of this License.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      If a facility in the modified Library refers to a function or a
+	      table of data to be supplied by an application program that uses
+	      the facility, other than as an argument passed when the facility
+	      is invoked, then you must make a good faith effort to ensure that,
+	      in the event an application does not supply such function or
+	      table, the facility still operates, and performs whatever part of
+	      its purpose remains meaningful.
+	    </para>
+
+	    <para>
+	      (For example, a function in a library to compute square roots has
+	      a purpose that is entirely well-defined independent of the
+	      application.  Therefore, Subsection 2d requires that any
+	      application-supplied function or table used by this function must
+	      be optional: if the application does not supply it, the square
+	      root function must still compute square roots.)
+	    </para>
 	      
-	    <para>Dessa krav gäller det ändrade verket i dess helhet. Om identifierbara delar av verket inte härrör från Biblioteket och rimligen kan anses fristående och separata verk gäller inte licensvillkoren i dessa delar när de distribueras som separata verk. Om samma delar distribueras som en del av en helhet som innehåller verk baserat på Biblioteket, måste distributionen i sin helhet ske enligt villkoren i Licensen. Licensen skall i sådant fall gälla för andra licensinnehavare för hela verket och därmed till varje del av Biblioteket oavsett vem som är upphovsman till de olika delarna.</para>
+	    <para>
+	      These requirements apply to the modified work as a whole.  If
+	      identifiable sections of that work are not derived from the Library,
+	      and can be reasonably considered independent and separate works in
+	      themselves, then this License, and its terms, do not apply to those
+	      sections when you distribute them as separate works.  But when you
+	      distribute the same sections as part of a whole which is a work based
+	      on the Library, the distribution of the whole must be on the terms of
+	      this License, whose permissions for other licensees extend to the
+	      entire whole, and thus to each and every part regardless of who wrote
+	      it.
+	    </para>
 
-	    <para>Avsikten med denna paragraf är inte att hävda rättigheter eller ifrågasätta dina rättigheter till ett verk som skrivits helt av dig. Syftet är i stället att utöva rätten att kontrollera distributionen av härledda verk eller kombinerade verk baserade på Biblioteket.</para>
+	    <para>
+	      Thus, it is not the intent of this section to claim rights or contest
+	      your rights to work written entirely by you; rather, the intent is to
+	      exercise the right to control the distribution of derivative or
+	      collective works based on the Library.
+	    </para>
 
-	    <para>Om det på ett lagrings- eller distributionsmedium finns ett annat verk som inte baseras på Biblioteket (eller ett verk baserat på Biblioteket) tillsammans med Biblioteket omfattas inte det andra verket av Licensen.</para>
+	    <para>
+	      In addition, mere aggregation of another work not based on the Library
+	      with the Library (or with a work based on the Library) on a volume of
+	      a storage or distribution medium does not bring the other work under
+	      the scope of this License.
+	    </para>
 	  </listitem>	      
-	</orderedlist></para>
+	</orderedlist>
+      </para>
 
     </sect2>
 
@@ -187,23 +221,67 @@
 
       <para>Undantag från paragraferna ovan kan göras för kombination eller länkning av ett <quote>verk som använder Biblioteket</quote> med Biblioteket för att skapa ett verk som innehåller delar av Biblioteket samt distribution av verket enligt andra villkor, under förutsättning att villkoren tillåter ändringar i verket för kundens egen räkning och omvänt en möjlighet att ta bort ändringarna.</para>
 
-      <para>Varje kopia av verket måste åtföljas av ett tydligt meddelande att Biblioteket används i verket och att Biblioteket och dess användning täcks av den här Licensen. Du måste bifoga en kopia av Licensen. Om verket under körning visar upphovsrättsklausuler måste du även inkludera upphovsrättsklausuler för Biblioteket samt en referens till kopian av denna Licens. Du måste även göra en av följande saker: <orderedlist numeration="loweralpha">
+      <para>
+	You must give prominent notice with each copy of the work that the
+	Library is used in it and that the Library and its use are covered by
+	this License.  You must supply a copy of this License.  If the work
+	during execution displays copyright notices, you must include the
+	copyright notice for the Library among them, as well as a reference
+	directing the user to the copy of this License.  Also, you must do one
+	of these things:
+
+	<orderedlist numeration="loweralpha">
 	  <listitem>
-	    <para id="sect6a">Bifoga den kompletta källkoden för Biblioteket i maskinläsbar form inklusive eventuella ändringar som använts i verket (vilka skall distribueras enligt paragraf <link linkend="sect1">1</link> och <link linkend="sect2">2</link> ovan) samt, om verket är en körbar fil länkad till Biblioteket, det kompletta maskinläsbara <quote>verket som använder Biblioteket</quote> som objektkod och/eller källkod, så att användaren kan ändra Biblioteket och sedan återlänka det för att skapa en förändrad körbar fil innehållande det ändrade Biblioteket. (Detta beror på att användaren som ändrar innehållet av definitionsfilerna i Biblioteket kanske inte kan kompilera om applikationen för att använda de ändrade definitionerna.)</para>
+	    <para id="sect6a">
+	      Accompany the work with the complete corresponding
+	      machine-readable source code for the Library including whatever
+	      changes were used in the work (which must be distributed under
+	      Sections <link linkend="sect1">1</link> and 
+	      <link linkend="sect2">2</link> above); and, if the work is an 
+	      executable linked with the Library, with the complete machine-readable 
+	      <quote>work that uses the Library</quote>, as object code and/or source 
+	      code, so that the user can modify the Library and then relink to 
+	      produce a modified executable containing the modified Library.  (It is 
+	      understood that the user who changes the contents of definitions files 
+	      in the Library will not necessarily be able to recompile the application
+	      to use the modified definitions.)
+	    </para>
 	  </listitem>
 	  <listitem>
-	    <para>Använda en lämplig delad biblioteksfunktion för länkning med Biblioteket. En lämplig funktion är en som (1) under körningen använder en redan befintlig kopia av biblioteket i stället för att kopiera biblioteksfunktioner till den körbara filen och (2) fungerar korrekt med en ändrad version av biblioteket, om användaren installerar en, så länge den ändrade versionen är gränssnittskompatibel med versionen som verket skapades för.</para>
+	    <para>
+	      Use a suitable shared library mechanism for linking with the
+	      Library.  A suitable mechanism is one that (1) uses at run time a
+	      copy of the library already present on the user's computer system,
+	      rather than copying library functions into the executable, and (2)
+	      will operate properly with a modified version of the library, if
+	      the user installs one, as long as the modified version is
+	      interface-compatible with the version that the work was made with.
+	    </para>
 	  </listitem>
 	  <listitem>
-	    <para>Bifoga ett skriftligt erbjudande, gällande i minst tre år, att ge samma användare materialen uppräknade i <link linkend="sect6a">6a</link> ovan, mot en avgift som inte är högre än självkostnaden för distributionen.</para>
+	    <para>
+	      Accompany the work with a written offer, valid for at
+	      least three years, to give the same user the materials
+	      specified in <link linkend="sect6a">Subsection 6a</link>
+	      , above, for a charge no more than the cost of performing 
+	      this distribution.	      
+	    </para>
 	  </listitem>
 	  <listitem>
-	    <para>Om distributionen av verket sker genom erbjudande av tillgång till kopiering från en bestämd plats, erbjuda motsvarande tillgång att kopiera de ovan nämnda materialen från samma plats.</para>
+	    <para>
+	      If distribution of the work is made by offering access to copy
+	      from a designated place, offer equivalent access to copy the above
+	      specified materials from the same place.
+	    </para>
 	  </listitem>
 	  <listitem>
-	    <para>Kontrollera att användaren redan har mottagit en kopia av materialen eller att du redan har skickat en kopia till denna användare.</para>
+	    <para>
+	      Verify that the user has already received a copy of these
+	      materials or that you have already sent this user a copy.
+	    </para>
 	  </listitem>
-	</orderedlist></para>
+	</orderedlist>
+      </para>
 
 	<para>För körbara filer måste <quote>verket som använder Biblioteket</quote> innehålla samtliga data- och hjälpprogram som behövs för att skapa en körbar fil från den. Ett undantag kan dock göras för material som normalt distribueras, antingen i binär form eller källkod, med huvudkomponenterna (kompilator, kärna osv.) i vilket den körbara filen körs, såvida inte denna komponent medföljer den körbara filen.</para>
 
@@ -235,7 +313,7 @@
     <sect2 id="sect9" label="9">
       <title>Paragraf 9</title>
       
-      <para>Du åläggs inte att acceptera Licensen eftersom du inte har undertecknat detta avtal. Du har dock ingen rätt att ändra eller distribuera Biblioteket eller verk baserade på Biblioteket. Sådan verksamhet är förbjuden i lag om du inte accepterar Licensen. Genom att ändra eller distribuera Biblioteket (eller verk baserat på Biblioteket) visar du genom ditt handlande att du accepterar Licensen och alla villkor för att kopiera, distribuera eller ändra Biblioteket eller verk baserade på Biblioteket.</para>
+      <para>Du åläggs inte att acceptera Licensen eftersom du inte har undertecknat detta avtal. Du har dock ingen rätt att ändra eller distribuera Biblioteket eller verk baserade på Biblioteket. Sådan verksamhet ärförbjuden i lag om du inte accepterar Licensen. Genom att ändra eller distribuera Biblioteket (eller verk baserat på Biblioteket) visar du genom ditt handlande att du accepterar Licensen och alla villkor för att kopiera, distribuera eller ändra Biblioteket eller verk baserade på Biblioteket.</para>
     </sect2>
 
     <sect2 id="sect10" label="10">
@@ -259,7 +337,7 @@
     <sect2 id="sect12" label="12">
       <title>Paragraf 12</title>
 
-      <para>Om distributionen och/eller användningen av Biblioteket är begränsad i vissa länder, på grund av patent eller upphovsrättsligt skyddade gränssnitt, kan upphovsmannen som placerar Biblioteket under den här Licensen lägga till en uttrycklig geografisk spridningsklausul, enligt vilken distribution är tillåten i länder förutom dem i vilket det är förbjudet. Om så är fallet kommer begränsningen att utgöra en fullvärdig del av Licensen.</para>
+      <para>Om distributionen och/eller användningen av Biblioteket är begränsad i vissa länder, på grund av patent eller upphovsrättsligt skyddade gränssnitt, kan upphovsmannen som placerar Biblioteket under den här Licensen lägga till en uttrycklig geografisk spridningsklausul, enligt vilken distribution är tillåten i länder förutom dem i vilket det är förbjudet. Om så är fallet kommer begränsningen att utgöra en fullvärdigdel av Licensen.</para>
     </sect2>
 
     <sect2 id="sect13" label="13">
@@ -273,20 +351,20 @@
     <sect2 id="sect14" label="14">
       <title>Paragraf 14</title>
 
-      <para>Om du vill använda delar av Biblioteket i andra fria programvaror vars distributionsvillkor inte är förenliga med dessa skall du skriva till upphovsmannen och begära tillstånd. För programvara där Free Software Foundation har upphovsrätt, skriver du till Free Software Foundation. Vi gör ibland undantag för detta. Vårt beslut kommer att styras av två mål, nämligen att bevara den fria statusen av alla verk som härleds ur vår fria programvara samt att främja delning och återanvändning av programvara i allmänhet.</para>
+      <para>Om du vill använda delar av Biblioteket i andra fria programvaror vars distributionsvillkor inte är förenliga med dessa skall du skriva till upphovsmannen och begära tillstånd. För programvara där Free SoftwareFoundation har upphovsrätt, skriver du till Free Software Foundation. Vi gör ibland undantag för detta. Vårt beslut kommer att styras av två mål, nämligen att bevara den fria statusen av alla verk som härleds ur vår fria programvara samt att främja delning och återanvändning av programvara i allmänhet.</para>
     </sect2>
 
     <sect2 id="sect15" label="15">
       <title>INGEN GARANTI</title>
       <subtitle>Paragraf 15</subtitle>
 
-      <para>ÄVEN OM BIBLIOTEKET LICENSIERAS UTAN KOSTNAD, GES INGEN GARANTI FÖR BIBLIOTEKET, UTOM SÅDAN GARANTI SOM MÅSTE GES ENLIGT GÄLLANDE LAGSTIFTNING. FÖRUTOM NÄR SÅ SKRIFTLIGT ANGES, TILLHANDAHÅLLER UPPHOVSRÄTTSINNEHAVAREN OCH/ELLER ANDRA PARTER BIBLIOTEKET I <quote>BEFINTLIGT SKICK</quote> (AS IS) UTAN GARANTI AV NÅGOT SLAG, VARKEN UTTRYCKLIGA ELLER UNDERFÖRSTÅDDA, INKLUSIVE, MEN INTE BEGRÄNSAT TILL UNDERFÖRSTÅDDA GARANTIER VID KÖP OCH LÄMPLIGHET FÖR ETT VISST ÄNDAMÅL. HELA RISKEN FÖR KVALITET OCH ANVÄNDBARHET AV BIBLIOTEKET BÄRS AV DIG. OM BIBLIOTEKET SKULLE VISA SIG BEHÄFTAT MED FEL BÄR DU ALLA KOSTNADER FÖR FELETS AVHJÄLPANDE, REPARATION ELLER NÖDVÄNDIG SERVICE.</para>
+      <para>ÄVEN OM BIBLIOTEKET LICENSIERAS UTAN KOSTNAD, GES INGEN GARANTI FÖR BIBLIOTEKET, UTOM SÅDAN GARANTI SOM MÅSTE GES ENLIGT GÄLLANDE LAGSTIFTNING. FÖRUTOM NÄR SÅ SKRIFTLIGT ANGES, TILLHANDAHÅLLER UPPHOVSRÄTTSHAVAREN OCH/ELLER ANDRA PARTER BIBLIOTEKET I <quote>BEFINTLIGT SKICK</quote> (AS IS) UTAN GARANTI AV NÅGOT SLAG, VARKEN UTTRYCKLIGA ELLER UNDERFÖRSTÅDDA, INKLUSIVE, MEN INTE BEGRÄNSAT TILL UNDERFÖRSTÅDDA GARANTIER VID KÖP OCH LÄMPLIGHET FÖR ETT VISST ÄNDAMÅL. HELA RISKEN FÖR KVALITET OCH ANVÄNDBARHET AV BIBLIOTEKET BÄRS AV DIG. OM BIBLIOTEKET SKULLE VISA SIG BEHÄFTAT MED FEL BÄR DU ALLA KOSTNADER FÖR FELETS AVHJÄLPANDE, REPARATION ELLER NÖDVÄNDIG SERVICE.</para>
     </sect2>
 
     <sect2 id="sect16" label="16">
       <title>Paragraf 16</title>
 
-      <para>INTE I NÅGOT FALL, SÅVIDA INTE DET KRÄVS ENLIGT GÄLLANDE LAGSTIFTNING ELLER AVTALAS SKRIFTLIGT, SKALL EN UPPHOVSRÄTTSINNEHAVARE ELLER ANNAN PART SOM KAN ÄNDRA OCH/ELLER DISTRIBUERA BIBLIOTEKET ENLIGT OVAN, VARA SKYLDIG UTGE ERSÄTTNING FÖR SKADA DU LIDER, INKLUSIVE ALLMÄN, DIREKT ELLER INDIREKT SKADA SOM FÖLJER PÅ GRUND AV ANVÄNDNING AV, ELLER OMÖJLIGHET ATT ANVÄNDA, BIBLIOTEKET (INKLUSIVE MEN INTE BEGRÄNSAT TILL FÖRLUST AV DATA, DATA SOM FRAMSTÄLLS FELAKTIGT, FÖRLUSTER SOM DU ELLER TREDJE MAN LIDER ELLER FEL I BIBLIOTEKET SOM GÖR ATT DET INTE FUNGERAR MED ANNAN PROGRAMVARA), ÄVEN OM UPPHOVSRÄTTSINNEHAVARE ELLER ANNAN PART HAR UNDERRÄTTATS OM MÖJLIGHETEN TILL SÅDAN SKADA.</para>
+      <para>INTE I NÅGOT FALL, SÅVIDA INTE DET KRÄVS ENLIGT GÄLLANDE LAGSTIFTNING ELLER AVTALAS SKRIFTLIGT, SKALL EN UPPHOVSRÄTTSHAVARE ELLER ANNAN PART SOM KAN ÄNDRA OCH/ELLER DISTRIBUERA BIBLIOTEKET ENLIGT OVAN, VARA SKYLDIG UTGE ERSÄTTNING FÖR SKADA DU LIDER, INKLUSIVE ALLMÄN, DIREKT ELLER INDIREKT SKADA SOM FÖLJER PÅ GRUND AV ANVÄNDNING AV, ELLER OMÖJLIGHET ATT ANVÄNDA, BIBLIOTEKET (INKLUSIVE MEN INTE BEGRÄNSAT TILL FÖRLUST AV DATA, DATA SOM FRAMSTÄLLS FELAKTIGT, FÖRLUSTER SOM DU ELLER TREDJE MAN LIDER ELLER FEL IBIBLIOTEKET SOM GÖR ATT DET INTE FUNGERAR MED ANNAN PROGRAMVARA), ÄVEN OM UPPHOVSRÄTTSHAVAREN ELLER ANNAN PART HAR UNDERRÄTTATS OM MÖJLIGHETEN TILL SÅDAN SKADA.</para>
     </sect2>
   </sect1>
 </article>

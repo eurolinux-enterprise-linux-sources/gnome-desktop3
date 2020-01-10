@@ -177,7 +177,13 @@
     <title>문서의 수집</title>
     <para>본 사용 허가서에 의해서 배포된 <link linkend="fdl-document">문서</link>들을 모아서 구성된 수집 저작물을 만들 수 있습니다. 또한 개별 문서에 포함되어 있던 본 사용 허가서의 복제물들을 한 개로 대체하여 수집 저작물에 포함시킬 수 있습니다. 이 경우, 다른 모든 부분들은 본 사용 허가서에 규정된 제2조 동일 복제 규정을 준수해야 합니다.</para>
     
-    <para>수집 저작물로부터 하나의 문서를 발췌해서 개별 배포할 경우에는 본 사용 허가서의 복제물을 발췌한 문서에 첨부하고 그 이외의 다른 부분들은 모두 제2조에 규정된 동일 복제 조항을 준수해야 합니다.</para>
+    <para>
+      You may extract a single document from such a collection, and
+      distribute it individually under this License, provided you
+      insert a copy of this License into the extracted document, and
+      follow this License in all other respects regarding verbatim
+      copying of that document.
+    </para>
     </sect1>
     
   <sect1 id="fdl-section7" label="7">

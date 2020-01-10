@@ -2,12 +2,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>GNOME Desktop Library Reference Manual: Language Utilities</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<title>Language Utilities: GNOME Desktop Library Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="GNOME Desktop Library Reference Manual">
 <link rel="up" href="languages.html" title="Part VIII. Language Utilities">
 <link rel="prev" href="languages.html" title="Part VIII. Language Utilities">
-<meta name="generator" content="GTK-Doc V1.21 (XML mode)">
+<link rel="next" href="annotation-glossary.html" title="Annotation Glossary">
+<meta name="generator" content="GTK-Doc V1.25.1 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -19,7 +20,7 @@
 <td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
 <td><a accesskey="u" href="languages.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
 <td><a accesskey="p" href="languages.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
-<td><img src="right-insensitive.png" width="16" height="16" border="0"></td>
+<td><a accesskey="n" href="annotation-glossary.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
 </tr></table>
 <div class="refentry">
 <a name="gnome-desktop3-Language-Utilities"></a><div class="titlepage"></div>
@@ -32,7 +33,7 @@
 </tr></table></div>
 <div class="refsect1">
 <a name="gnome-desktop3-Language-Utilities.functions"></a><h2>Functions</h2>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="functions_return">
 <col class="functions_name">
@@ -115,8 +116,6 @@
 </div>
 <div class="refsect1">
 <a name="gnome-desktop3-Language-Utilities.description"></a><h2>Description</h2>
-<p>
-</p>
 </div>
 <div class="refsect1">
 <a name="gnome-desktop3-Language-Utilities.functions_details"></a><h2>Functions</h2>
@@ -126,12 +125,12 @@
 gnome_get_all_locales (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
 <p>Gets all locales.</p>
 <div class="refsect3">
-<a name="id-1.9.2.5.2.5"></a><h4>Returns</h4>
+<a name="gnome-get-all-locales.returns"></a><h4>Returns</h4>
 <p>  a newly allocated <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>-terminated string array containing the
 all locales. Free with <a href="https://developer.gnome.org/glib/unstable/glib-String-Utility-Functions.html#g-strfreev"><code class="function">g_strfreev()</code></a>. </p>
-<p><span class="annotation">[<a href="http://foldoc.org/array"><span class="acronym">array</span></a> zero-terminated=1][<a href="http://foldoc.org/element-type"><span class="acronym">element-type</span></a> utf8][<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span></p>
+<p><span class="annotation">[<acronym title="Parameter points to an array of items."><span class="acronym">array</span></acronym> zero-terminated=1][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> utf8][<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
-<p class="since">Since 3.8</p>
+<p class="since">Since: 3.8</p>
 </div>
 <hr>
 <div class="refsect2">
@@ -144,8 +143,8 @@ gnome_get_country_from_code (<em class="parameter"><code>const <span class="type
  is provided the
 returned string is translated accordingly.</p>
 <div class="refsect3">
-<a name="id-1.9.2.5.3.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnome-get-country-from-code.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -160,18 +159,18 @@ returned string is translated accordingly.</p>
 <tr>
 <td class="parameter_name"><p>translation</p></td>
 <td class="parameter_description"><p> a locale string. </p></td>
-<td class="parameter_annotations"><span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.9.2.5.3.6"></a><h4>Returns</h4>
+<a name="gnome-get-country-from-code.returns"></a><h4>Returns</h4>
 <p> the country name. Caller takes
 ownership. </p>
-<p><span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span></p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
-<p class="since">Since 3.8</p>
+<p class="since">Since: 3.8</p>
 </div>
 <hr>
 <div class="refsect2">
@@ -184,8 +183,8 @@ gnome_get_country_from_locale (<em class="parameter"><code>const <span class="ty
  is
 provided the returned string is translated accordingly.</p>
 <div class="refsect3">
-<a name="id-1.9.2.5.4.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnome-get-country-from-locale.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -200,18 +199,18 @@ provided the returned string is translated accordingly.</p>
 <tr>
 <td class="parameter_name"><p>translation</p></td>
 <td class="parameter_description"><p> a locale string. </p></td>
-<td class="parameter_annotations"><span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.9.2.5.4.6"></a><h4>Returns</h4>
+<a name="gnome-get-country-from-locale.returns"></a><h4>Returns</h4>
 <p> the country description. Caller
 takes ownership. </p>
-<p><span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span></p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
-<p class="since">Since 3.8</p>
+<p class="since">Since: 3.8</p>
 </div>
 <hr>
 <div class="refsect2">
@@ -223,8 +222,8 @@ gnome_get_input_source_from_locale (<em class="parameter"><code>const <span clas
 <p>Gets the default input source's type and identifier for a given
 locale.</p>
 <div class="refsect3">
-<a name="id-1.9.2.5.5.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnome-get-input-source-from-locale.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -240,23 +239,22 @@ locale.</p>
 <td class="parameter_name"><p>type</p></td>
 <td class="parameter_description"><p> location to store the input source
 type. </p></td>
-<td class="parameter_annotations"><span class="annotation">[<a href="http://foldoc.org/out"><span class="acronym">out</span></a>][<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>id</p></td>
 <td class="parameter_description"><p> location to store the input source
 identifier. </p></td>
-<td class="parameter_annotations"><span class="annotation">[<a href="http://foldoc.org/out"><span class="acronym">out</span></a>][<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.9.2.5.5.6"></a><h4>Returns</h4>
+<a name="gnome-get-input-source-from-locale.returns"></a><h4>Returns</h4>
 <p> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if a input source exists or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise.</p>
-<p></p>
 </div>
-<p class="since">Since 3.8</p>
+<p class="since">Since: 3.8</p>
 </div>
 <hr>
 <div class="refsect2">
@@ -269,8 +267,8 @@ gnome_get_language_from_code (<em class="parameter"><code>const <span class="typ
  is provided the
 returned string is translated accordingly.</p>
 <div class="refsect3">
-<a name="id-1.9.2.5.6.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnome-get-language-from-code.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -285,18 +283,18 @@ returned string is translated accordingly.</p>
 <tr>
 <td class="parameter_name"><p>translation</p></td>
 <td class="parameter_description"><p> a locale string. </p></td>
-<td class="parameter_annotations"><span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.9.2.5.6.6"></a><h4>Returns</h4>
+<a name="gnome-get-language-from-code.returns"></a><h4>Returns</h4>
 <p> the language name. Caller takes
 ownership. </p>
-<p><span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span></p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
-<p class="since">Since 3.8</p>
+<p class="since">Since: 3.8</p>
 </div>
 <hr>
 <div class="refsect2">
@@ -309,8 +307,8 @@ gnome_get_language_from_locale (<em class="parameter"><code>const <span class="t
  is
 provided the returned string is translated accordingly.</p>
 <div class="refsect3">
-<a name="id-1.9.2.5.7.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnome-get-language-from-locale.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -325,18 +323,18 @@ provided the returned string is translated accordingly.</p>
 <tr>
 <td class="parameter_name"><p>translation</p></td>
 <td class="parameter_description"><p> a locale string. </p></td>
-<td class="parameter_annotations"><span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.9.2.5.7.6"></a><h4>Returns</h4>
+<a name="gnome-get-language-from-locale.returns"></a><h4>Returns</h4>
 <p> the language description. Caller
 takes ownership. </p>
-<p><span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span></p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
-<p class="since">Since 3.8</p>
+<p class="since">Since: 3.8</p>
 </div>
 <hr>
 <div class="refsect2">
@@ -348,8 +346,8 @@ gnome_normalize_locale (<em class="parameter"><code>const <span class="type">cha
 ]] for <em class="parameter"><code>name</code></em>
 .</p>
 <div class="refsect3">
-<a name="id-1.9.2.5.8.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnome-normalize-locale.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -363,12 +361,12 @@ gnome_normalize_locale (<em class="parameter"><code>const <span class="type">cha
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.9.2.5.8.6"></a><h4>Returns</h4>
+<a name="gnome-normalize-locale.returns"></a><h4>Returns</h4>
 <p> normalized locale string. Caller
 takes ownership. </p>
-<p><span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span></p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
-<p class="since">Since 3.8</p>
+<p class="since">Since: 3.8</p>
 </div>
 <hr>
 <div class="refsect2">
@@ -384,8 +382,8 @@ gnome_parse_locale (<em class="parameter"><code>const <span class="type">char</s
 ]]. See
 http://en.wikipedia.org/wiki/Locale.</p>
 <div class="refsect3">
-<a name="id-1.9.2.5.9.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnome-parse-locale.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -401,35 +399,34 @@ http://en.wikipedia.org/wiki/Locale.</p>
 <td class="parameter_name"><p>language_codep</p></td>
 <td class="parameter_description"><p> location to
 store the language code, or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. </p></td>
-<td class="parameter_annotations"><span class="annotation">[<a href="http://foldoc.org/out"><span class="acronym">out</span></a>][<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>][<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>country_codep</p></td>
 <td class="parameter_description"><p> location to
 store the country code, or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. </p></td>
-<td class="parameter_annotations"><span class="annotation">[<a href="http://foldoc.org/out"><span class="acronym">out</span></a>][<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>][<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>codesetp</p></td>
 <td class="parameter_description"><p> location to
 store the codeset, or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. </p></td>
-<td class="parameter_annotations"><span class="annotation">[<a href="http://foldoc.org/out"><span class="acronym">out</span></a>][<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>][<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>modifierp</p></td>
 <td class="parameter_description"><p> location to
 store the modifier, or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. </p></td>
-<td class="parameter_annotations"><span class="annotation">[<a href="http://foldoc.org/out"><span class="acronym">out</span></a>][<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>][<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.9.2.5.9.6"></a><h4>Returns</h4>
+<a name="gnome-parse-locale.returns"></a><h4>Returns</h4>
 <p> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if parsing was successful.</p>
-<p></p>
 </div>
-<p class="since">Since 3.8</p>
+<p class="since">Since: 3.8</p>
 </div>
 <hr>
 <div class="refsect2">
@@ -439,8 +436,8 @@ gnome_language_has_translations (<em class="parameter"><code>const <span class="
 <p>Returns <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if there are translations for language <em class="parameter"><code>code</code></em>
 .</p>
 <div class="refsect3">
-<a name="id-1.9.2.5.10.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnome-language-has-translations.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -454,12 +451,11 @@ gnome_language_has_translations (<em class="parameter"><code>const <span class="
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.9.2.5.10.6"></a><h4>Returns</h4>
+<a name="gnome-language-has-translations.returns"></a><h4>Returns</h4>
 <p> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if there are translations for language <em class="parameter"><code>code</code></em>
 .</p>
-<p></p>
 </div>
-<p class="since">Since 3.8</p>
+<p class="since">Since: 3.8</p>
 </div>
 </div>
 <div class="refsect1">
@@ -467,7 +463,6 @@ gnome_language_has_translations (<em class="parameter"><code>const <span class="
 </div>
 </div>
 <div class="footer">
-<hr>
-          Generated by GTK-Doc V1.21</div>
+<hr>Generated by GTK-Doc V1.25.1</div>
 </body>
 </html>

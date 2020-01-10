@@ -145,9 +145,6 @@
 #define GNOME_DESKTOP_USE_UNSTABLE_API
 #include "gnome-desktop-thumbnail.h"
 #include <glib/gstdio.h>
-#ifdef HAVE_OPENAT
-#include <libgsystem.h>
-#endif
 
 #define SECONDS_BETWEEN_STATS 10
 
@@ -430,7 +427,7 @@ create_loader (GFile        *file,
   }
 
   if (loader == NULL) {
-    g_warning ("Unable to create loader for mime type %s: %s", mime_type, error->message);
+    g_debug ("Unable to create loader for mime type %s: %s", mime_type, error->message);
     g_clear_error (&error);
     loader = gdk_pixbuf_loader_new ();
   }
@@ -487,18 +484,13 @@ _gdk_pixbuf_new_from_uri_at_scale (const char *uri,
     }
 
     if (input_stream == NULL) {
-#ifdef HAVE_OPENAT
-        if (g_file_is_native (file))
-            input_stream = gs_file_read_noatime (file, NULL, &error);
-        else
-#endif
-            input_stream = G_INPUT_STREAM (g_file_read (file, NULL, &error));
-        if (input_stream == NULL) {
-            g_warning ("Unable to create an input stream for %s: %s", uri, error->message);
-            g_clear_error (&error);
-            g_object_unref (file);
-            return NULL;
-        }
+	    input_stream = G_INPUT_STREAM (g_file_read (file, NULL, &error));
+	    if (input_stream == NULL) {
+		    g_warning ("Unable to create an input stream for %s: %s", uri, error->message);
+		    g_clear_error (&error);
+		    g_object_unref (file);
+		    return NULL;
+	    }
     }
 
     has_frame = FALSE;
@@ -557,11 +549,12 @@ _gdk_pixbuf_new_from_uri_at_scale (const char *uri,
         /* This can happen if the above loop was exited due to the
          * g_input_stream_read() call failing. */
         result = FALSE;
-    } else if (gdk_pixbuf_loader_close (loader, &error) == FALSE) {
+    } else if (gdk_pixbuf_loader_close (loader, &error) == FALSE &&
+               !g_error_matches (error, GDK_PIXBUF_ERROR, GDK_PIXBUF_ERROR_INCOMPLETE_ANIMATION)) {
         g_warning ("Error creating thumbnail for %s: %s", uri, error->message);
-        g_clear_error (&error);
         result = FALSE;
     }
+    g_clear_error (&error);
 
     if (!result) {
         g_clear_object (&loader);
@@ -586,52 +579,6 @@ _gdk_pixbuf_new_from_uri_at_scale (const char *uri,
     g_object_unref (G_OBJECT (loader));
 
     return pixbuf;
-}
-
-static void
-gnome_desktop_thumbnail_factory_finalize (GObject *object)
-{
-  GnomeDesktopThumbnailFactory *factory;
-  GnomeDesktopThumbnailFactoryPrivate *priv;
-  
-  factory = GNOME_DESKTOP_THUMBNAIL_FACTORY (object);
-
-  priv = factory->priv;
-
-  if (priv->thumbnailers)
-    {
-      g_list_free_full (priv->thumbnailers, (GDestroyNotify)thumbnailer_unref);
-      priv->thumbnailers = NULL;
-    }
-
-  if (priv->mime_types_map)
-    {
-      g_hash_table_destroy (priv->mime_types_map);
-      priv->mime_types_map = NULL;
-    }
-
-  if (priv->monitors)
-    {
-      g_list_free_full (priv->monitors, (GDestroyNotify)g_object_unref);
-      priv->monitors = NULL;
-    }
-
-  g_mutex_clear (&priv->lock);
-
-  if (priv->disabled_types)
-    {
-      g_strfreev (priv->disabled_types);
-      priv->disabled_types = NULL;
-    }
-
-  if (priv->settings)
-    {
-      g_object_unref (priv->settings);
-      priv->settings = NULL;
-    }
-
-  if (G_OBJECT_CLASS (parent_class)->finalize)
-    (* G_OBJECT_CLASS (parent_class)->finalize) (object);
 }
 
 /* These should be called with the lock held */
@@ -941,10 +888,11 @@ external_thumbnailers_disabled_changed_cb (GSettings                    *setting
 
   g_mutex_lock (&priv->lock);
 
-  if (priv->disabled)
-    return;
-  g_strfreev (priv->disabled_types);
-  priv->disabled_types = g_settings_get_strv (priv->settings, "disable");
+  if (!priv->disabled)
+    {
+      g_strfreev (priv->disabled_types);
+      priv->disabled_types = g_settings_get_strv (priv->settings, "disable");
+    }
 
   g_mutex_unlock (&priv->lock);
 }
@@ -983,6 +931,49 @@ gnome_desktop_thumbnail_factory_init (GnomeDesktopThumbnailFactory *factory)
 }
 
 static void
+gnome_desktop_thumbnail_factory_finalize (GObject *object)
+{
+  GnomeDesktopThumbnailFactory *factory;
+  GnomeDesktopThumbnailFactoryPrivate *priv;
+  
+  factory = GNOME_DESKTOP_THUMBNAIL_FACTORY (object);
+
+  priv = factory->priv;
+
+  if (priv->thumbnailers)
+    {
+      g_list_free_full (priv->thumbnailers, (GDestroyNotify)thumbnailer_unref);
+      priv->thumbnailers = NULL;
+    }
+
+  g_clear_pointer (&priv->mime_types_map, g_hash_table_destroy);
+
+  if (priv->monitors)
+    {
+      g_list_free_full (priv->monitors, (GDestroyNotify)g_object_unref);
+      priv->monitors = NULL;
+    }
+
+  g_mutex_clear (&priv->lock);
+
+  g_clear_pointer (&priv->disabled_types, g_strfreev);
+
+  if (priv->settings)
+    {
+      g_signal_handlers_disconnect_by_func (priv->settings,
+                                            external_thumbnailers_disabled_all_changed_cb,
+                                            factory);
+      g_signal_handlers_disconnect_by_func (priv->settings,
+                                            external_thumbnailers_disabled_changed_cb,
+                                            factory);
+      g_clear_object (&priv->settings);
+    }
+
+  if (G_OBJECT_CLASS (parent_class)->finalize)
+    (* G_OBJECT_CLASS (parent_class)->finalize) (object);
+}
+
+static void
 gnome_desktop_thumbnail_factory_class_init (GnomeDesktopThumbnailFactoryClass *class)
 {
   GObjectClass *gobject_class;
@@ -1018,6 +1009,98 @@ gnome_desktop_thumbnail_factory_new (GnomeDesktopThumbnailSize size)
   return factory;
 }
 
+static char *
+thumbnail_filename (const char *uri)
+{
+  GChecksum *checksum;
+  guint8 digest[16];
+  gsize digest_len = sizeof (digest);
+  char *file;
+
+  checksum = g_checksum_new (G_CHECKSUM_MD5);
+  g_checksum_update (checksum, (const guchar *) uri, strlen (uri));
+
+  g_checksum_get_digest (checksum, digest, &digest_len);
+  g_assert (digest_len == 16);
+
+  file = g_strconcat (g_checksum_get_string (checksum), ".png", NULL);
+
+  g_checksum_free (checksum);
+
+  return file;
+}
+
+static char *
+thumbnail_path (const char                *uri,
+                GnomeDesktopThumbnailSize  size)
+{
+  char *path, *file;
+
+  file = thumbnail_filename (uri);
+  path = g_build_filename (g_get_user_cache_dir (),
+                           "thumbnails",
+                           size == GNOME_DESKTOP_THUMBNAIL_SIZE_LARGE ? "large" : "normal",
+                           file,
+                           NULL);
+  g_free (file);
+  return path;
+}
+
+static char *
+thumbnail_failed_path (const char *uri)
+{
+  char *path, *file;
+
+  file = thumbnail_filename (uri);
+  /* XXX: appname is only used for failed thumbnails. Is this a mistake? */
+  path = g_build_filename (g_get_user_cache_dir (),
+                           "thumbnails",
+                           "fail",
+                           appname,
+                           file,
+                           NULL);
+  g_free (file);
+  return path;
+}
+
+static char *
+validate_thumbnail_path (char                      *path,
+                         const char                *uri,
+                         time_t                     mtime,
+                         GnomeDesktopThumbnailSize  size)
+{
+  GdkPixbuf *pixbuf;
+
+  pixbuf = gdk_pixbuf_new_from_file (path, NULL);
+  if (pixbuf == NULL ||
+      !gnome_desktop_thumbnail_is_valid (pixbuf, uri, mtime)) {
+      g_free (path);
+      return NULL;
+  }
+
+  g_clear_object (&pixbuf);
+
+  return path;
+}
+
+static char *
+lookup_thumbnail_path (const char                *uri,
+                       time_t                     mtime,
+                       GnomeDesktopThumbnailSize  size)
+{
+  char *path = thumbnail_path (uri, size);
+  return validate_thumbnail_path (path, uri, mtime, size);
+}
+
+static char *
+lookup_failed_thumbnail_path (const char                *uri,
+                              time_t                     mtime,
+                              GnomeDesktopThumbnailSize  size)
+{
+  char *path = thumbnail_failed_path (uri);
+  return validate_thumbnail_path (path, uri, mtime, size);
+}
+
 /**
  * gnome_desktop_thumbnail_factory_lookup:
  * @factory: a #GnomeDesktopThumbnailFactory
@@ -1038,46 +1121,10 @@ gnome_desktop_thumbnail_factory_lookup (GnomeDesktopThumbnailFactory *factory,
 					time_t                 mtime)
 {
   GnomeDesktopThumbnailFactoryPrivate *priv = factory->priv;
-  char *path, *file;
-  GChecksum *checksum;
-  guint8 digest[16];
-  gsize digest_len = sizeof (digest);
-  GdkPixbuf *pixbuf;
-  gboolean res;
 
   g_return_val_if_fail (uri != NULL, NULL);
 
-  res = FALSE;
-
-  checksum = g_checksum_new (G_CHECKSUM_MD5);
-  g_checksum_update (checksum, (const guchar *) uri, strlen (uri));
-
-  g_checksum_get_digest (checksum, digest, &digest_len);
-  g_assert (digest_len == 16);
-
-  file = g_strconcat (g_checksum_get_string (checksum), ".png", NULL);
-  
-  path = g_build_filename (g_get_user_cache_dir (),
-			   "thumbnails",
-			   (priv->size == GNOME_DESKTOP_THUMBNAIL_SIZE_NORMAL)?"normal":"large",
-			   file,
-			   NULL);
-  g_free (file);
-
-  pixbuf = gdk_pixbuf_new_from_file (path, NULL);
-  if (pixbuf != NULL)
-    {
-      res = gnome_desktop_thumbnail_is_valid (pixbuf, uri, mtime);
-      g_object_unref (pixbuf);
-    }
-
-  g_checksum_free (checksum);
-
-  if (res)
-    return path;
-
-  g_free (path);
-  return FALSE;
+  return lookup_thumbnail_path (uri, mtime, priv->size);
 }
 
 /**
@@ -1101,42 +1148,17 @@ gnome_desktop_thumbnail_factory_has_valid_failed_thumbnail (GnomeDesktopThumbnai
 							    const char            *uri,
 							    time_t                 mtime)
 {
-  char *path, *file;
-  GdkPixbuf *pixbuf;
-  gboolean res;
-  GChecksum *checksum;
-  guint8 digest[16];
-  gsize digest_len = sizeof (digest);
+  char *path;
 
-  checksum = g_checksum_new (G_CHECKSUM_MD5);
-  g_checksum_update (checksum, (const guchar *) uri, strlen (uri));
+  g_return_val_if_fail (uri != NULL, FALSE);
 
-  g_checksum_get_digest (checksum, digest, &digest_len);
-  g_assert (digest_len == 16);
+  path = lookup_failed_thumbnail_path (uri, mtime, factory->priv->size);
+  if (path == NULL)
+    return FALSE;
 
-  res = FALSE;
-
-  file = g_strconcat (g_checksum_get_string (checksum), ".png", NULL);
-
-  path = g_build_filename (g_get_user_cache_dir (),
-			   "thumbnails/fail",
-			   appname,
-			   file,
-			   NULL);
-  g_free (file);
-
-  pixbuf = gdk_pixbuf_new_from_file (path, NULL);
   g_free (path);
 
-  if (pixbuf)
-    {
-      res = gnome_desktop_thumbnail_is_valid (pixbuf, uri, mtime);
-      g_object_unref (pixbuf);
-    }
-
-  g_checksum_free (checksum);
-
-  return res;
+  return TRUE;
 }
 
 static gboolean
@@ -1452,89 +1474,88 @@ gnome_desktop_thumbnail_factory_generate_thumbnail (GnomeDesktopThumbnailFactory
 }
 
 static gboolean
-make_thumbnail_dirs (GnomeDesktopThumbnailFactory *factory)
+save_thumbnail (GdkPixbuf  *pixbuf,
+                char       *path,
+                const char *uri,
+                time_t      mtime)
 {
-  char *thumbnail_dir;
-  char *image_dir;
-  gboolean res;
+  char *dirname;
+  char *tmp_path = NULL;
+  int tmp_fd;
+  char mtime_str[21];
+  gboolean ret = FALSE;
+  GError *error = NULL;
+  const char *width, *height;
 
-  res = FALSE;
+  if (pixbuf == NULL)
+    return FALSE;
 
-  thumbnail_dir = g_build_filename (g_get_user_cache_dir (),
-				    "thumbnails",
-				    NULL);
-  if (!g_file_test (thumbnail_dir, G_FILE_TEST_IS_DIR))
+  dirname = g_path_get_dirname (path);
+
+  if (g_mkdir_with_parents (dirname, 0700) != 0)
+    goto out;
+
+  tmp_path = g_strconcat (path, ".XXXXXX", NULL);
+  tmp_fd = g_mkstemp (tmp_path);
+
+  if (tmp_fd == -1)
+    goto out;
+  close (tmp_fd);
+
+  g_snprintf (mtime_str, 21, "%ld",  mtime);
+  width = gdk_pixbuf_get_option (pixbuf, "tEXt::Thumb::Image::Width");
+  height = gdk_pixbuf_get_option (pixbuf, "tEXt::Thumb::Image::Height");
+
+  error = NULL;
+  if (width != NULL && height != NULL)
+    ret = gdk_pixbuf_save (pixbuf,
+			   tmp_path,
+			   "png", &error,
+			   "tEXt::Thumb::Image::Width", width,
+			   "tEXt::Thumb::Image::Height", height,
+			   "tEXt::Thumb::URI", uri,
+			   "tEXt::Thumb::MTime", mtime_str,
+			   "tEXt::Software", "GNOME::ThumbnailFactory",
+			   NULL);
+  else
+    ret = gdk_pixbuf_save (pixbuf,
+			   tmp_path,
+			   "png", &error,
+			   "tEXt::Thumb::URI", uri,
+			   "tEXt::Thumb::MTime", mtime_str,
+			   "tEXt::Software", "GNOME::ThumbnailFactory",
+			   NULL);
+
+  if (!ret)
+    goto out;
+
+  g_chmod (tmp_path, 0600);
+  g_rename (tmp_path, path);
+
+ out:
+  if (error != NULL)
     {
-      g_mkdir (thumbnail_dir, 0700);
-      res = TRUE;
+      g_warning ("Failed to create thumbnail %s: %s", tmp_path, error->message);
+      g_error_free (error);
     }
-
-  image_dir = g_build_filename (thumbnail_dir,
-				(factory->priv->size == GNOME_DESKTOP_THUMBNAIL_SIZE_NORMAL)?"normal":"large",
-				NULL);
-  if (!g_file_test (image_dir, G_FILE_TEST_IS_DIR))
-    {
-      g_mkdir (image_dir, 0700);
-      res = TRUE;
-    }
-
-  g_free (thumbnail_dir);
-  g_free (image_dir);
-  
-  return res;
+  g_unlink (tmp_path);
+  g_free (tmp_path);
+  g_free (dirname);
+  return ret;
 }
 
-static gboolean
-make_thumbnail_fail_dirs (GnomeDesktopThumbnailFactory *factory)
+static GdkPixbuf *
+make_failed_thumbnail (void)
 {
-  char *thumbnail_dir;
-  char *fail_dir;
-  char *app_dir;
-  gboolean res;
-
-  res = FALSE;
-
-  thumbnail_dir = g_build_filename (g_get_user_cache_dir (),
-				    "thumbnails",
-				    NULL);
-  if (!g_file_test (thumbnail_dir, G_FILE_TEST_IS_DIR))
-    {
-      g_mkdir (thumbnail_dir, 0700);
-      res = TRUE;
-    }
-
-  fail_dir = g_build_filename (thumbnail_dir,
-			       "fail",
-			       NULL);
-  if (!g_file_test (fail_dir, G_FILE_TEST_IS_DIR))
-    {
-      g_mkdir (fail_dir, 0700);
-      res = TRUE;
-    }
-
-  app_dir = g_build_filename (fail_dir,
-			      appname,
-			      NULL);
-  if (!g_file_test (app_dir, G_FILE_TEST_IS_DIR))
-    {
-      g_mkdir (app_dir, 0700);
-      res = TRUE;
-    }
-
-  g_free (thumbnail_dir);
-  g_free (fail_dir);
-  g_free (app_dir);
-  
-  return res;
+  return gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8, 1, 1);
 }
-
 
 /**
  * gnome_desktop_thumbnail_factory_save_thumbnail:
  * @factory: a #GnomeDesktopThumbnailFactory
- * @thumbnail: the thumbnail as a pixbuf 
+ * @thumbnail: the thumbnail as a pixbuf
  * @uri: the uri of a file
- * @original_mtime: the modification time of the original file 
+ * @original_mtime: the modification time of the original file
  *
  * Saves @thumbnail at the right place. If the save fails a
  * failed thumbnail is written.
@@ -1549,96 +1570,18 @@ gnome_desktop_thumbnail_factory_save_thumbnail (GnomeDesktopThumbnailFactory *fa
 						const char            *uri,
 						time_t                 original_mtime)
 {
-  GnomeDesktopThumbnailFactoryPrivate *priv = factory->priv;
-  char *path, *file;
-  char *tmp_path;
-  const char *width, *height;
-  int tmp_fd;
-  char mtime_str[21];
-  gboolean saved_ok;
-  GChecksum *checksum;
-  guint8 digest[16];
-  gsize digest_len = sizeof (digest);
-  GError *error;
+  char *path;
 
-  checksum = g_checksum_new (G_CHECKSUM_MD5);
-  g_checksum_update (checksum, (const guchar *) uri, strlen (uri));
-
-  g_checksum_get_digest (checksum, digest, &digest_len);
-  g_assert (digest_len == 16);
-
-  file = g_strconcat (g_checksum_get_string (checksum), ".png", NULL);
-
-  path = g_build_filename (g_get_user_cache_dir (),
-			   "thumbnails",
-			   (priv->size == GNOME_DESKTOP_THUMBNAIL_SIZE_NORMAL)?"normal":"large",
-			   file,
-			   NULL);
-
-  g_free (file);
-
-  g_checksum_free (checksum);
-
-  tmp_path = g_strconcat (path, ".XXXXXX", NULL);
-
-  tmp_fd = g_mkstemp (tmp_path);
-  if (tmp_fd == -1 &&
-      make_thumbnail_dirs (factory))
+  path = thumbnail_path (uri, factory->priv->size);
+  if (!save_thumbnail (thumbnail, path, uri, original_mtime))
     {
-      g_free (tmp_path);
-      tmp_path = g_strconcat (path, ".XXXXXX", NULL);
-      tmp_fd = g_mkstemp (tmp_path);
-    }
-
-  if (tmp_fd == -1)
-    {
-      gnome_desktop_thumbnail_factory_create_failed_thumbnail (factory, uri, original_mtime);
-      g_free (tmp_path);
+      thumbnail = make_failed_thumbnail ();
       g_free (path);
-      return;
+      path = thumbnail_failed_path (uri);
+      save_thumbnail (thumbnail, path, uri, original_mtime);
+      g_object_unref (thumbnail);
     }
-  close (tmp_fd);
-  
-  g_snprintf (mtime_str, 21, "%" G_GUINT64_FORMAT, (guint64) original_mtime);
-  width = gdk_pixbuf_get_option (thumbnail, "tEXt::Thumb::Image::Width");
-  height = gdk_pixbuf_get_option (thumbnail, "tEXt::Thumb::Image::Height");
-
-  error = NULL;
-  if (width != NULL && height != NULL) 
-    saved_ok  = gdk_pixbuf_save (thumbnail,
-				 tmp_path,
-				 "png", &error,
-				 "tEXt::Thumb::Image::Width", width,
-				 "tEXt::Thumb::Image::Height", height,
-				 "tEXt::Thumb::URI", uri,
-				 "tEXt::Thumb::MTime", mtime_str,
-				 "tEXt::Software", "GNOME::ThumbnailFactory",
-				 NULL);
-  else
-    saved_ok  = gdk_pixbuf_save (thumbnail,
-				 tmp_path,
-				 "png", &error,
-				 "tEXt::Thumb::URI", uri,
-				 "tEXt::Thumb::MTime", mtime_str,
-				 "tEXt::Software", "GNOME::ThumbnailFactory",
-				 NULL);
-    
-
-  if (saved_ok)
-    {
-      g_chmod (tmp_path, 0600);
-      g_rename (tmp_path, path);
-    }
-  else
-    {
-      g_warning ("Failed to create thumbnail %s: %s", tmp_path, error->message);
-      gnome_desktop_thumbnail_factory_create_failed_thumbnail (factory, uri, original_mtime);
-      g_unlink (tmp_path);
-      g_clear_error (&error);
-    }
-
   g_free (path);
-  g_free (tmp_path);
 }
 
 /**
@@ -1659,67 +1602,14 @@ gnome_desktop_thumbnail_factory_create_failed_thumbnail (GnomeDesktopThumbnailFa
 							 const char            *uri,
 							 time_t                 mtime)
 {
-  char *path, *file;
-  char *tmp_path;
-  int tmp_fd;
-  char mtime_str[21];
+  char *path;
   GdkPixbuf *pixbuf;
-  GChecksum *checksum;
-  guint8 digest[16];
-  gsize digest_len = sizeof (digest);
 
-  checksum = g_checksum_new (G_CHECKSUM_MD5);
-  g_checksum_update (checksum, (const guchar *) uri, strlen (uri));
-
-  g_checksum_get_digest (checksum, digest, &digest_len);
-  g_assert (digest_len == 16);
-
-  file = g_strconcat (g_checksum_get_string (checksum), ".png", NULL);
-
-  path = g_build_filename (g_get_user_cache_dir (),
-			   "thumbnails/fail",
-			   appname,
-			   file,
-			   NULL);
-  g_free (file);
-
-  g_checksum_free (checksum);
-
-  tmp_path = g_strconcat (path, ".XXXXXX", NULL);
-
-  tmp_fd = g_mkstemp (tmp_path);
-  if (tmp_fd == -1 &&
-      make_thumbnail_fail_dirs (factory))
-    {
-      g_free (tmp_path);
-      tmp_path = g_strconcat (path, ".XXXXXX", NULL);
-      tmp_fd = g_mkstemp (tmp_path);
-    }
-
-  if (tmp_fd == -1)
-    {
-      g_free (tmp_path);
-      g_free (path);
-      return;
-    }
-  close (tmp_fd);
-  
-  g_snprintf (mtime_str, 21, "%" G_GUINT64_FORMAT, (guint64) mtime);
-  pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8, 1, 1);
-  gdk_pixbuf_save (pixbuf,
-		   tmp_path,
-		   "png", NULL,
-		   "tEXt::Thumb::URI", uri,
-		   "tEXt::Thumb::MTime", mtime_str,
-		   "tEXt::Software", "GNOME::ThumbnailFactory",
-		   NULL);
-  g_object_unref (pixbuf);
-
-  g_chmod (tmp_path, 0600);
-  g_rename (tmp_path, path);
-
+  path = thumbnail_failed_path (uri);
+  pixbuf = make_failed_thumbnail ();
+  save_thumbnail (pixbuf, path, uri, mtime);
   g_free (path);
-  g_free (tmp_path);
+  g_object_unref (pixbuf);
 }
 
 /**
@@ -1757,23 +1647,7 @@ char *
 gnome_desktop_thumbnail_path_for_uri (const char         *uri,
 				      GnomeDesktopThumbnailSize  size)
 {
-  char *md5;
-  char *file;
-  char *path;
-
-  md5 = gnome_desktop_thumbnail_md5 (uri);
-  file = g_strconcat (md5, ".png", NULL);
-  g_free (md5);
-  
-  path = g_build_filename (g_get_user_cache_dir (),
-			   "thumbnails",
-			   (size == GNOME_DESKTOP_THUMBNAIL_SIZE_NORMAL)?"normal":"large",
-			   file,
-			   NULL);
-    
-  g_free (file);
-
-  return path;
+  return thumbnail_path (uri, size);
 }
 
 /**

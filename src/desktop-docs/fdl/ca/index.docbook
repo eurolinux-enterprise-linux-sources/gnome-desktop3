@@ -194,7 +194,13 @@
     <title>RECOPILACIONS DE DOCUMENTS</title>
     <para>Podeu crear una recopilació que estigui formada pel <link linkend="fdl-document">Document</link> i altres documents publicats sota aquesta Llicència, i reemplaçar les còpies individuals d'aquesta Llicència dels diversos documents per una de sola que quedi inclosa a la recopilació, sempre que seguiu les normes d'aquesta Llicència pel que fa a la còpia literal de cadascun dels documents en tots els altres aspectes.</para>
     
-    <para>Podeu extreure un document individual d'aquesta col·lecció i distribuir-lo individualment sota aquesta Llicència, sempre que inseriu una còpia d'aquesta Llicència en el document que ha estat extret i que seguiu aquesta Llicència en tots els altres aspectes relatius a la còpia literal del document.</para>
+    <para>
+      You may extract a single document from such a collection, and
+      distribute it individually under this License, provided you
+      insert a copy of this License into the extracted document, and
+      follow this License in all other respects regarding verbatim
+      copying of that document.
+    </para>
     </sect1>
     
   <sect1 id="fdl-section7" label="7">

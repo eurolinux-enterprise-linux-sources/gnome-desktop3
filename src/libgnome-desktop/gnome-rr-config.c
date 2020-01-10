@@ -38,7 +38,6 @@
 
 #include "gnome-rr-config.h"
 
-#include "edid.h"
 #include "gnome-rr-private.h"
 
 #define CONFIG_INTENDED_BASENAME "monitors.xml"
@@ -164,6 +163,15 @@ gnome_rr_config_load_current (GnomeRRConfig *config, GError **error)
 	output->priv->name = g_strdup (gnome_rr_output_get_name (rr_output));
 	output->priv->connected = TRUE;
 	output->priv->display_name = g_strdup (gnome_rr_output_get_display_name (rr_output));
+	output->priv->config = config;
+	output->priv->is_tiled = _gnome_rr_output_get_tile_info (rr_output,
+								 &output->priv->tile);
+	if (output->priv->is_tiled)
+	{
+	    _gnome_rr_output_get_tiled_display_size (rr_output, NULL, NULL,
+						     &output->priv->total_tiled_width,
+						     &output->priv->total_tiled_height);
+	}
 
 	if (!output->priv->connected)
 	{
@@ -217,7 +225,8 @@ gnome_rr_config_load_current (GnomeRRConfig *config, GError **error)
 	}
 
         output->priv->primary = gnome_rr_output_get_is_primary (rr_output);
- 
+        output->priv->underscanning = gnome_rr_output_get_is_underscanning (rr_output);
+
 	g_ptr_array_add (a, output);
     }
 
@@ -339,6 +348,9 @@ output_equal (GnomeRROutputInfo *output1, GnomeRROutputInfo *output2)
 	
 	if (output1->priv->rotation != output2->priv->rotation)
 	    return FALSE;
+
+	if (output1->priv->underscanning != output2->priv->underscanning)
+	    return FALSE;
     }
 
     return TRUE;
@@ -423,10 +435,12 @@ make_outputs (GnomeRRConfig *config)
 	GnomeRROutputInfo *old = config->priv->outputs[i];
 	GnomeRROutputInfo *new = g_object_new (GNOME_TYPE_RR_OUTPUT_INFO, NULL);
 	*(new->priv) = *(old->priv);
-	if (old->priv->name)
-	    new->priv->name = g_strdup (old->priv->name);
-	if (old->priv->display_name)
-	    new->priv->display_name = g_strdup (old->priv->display_name);
+
+        new->priv->name = g_strdup (old->priv->name);
+        new->priv->display_name = g_strdup (old->priv->display_name);
+        new->priv->vendor = g_strdup (old->priv->vendor);
+        new->priv->product = g_strdup (old->priv->product);
+        new->priv->serial = g_strdup (old->priv->serial);
 
 	if (old->priv->on && !first_on)
 	    first_on = old;
@@ -1169,9 +1183,11 @@ crtc_assignment_apply (CrtcAssignment *assign, gboolean persistent, GError **err
 	g_variant_builder_add (&output_builder, "(u@a{sv})",
 			       gnome_rr_output_get_id (gnome_rr_output),
 			       g_variant_new_parsed ("{ 'primary': <%b>,"
-						     "  'presentation': <%b> }",
+						     "  'presentation': <%b>,"
+						     "  'underscanning': <%b> }",
 						     output->priv->primary,
-						     FALSE));
+						     FALSE,
+						     output->priv->underscanning));
     }
 
     return _gnome_rr_screen_apply_configuration (assign->screen,

@@ -1,5 +1,5 @@
 m4_define(gnome_platform, 3)
-m4_define(gnome_minor, 14)
+m4_define(gnome_minor, 22)
 m4_define(gnome_micro, 2)
 dnl gnome_sub is an optional sub-version which will not be advertised to the user
 dnl It allows to release a 2.30.1.1 which is just a better 2.30.1
@@ -12,7 +12,7 @@ AC_INIT([gnome-desktop], gnome_version,
         [http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-desktop])
 AC_CONFIG_SRCDIR([libgnome-desktop])
 
-AM_INIT_AUTOMAKE([1.11 foreign no-dist-gzip dist-xz tar-ustar])
+AM_INIT_AUTOMAKE([1.11.2 foreign no-dist-gzip dist-xz tar-ustar])
 AM_MAINTAINER_MODE([enable])
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
@@ -28,7 +28,7 @@ AC_CONFIG_MACRO_DIR([m4])
 #   change to C+1:0:0
 # - If the interface is the same as the previous version, change to C:R+1:A
 
-LT_VERSION=10:0:0
+LT_VERSION=14:0:2
 AC_SUBST(LT_VERSION)
 
 LT_PREREQ([2.2.6])
@@ -91,31 +91,21 @@ AC_ARG_ENABLE([desktop-docs],
 	[],[enable_desktop_docs=yes])
 AM_CONDITIONAL(DESKTOP_DOCS_ENABLED, test "x$enable_desktop_docs" = "xyes")
 
-# Path to the pnp.ids file -- to know if we use one shipped with another
-# package, or an internal file
-
-AC_ARG_WITH(pnp-ids-path,
-              [AC_HELP_STRING([--with-pnp-ids-path],
-                              [Specify the path to pnp.ids @<:@default=(internal)@:>@])],,
-                              [with_pnp_ids_path="\${pnpdatadir}/pnp.ids"])
-
-AM_CONDITIONAL(USE_INTERNAL_PNP_IDS, test "x$with_pnp_ids_path" = "x\${pnpdatadir}/pnp.ids")
-PNP_IDS=$with_pnp_ids_path
-AC_SUBST(PNP_IDS)
-if test "x$with_pnp_ids_path" = "x\${pnpdatadir}/pnp.ids"; then
-        EXTERNAL_PNP_IDS="no (internal)"
-else
-        EXTERNAL_PNP_IDS="$with_pnp_ids_path"
-fi
+# Should we build debug tools? Useful to bundle the gnome-desktop library
+# e.g. with a xdg-app runtime
+AC_ARG_ENABLE([debug-tools],
+        [AS_HELP_STRING([--disable-debug-tools],[do not build debug tools])],
+        [],[enable_debug_tools=yes])
+AM_CONDITIONAL(DEBUG_TOOLS_ENABLED, test "x$enable_debug_tools" = "xyes")
 
 GLIB_TESTS
 
 dnl If you add a version number here, you *must* add an AC_SUBST line for
 dnl it too, or it will never make it into the spec file!
 
-GDK_PIXBUF_REQUIRED=2.21.3
+GDK_PIXBUF_REQUIRED=2.33.0
 GTK_REQUIRED=3.3.6
-GLIB_REQUIRED=2.38.0
+GLIB_REQUIRED=2.44.0
 XRANDR_REQUIRED=1.3
 GSETTINGS_DESKTOP_SCHEMAS_REQUIRED=3.5.91
 XEXT_REQUIRED=1.1
@@ -133,7 +123,6 @@ AC_CHECK_LIB([rt], [clock_gettime], [LIBRT="-lrt"], [LIBRT=""])
 AC_SUBST(LIBRT)
 
 AC_CHECK_FUNCS([openat])
-AM_CONDITIONAL([USE_LIBGSYSTEM], [test x$ac_cv_func_openat = xyes])
 
 dnl we need x11 for GnomeBG
 
@@ -151,6 +140,25 @@ AC_SUBST(X11_PACKAGE)
 AC_SUBST(XLIB_CFLAGS)
 AC_SUBST(XLIB_LIBS)
 
+dnl ---------------------------------------------------------------------------
+dnl - hwdb for pnp IDs (default enabled)
+dnl ---------------------------------------------------------------------------
+UDEV_PKG=""
+AC_ARG_ENABLE(udev, AS_HELP_STRING([--disable-udev],[Disable udev support]), enable_udev=$enableval)
+if test x$enable_udev != xno; then
+	PKG_CHECK_MODULES(UDEV, libudev, have_udev="yes", have_udev="no")
+	if test "x$have_udev" = "xyes"; then
+		AC_DEFINE(HAVE_UDEV, 1, [define if udev is available])
+		UDEV_PKG="libudev"
+	else
+		if test x$enable_udev = xyes; then
+			AC_MSG_ERROR([udev enabled but not found])
+		fi
+	fi
+else
+	have_udev=no
+fi
+
 dnl pkg-config dependency checks
 
 PKG_CHECK_MODULES(GNOME_DESKTOP, gdk-pixbuf-2.0 >= $GDK_PIXBUF_REQUIRED
@@ -158,10 +166,9 @@ PKG_CHECK_MODULES(GNOME_DESKTOP, gdk-pixbuf-2.0 >= $GDK_PIXBUF_REQUIRED
                                  glib-2.0 >= $GLIB_REQUIRED
                                  gio-2.0 >= $GLIB_REQUIRED
                                  gsettings-desktop-schemas >= $GSETTINGS_DESKTOP_SCHEMAS_REQUIRED
-                                 xrandr >= $XRANDR_REQUIRED
-                                 xext >= $XEXT_REQUIRED
                                  xkeyboard-config
-                                 iso-codes)
+                                 iso-codes
+                                 $UDEV_PKG)
 
 XKB_BASE=$($PKG_CONFIG --variable xkb_base xkeyboard-config)
 AC_SUBST(XKB_BASE)
@@ -201,7 +208,7 @@ AM_GLIB_GNU_GETTEXT
 GOBJECT_INTROSPECTION_CHECK([0.9.7])
 
 # check for gtk-doc
-GTK_DOC_CHECK([1.4])
+GTK_DOC_CHECK([1.14],[--flavour no-tmpl])
 
 AC_CONFIG_FILES([
 Makefile
@@ -246,8 +253,9 @@ echo "
 
         GNOME Distributor:            ${GNOME_DISTRIBUTOR}
         Build desktop-wide docs:      ${enable_desktop_docs}
+        Build debug tools:            ${enable_debug_tools}
         Date in gnome-version.xml:    ${enable_date_in_gnome_version}
-        Use external pnp.ids:         ${EXTERNAL_PNP_IDS}
         Build gtk-doc documentation:  ${enable_gtk_doc}
+        Build with udev support:      ${enable_udev}
 
 "

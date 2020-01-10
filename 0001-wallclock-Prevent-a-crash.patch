@@ -1,0 +1,26 @@
+From c0df0733ccd71b32eae65ba04364f512b07f9c43 Mon Sep 17 00:00:00 2001
+From: Rui Matos <tiagomatos@gmail.com>
+Date: Wed, 19 Apr 2017 19:16:29 +0200
+Subject: [PATCH] wallclock: Prevent a crash
+
+https://bugzilla.gnome.org/show_bug.cgi?id=780861
+---
+ libgnome-desktop/gnome-wall-clock.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/libgnome-desktop/gnome-wall-clock.c b/libgnome-desktop/gnome-wall-clock.c
+index 1cd67a8..2b6b7c5 100644
+--- a/libgnome-desktop/gnome-wall-clock.c
++++ b/libgnome-desktop/gnome-wall-clock.c
+@@ -85,7 +85,7 @@ gnome_wall_clock_init (GnomeWallClock *self)
+ 	g_signal_connect (self->priv->tz_monitor, "changed", G_CALLBACK (on_tz_changed), self);
+ 	
+ 	self->priv->desktop_settings = g_settings_new ("org.gnome.desktop.interface");
+-	g_signal_connect (self->priv->desktop_settings, "changed", G_CALLBACK (on_schema_change), self);
++	g_signal_connect_object (self->priv->desktop_settings, "changed", G_CALLBACK (on_schema_change), self, 0);
+ 
+ 	ampm = nl_langinfo (AM_STR);
+ 	if (ampm != NULL && *ampm != '\0')
+-- 
+2.9.3
+

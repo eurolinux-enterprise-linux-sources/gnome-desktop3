@@ -48,6 +48,7 @@ CFILE_GLOB=$(top_srcdir)/libgnome-desktop/*.c
 # Header files to ignore when scanning.
 # e.g. IGNORE_HFILES=gtkdebug.h gtkintl.h
 IGNORE_HFILES= \
+	gnome-rr-private.h \
 	libgsystem \
 	meta-dbus-idle-monitor.h \
 	meta-dbus-xrandr.h \
@@ -61,7 +62,7 @@ HTML_IMAGES=
 # e.g. content_files=running.sgml building.sgml changes-2.0.sgml
 content_files=
 
-# SGML files where gtk-doc abbrevations (#GtkWidget) are expanded
+# SGML files where gtk-doc abbreviations (#GtkWidget) are expanded
 # These files must be listed here *and* in content_files
 # e.g. expand_content_files=running.sgml
 expand_content_files=

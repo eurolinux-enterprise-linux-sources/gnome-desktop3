@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>GNOME Desktop Library Reference Manual: gnome-pnp-ids</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<title>gnome-pnp-ids: GNOME Desktop Library Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="GNOME Desktop Library Reference Manual">
 <link rel="up" href="randr.html" title="Part III. Monitor Configuration">
 <link rel="prev" href="gnome-desktop3-gnome-rr-config.html" title="gnome-rr-config">
 <link rel="next" href="thumbnail.html" title="Part IV. Thumbnails">
-<meta name="generator" content="GTK-Doc V1.21 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.25.1 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -34,16 +34,12 @@
 </tr></table></div>
 <div class="refsect1">
 <a name="gnome-desktop3-gnome-pnp-ids.functions"></a><h2>Functions</h2>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="functions_return">
 <col class="functions_name">
 </colgroup>
 <tbody>
-<tr>
-<td class="define_keyword">#define</td>
-<td class="function_name"><a class="link" href="gnome-desktop3-gnome-pnp-ids.html#GNOME-PNP-IDS-ERROR:CAPS" title="GNOME_PNP_IDS_ERROR">GNOME_PNP_IDS_ERROR</a></td>
-</tr>
 <tr>
 <td class="function_type">
 <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
@@ -65,7 +61,7 @@
 </div>
 <a name="GnomePnpIds"></a><div class="refsect1">
 <a name="gnome-desktop3-gnome-pnp-ids.other"></a><h2>Types and Values</h2>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="name">
 <col class="description">
@@ -79,30 +75,24 @@
 <td class="datatype_keyword">struct</td>
 <td class="function_name"><a class="link" href="gnome-desktop3-gnome-pnp-ids.html#GnomePnpIdsClass" title="struct GnomePnpIdsClass">GnomePnpIdsClass</a></td>
 </tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="gnome-desktop3-gnome-pnp-ids.html#GNOME-PNP-IDS-ERROR:CAPS" title="GNOME_PNP_IDS_ERROR">GNOME_PNP_IDS_ERROR</a></td>
+</tr>
 </tbody>
 </table></div>
 </div>
 <div class="refsect1">
 <a name="gnome-desktop3-gnome-pnp-ids.object-hierarchy"></a><h2>Object Hierarchy</h2>
-<pre class="screen">    <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+<pre class="screen">    <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObject-struct">GObject</a>
     <span class="lineart">╰──</span> GnomePnpIds
 </pre>
 </div>
 <div class="refsect1">
 <a name="gnome-desktop3-gnome-pnp-ids.description"></a><h2>Description</h2>
-<p>
-</p>
 </div>
 <div class="refsect1">
 <a name="gnome-desktop3-gnome-pnp-ids.functions_details"></a><h2>Functions</h2>
-<div class="refsect2">
-<a name="GNOME-PNP-IDS-ERROR:CAPS"></a><h3>GNOME_PNP_IDS_ERROR</h3>
-<pre class="programlisting">#define GNOME_PNP_IDS_ERROR                (gnome_pnp_ids_error_quark ())
-</pre>
-<p>
-</p>
-</div>
-<hr>
 <div class="refsect2">
 <a name="gnome-pnp-ids-get-pnp-id"></a><h3>gnome_pnp_ids_get_pnp_id ()</h3>
 <pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
@@ -110,8 +100,8 @@ gnome_pnp_ids_get_pnp_id (<em class="parameter"><code><a class="link" href="gnom
                           <em class="parameter"><code>const <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *pnp_id</code></em>);</pre>
 <p>Find the full manufacturer name for the given PNP ID.</p>
 <div class="refsect3">
-<a name="id-1.4.4.8.3.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="gnome-pnp-ids-get-pnp-id.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -132,10 +122,10 @@ gnome_pnp_ids_get_pnp_id (<em class="parameter"><code><a class="link" href="gnom
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.4.4.8.3.6"></a><h4>Returns</h4>
+<a name="gnome-pnp-ids-get-pnp-id.returns"></a><h4>Returns</h4>
 <p> a new string representing the manufacturer name,
 or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> when not found. </p>
-<p><span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span></p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
 </div>
 <hr>
@@ -146,9 +136,9 @@ gnome_pnp_ids_new (<em class="parameter"><code><span class="type">void</span></c
 <p>Returns a reference to a <a class="link" href="gnome-desktop3-gnome-pnp-ids.html#GnomePnpIds"><span class="type">GnomePnpIds</span></a> object, or creates
 a new one if none have been created.</p>
 <div class="refsect3">
-<a name="id-1.4.4.8.4.5"></a><h4>Returns</h4>
+<a name="gnome-pnp-ids-new.returns"></a><h4>Returns</h4>
 <p> a <a class="link" href="gnome-desktop3-gnome-pnp-ids.html#GnomePnpIds"><span class="type">GnomePnpIds</span></a> object. </p>
-<p><span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span></p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
 </div>
 </div>
@@ -157,8 +147,6 @@ a new one if none have been created.</p>
 <div class="refsect2">
 <a name="GnomePnpIds-struct"></a><h3>struct GnomePnpIds</h3>
 <pre class="programlisting">struct GnomePnpIds;</pre>
-<p>
-</p>
 </div>
 <hr>
 <div class="refsect2">
@@ -167,13 +155,16 @@ a new one if none have been created.</p>
         GObjectClass    parent_class;
 };
 </pre>
-<p>
-</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GNOME-PNP-IDS-ERROR:CAPS"></a><h3>GNOME_PNP_IDS_ERROR</h3>
+<pre class="programlisting">#define GNOME_PNP_IDS_ERROR                (gnome_pnp_ids_error_quark ())
+</pre>
 </div>
 </div>
 </div>
 <div class="footer">
-<hr>
-          Generated by GTK-Doc V1.21</div>
+<hr>Generated by GTK-Doc V1.25.1</div>
 </body>
 </html>

@@ -1,76 +1,86 @@
-%define gtk3_version                      3.3.6
-%define glib2_version                     2.38.0
-%define gtk_doc_version                   1.9
-%define gsettings_desktop_schemas_version 3.5.91
-%define po_package                        gnome-desktop-3.0
+%global gdk_pixbuf2_version               2.33.0
+%global gtk3_version                      3.3.6
+%global glib2_version                     2.44.0
+%global gtk_doc_version                   1.14
+%global gsettings_desktop_schemas_version 3.5.91
+%global po_package                        gnome-desktop-3.0
 
-Summary: Shared code among gnome-panel, gnome-session, nautilus, etc
 Name: gnome-desktop3
-Version: 3.14.2
+Version: 3.22.2
 Release: 2%{?dist}
-URL: http://www.gnome.org
-Source0: http://download.gnome.org/sources/gnome-desktop/3.14/gnome-desktop-%{version}.tar.xz
-Patch0: 0001-default-input-sources-Switch-ja_JP-default-to-ibus-k.patch
+Summary: Shared code among gnome-panel, gnome-session, nautilus, etc
 
 License: GPLv2+ and LGPLv2+
-Group: System Environment/Libraries
-
-# needed for GnomeWallClock
-Requires: gsettings-desktop-schemas >= %{gsettings_desktop_schemas_version}
-
-# Make sure to update libgnome schema when changing this
-Requires: system-backgrounds-gnome
-
-# Make sure that gnome-themes-standard gets pulled in for upgrades
-Requires: gnome-themes-standard
+URL: http://www.gnome.org
+Source0: http://download.gnome.org/sources/gnome-desktop/3.22/gnome-desktop-%{version}.tar.xz
+Patch0: 0001-default-input-sources-Switch-ja_JP-default-to-ibus-k.patch
+Patch1: 0001-default-input-sources-Change-default-for-zh_TW-to-ib.patch
+Patch2: 0001-wallclock-Prevent-a-crash.patch
 
 BuildRequires: gnome-common
-BuildRequires: gtk3-devel >= %{gtk3_version}
-BuildRequires: gobject-introspection-devel
-BuildRequires: gsettings-desktop-schemas-devel >= %{gsettings_desktop_schemas_version}
-BuildRequires: glib2-devel >= %{glib2_version}
-BuildRequires: libxkbfile-devel
-BuildRequires: xkeyboard-config-devel
+BuildRequires: pkgconfig(gdk-pixbuf-2.0) >= %{gdk_pixbuf2_version}
+BuildRequires: pkgconfig(gio-2.0) >= %{glib2_version}
+BuildRequires: pkgconfig(gobject-introspection-1.0)
+BuildRequires: pkgconfig(gsettings-desktop-schemas) >= %{gsettings_desktop_schemas_version}
+BuildRequires: pkgconfig(gtk+-3.0) >= %{gtk3_version}
+BuildRequires: pkgconfig(iso-codes)
+BuildRequires: pkgconfig(libudev)
+BuildRequires: pkgconfig(xkeyboard-config)
 BuildRequires: gettext
 BuildRequires: gtk-doc >= %{gtk_doc_version}
 BuildRequires: automake autoconf libtool intltool
 BuildRequires: itstool
-BuildRequires: iso-codes-devel
+
+Requires: gdk-pixbuf2%{?_isa} >= %{gdk_pixbuf2_version}
+# Make sure that gnome-themes-standard gets pulled in for upgrades
+Requires: gnome-themes-standard
+# needed for GnomeWallClock
+Requires: gsettings-desktop-schemas >= %{gsettings_desktop_schemas_version}
 
 # GnomeIdleMonitor API change breaks older gnome-shell versions
 Conflicts: gnome-shell < 3.7.90
 
+%if 0%{?fedora}
+# From rhughes-f20-gnome-3-12 copr
+Obsoletes: compat-gnome-desktop310 < 3.12
+%endif
+
 %description
 
-The gnome-desktop package contains an internal library
+The %{name} package contains an internal library
 (libgnomedesktop) used to implement some portions of the GNOME
 desktop, and also some data files and other shared components of the
 GNOME user environment.
 
 %package devel
-Summary: Libraries and headers for libgnome-desktop
+Summary: Libraries and headers for %{name}
 License: LGPLv2+
-Group: Development/Libraries
-Requires: %name = %{version}-%{release}
-
-Requires: gtk3-devel >= %{gtk3_version}
-Requires: glib2-devel >= %{glib2_version}
-Requires: startup-notification-devel >= %{startup_notification_version}
+Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description devel
 Libraries and header files for the GNOME-internal private library
 libgnomedesktop.
 
+%package  tests
+Summary:  Tests for the %{name} package
+Requires: %{name}%{?_isa} = %{version}-%{release}
+
+%description tests
+The %{name}-tests package contains tests that can be used to verify
+the functionality of the installed %{name} package.
+
 %prep
 %setup -q -n gnome-desktop-%{version}
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
-%configure --with-pnp-ids-path="/usr/share/hwdata/pnp.ids"
+%configure --enable-installed-tests
 make %{?_smp_mflags}
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%make_install
 
 # stuff we don't want
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
@@ -82,7 +92,8 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 %postun -p /sbin/ldconfig
 
 %files -f %{po_package}.lang
-%doc AUTHORS COPYING COPYING.LIB NEWS README
+%doc AUTHORS NEWS README
+%license COPYING COPYING.LIB
 %{_datadir}/gnome/gnome-version.xml
 %{_libexecdir}/gnome-rr-debug
 # LGPL
@@ -98,7 +109,19 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 %dir %{_datadir}/gtk-doc/html/
 %doc %{_datadir}/gtk-doc/html/gnome-desktop3/
 
+%files tests
+%{_libexecdir}/installed-tests/gnome-desktop
+%{_datadir}/installed-tests
+
 %changelog
+* Wed Apr 19 2017 Rui Matos <rmatos@redhat.com> - 3.22.2-2
+- Fix a crash
+  Resolves: #1437059
+
+* Tue Nov 15 2016 Kalev Lember <klember@redhat.com> - 3.22.2-1
+- Update to 3.22.2
+- Resolves: #1386887
+
 * Wed Nov 12 2014 Kalev Lember <kalevlember@gmail.com> - 3.14.2-1
 - Update to 3.14.2
 - Resolves: #1174444

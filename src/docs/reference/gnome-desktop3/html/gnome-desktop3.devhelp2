@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<!DOCTYPE book PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "">
 <book xmlns="http://www.devhelp.net/book" title="GNOME Desktop Library Reference Manual" link="index.html" author="" name="gnome-desktop3" version="2" language="c">
   <chapters>
     <sub name="GNOME Desktop Library Overview" link="intro.html"/>
@@ -26,6 +25,7 @@
     <sub name="Language Utilities" link="languages.html">
       <sub name="Language Utilities" link="gnome-desktop3-Language-Utilities.html"/>
     </sub>
+    <sub name="Annotation Glossary" link="annotation-glossary.html"/>
   </chapters>
   <functions>
     <keyword type="function" name="gnome_bg_new ()" link="gnome-desktop3-gnome-bg.html#gnome-bg-new"/>
@@ -52,7 +52,6 @@
     <keyword type="struct" name="GnomeBGClass" link="gnome-desktop3-gnome-bg.html#GnomeBGClass"/>
     <keyword type="signal" name="The “changed” signal" link="gnome-desktop3-gnome-bg.html#GnomeBG-changed"/>
     <keyword type="signal" name="The “transitioned” signal" link="gnome-desktop3-gnome-bg.html#GnomeBG-transitioned"/>
-    <keyword type="macro" name="GNOME_RR_ERROR" link="gnome-desktop3-gnome-rr.html#GNOME-RR-ERROR:CAPS"/>
     <keyword type="function" name="gnome_rr_error_quark ()" link="gnome-desktop3-gnome-rr.html#gnome-rr-error-quark"/>
     <keyword type="function" name="gnome_rr_screen_new ()" link="gnome-desktop3-gnome-rr.html#gnome-rr-screen-new"/>
     <keyword type="function" name="gnome_rr_screen_new_async ()" link="gnome-desktop3-gnome-rr.html#gnome-rr-screen-new-async"/>
@@ -80,7 +79,9 @@
     <keyword type="function" name="gnome_rr_output_list_modes ()" link="gnome-desktop3-gnome-rr.html#gnome-rr-output-list-modes"/>
     <keyword type="function" name="gnome_rr_output_get_preferred_mode ()" link="gnome-desktop3-gnome-rr.html#gnome-rr-output-get-preferred-mode"/>
     <keyword type="function" name="gnome_rr_output_supports_mode ()" link="gnome-desktop3-gnome-rr.html#gnome-rr-output-supports-mode"/>
+    <keyword type="function" name="gnome_rr_output_supports_underscanning ()" link="gnome-desktop3-gnome-rr.html#gnome-rr-output-supports-underscanning"/>
     <keyword type="function" name="gnome_rr_output_get_is_primary ()" link="gnome-desktop3-gnome-rr.html#gnome-rr-output-get-is-primary"/>
+    <keyword type="function" name="gnome_rr_output_get_is_underscanning ()" link="gnome-desktop3-gnome-rr.html#gnome-rr-output-get-is-underscanning"/>
     <keyword type="function" name="gnome_rr_output_get_backlight ()" link="gnome-desktop3-gnome-rr.html#gnome-rr-output-get-backlight"/>
     <keyword type="function" name="gnome_rr_output_set_backlight ()" link="gnome-desktop3-gnome-rr.html#gnome-rr-output-set-backlight"/>
     <keyword type="function" name="gnome_rr_output_get_display_name ()" link="gnome-desktop3-gnome-rr.html#gnome-rr-output-get-display-name"/>
@@ -88,6 +89,7 @@
     <keyword type="function" name="gnome_rr_output_get_min_backlight_step ()" link="gnome-desktop3-gnome-rr.html#gnome-rr-output-get-min-backlight-step"/>
     <keyword type="function" name="gnome_rr_output_get_physical_size ()" link="gnome-desktop3-gnome-rr.html#gnome-rr-output-get-physical-size"/>
     <keyword type="function" name="gnome_rr_mode_get_id ()" link="gnome-desktop3-gnome-rr.html#gnome-rr-mode-get-id"/>
+    <keyword type="function" name="gnome_rr_mode_get_is_tiled ()" link="gnome-desktop3-gnome-rr.html#gnome-rr-mode-get-is-tiled"/>
     <keyword type="function" name="gnome_rr_mode_get_width ()" link="gnome-desktop3-gnome-rr.html#gnome-rr-mode-get-width"/>
     <keyword type="function" name="gnome_rr_mode_get_height ()" link="gnome-desktop3-gnome-rr.html#gnome-rr-mode-get-height"/>
     <keyword type="function" name="gnome_rr_mode_get_freq ()" link="gnome-desktop3-gnome-rr.html#gnome-rr-mode-get-freq"/>
@@ -107,6 +109,7 @@
     <keyword type="enum" name="enum GnomeRRDpmsMode" link="gnome-desktop3-gnome-rr.html#GnomeRRDpmsMode"/>
     <keyword type="typedef" name="GnomeRRMode" link="gnome-desktop3-gnome-rr.html#GnomeRRMode"/>
     <keyword type="enum" name="enum GnomeRRRotation" link="gnome-desktop3-gnome-rr.html#GnomeRRRotation"/>
+    <keyword type="macro" name="GNOME_RR_ERROR" link="gnome-desktop3-gnome-rr.html#GNOME-RR-ERROR:CAPS"/>
     <keyword type="enum" name="enum GnomeRRError" link="gnome-desktop3-gnome-rr.html#GnomeRRError"/>
     <keyword type="macro" name="GNOME_RR_CONNECTOR_TYPE_PANEL" link="gnome-desktop3-gnome-rr.html#GNOME-RR-CONNECTOR-TYPE-PANEL:CAPS"/>
     <keyword type="function" name="gnome_rr_output_info_get_aspect_ratio ()" link="gnome-desktop3-gnome-rr-config.html#gnome-rr-output-info-get-aspect-ratio"/>
@@ -120,14 +123,17 @@
     <keyword type="function" name="gnome_rr_output_info_get_refresh_rate ()" link="gnome-desktop3-gnome-rr-config.html#gnome-rr-output-info-get-refresh-rate"/>
     <keyword type="function" name="gnome_rr_output_info_get_rotation ()" link="gnome-desktop3-gnome-rr-config.html#gnome-rr-output-info-get-rotation"/>
     <keyword type="function" name="gnome_rr_output_info_get_serial ()" link="gnome-desktop3-gnome-rr-config.html#gnome-rr-output-info-get-serial"/>
+    <keyword type="function" name="gnome_rr_output_info_get_underscanning ()" link="gnome-desktop3-gnome-rr-config.html#gnome-rr-output-info-get-underscanning"/>
     <keyword type="function" name="gnome_rr_output_info_get_vendor ()" link="gnome-desktop3-gnome-rr-config.html#gnome-rr-output-info-get-vendor"/>
     <keyword type="function" name="gnome_rr_output_info_is_active ()" link="gnome-desktop3-gnome-rr-config.html#gnome-rr-output-info-is-active"/>
     <keyword type="function" name="gnome_rr_output_info_is_connected ()" link="gnome-desktop3-gnome-rr-config.html#gnome-rr-output-info-is-connected"/>
+    <keyword type="function" name="gnome_rr_output_info_is_primary_tile ()" link="gnome-desktop3-gnome-rr-config.html#gnome-rr-output-info-is-primary-tile"/>
     <keyword type="function" name="gnome_rr_output_info_set_active ()" link="gnome-desktop3-gnome-rr-config.html#gnome-rr-output-info-set-active"/>
     <keyword type="function" name="gnome_rr_output_info_set_geometry ()" link="gnome-desktop3-gnome-rr-config.html#gnome-rr-output-info-set-geometry"/>
     <keyword type="function" name="gnome_rr_output_info_set_primary ()" link="gnome-desktop3-gnome-rr-config.html#gnome-rr-output-info-set-primary"/>
     <keyword type="function" name="gnome_rr_output_info_set_refresh_rate ()" link="gnome-desktop3-gnome-rr-config.html#gnome-rr-output-info-set-refresh-rate"/>
     <keyword type="function" name="gnome_rr_output_info_set_rotation ()" link="gnome-desktop3-gnome-rr-config.html#gnome-rr-output-info-set-rotation"/>
+    <keyword type="function" name="gnome_rr_output_info_set_underscanning ()" link="gnome-desktop3-gnome-rr-config.html#gnome-rr-output-info-set-underscanning"/>
     <keyword type="function" name="gnome_rr_output_info_supports_rotation ()" link="gnome-desktop3-gnome-rr-config.html#gnome-rr-output-info-supports-rotation"/>
     <keyword type="function" name="gnome_rr_config_new_current ()" link="gnome-desktop3-gnome-rr-config.html#gnome-rr-config-new-current"/>
     <keyword type="function" name="gnome_rr_config_apply ()" link="gnome-desktop3-gnome-rr-config.html#gnome-rr-config-apply"/>
@@ -145,11 +151,11 @@
     <keyword type="struct" name="struct GnomeRROutputInfoClass" link="gnome-desktop3-gnome-rr-config.html#GnomeRROutputInfoClass"/>
     <keyword type="struct" name="struct GnomeRRConfig" link="gnome-desktop3-gnome-rr-config.html#GnomeRRConfig"/>
     <keyword type="struct" name="struct GnomeRRConfigClass" link="gnome-desktop3-gnome-rr-config.html#GnomeRRConfigClass"/>
-    <keyword type="macro" name="GNOME_PNP_IDS_ERROR" link="gnome-desktop3-gnome-pnp-ids.html#GNOME-PNP-IDS-ERROR:CAPS"/>
     <keyword type="function" name="gnome_pnp_ids_get_pnp_id ()" link="gnome-desktop3-gnome-pnp-ids.html#gnome-pnp-ids-get-pnp-id"/>
     <keyword type="function" name="gnome_pnp_ids_new ()" link="gnome-desktop3-gnome-pnp-ids.html#gnome-pnp-ids-new"/>
     <keyword type="struct" name="struct GnomePnpIds" link="gnome-desktop3-gnome-pnp-ids.html#GnomePnpIds-struct"/>
     <keyword type="struct" name="struct GnomePnpIdsClass" link="gnome-desktop3-gnome-pnp-ids.html#GnomePnpIdsClass"/>
+    <keyword type="macro" name="GNOME_PNP_IDS_ERROR" link="gnome-desktop3-gnome-pnp-ids.html#GNOME-PNP-IDS-ERROR:CAPS"/>
     <keyword type="function" name="gnome_desktop_thumbnail_factory_new ()" link="GnomeDesktopThumbnailFactory.html#gnome-desktop-thumbnail-factory-new" since="2.2"/>
     <keyword type="function" name="gnome_desktop_thumbnail_factory_lookup ()" link="GnomeDesktopThumbnailFactory.html#gnome-desktop-thumbnail-factory-lookup" since="2.2"/>
     <keyword type="function" name="gnome_desktop_thumbnail_factory_has_valid_failed_thumbnail ()" link="GnomeDesktopThumbnailFactory.html#gnome-desktop-thumbnail-factory-has-valid-failed-thumbnail" since="2.2"/>
@@ -179,6 +185,7 @@
     <keyword type="function" name="gnome_wall_clock_new ()" link="GnomeWallClock.html#gnome-wall-clock-new"/>
     <keyword type="function" name="gnome_wall_clock_get_clock ()" link="GnomeWallClock.html#gnome-wall-clock-get-clock"/>
     <keyword type="function" name="gnome_wall_clock_get_timezone ()" link="GnomeWallClock.html#gnome-wall-clock-get-timezone"/>
+    <keyword type="function" name="gnome_wall_clock_string_for_datetime ()" link="GnomeWallClock.html#gnome-wall-clock-string-for-datetime"/>
     <keyword type="struct" name="struct GnomeWallClock" link="GnomeWallClock.html#GnomeWallClock-struct"/>
     <keyword type="struct" name="struct GnomeWallClockClass" link="GnomeWallClock.html#GnomeWallClockClass"/>
     <keyword type="property" name="The “clock” property" link="GnomeWallClock.html#GnomeWallClock--clock"/>
@@ -186,6 +193,7 @@
     <keyword type="property" name="The “timezone” property" link="GnomeWallClock.html#GnomeWallClock--timezone"/>
     <keyword type="function" name="gnome_xkb_info_new ()" link="GnomeXkbInfo.html#gnome-xkb-info-new"/>
     <keyword type="function" name="gnome_xkb_info_get_all_layouts ()" link="GnomeXkbInfo.html#gnome-xkb-info-get-all-layouts" since="3.6"/>
+    <keyword type="function" name="gnome_xkb_info_get_languages_for_layout ()" link="GnomeXkbInfo.html#gnome-xkb-info-get-languages-for-layout" since="3.18"/>
     <keyword type="function" name="gnome_xkb_info_get_layouts_for_country ()" link="GnomeXkbInfo.html#gnome-xkb-info-get-layouts-for-country" since="3.8"/>
     <keyword type="function" name="gnome_xkb_info_get_layouts_for_language ()" link="GnomeXkbInfo.html#gnome-xkb-info-get-layouts-for-language" since="3.8"/>
     <keyword type="function" name="gnome_xkb_info_get_layout_info ()" link="GnomeXkbInfo.html#gnome-xkb-info-get-layout-info" since="3.6"/>
@@ -204,5 +212,26 @@
     <keyword type="function" name="gnome_normalize_locale ()" link="gnome-desktop3-Language-Utilities.html#gnome-normalize-locale" since="3.8"/>
     <keyword type="function" name="gnome_parse_locale ()" link="gnome-desktop3-Language-Utilities.html#gnome-parse-locale" since="3.8"/>
     <keyword type="function" name="gnome_language_has_translations ()" link="gnome-desktop3-Language-Utilities.html#gnome-language-has-translations" since="3.8"/>
+    <keyword type="constant" name="GNOME_RR_DPMS_ON" link="gnome-desktop3-gnome-rr.html#GNOME-RR-DPMS-ON:CAPS"/>
+    <keyword type="constant" name="GNOME_RR_DPMS_STANDBY" link="gnome-desktop3-gnome-rr.html#GNOME-RR-DPMS-STANDBY:CAPS"/>
+    <keyword type="constant" name="GNOME_RR_DPMS_SUSPEND" link="gnome-desktop3-gnome-rr.html#GNOME-RR-DPMS-SUSPEND:CAPS"/>
+    <keyword type="constant" name="GNOME_RR_DPMS_OFF" link="gnome-desktop3-gnome-rr.html#GNOME-RR-DPMS-OFF:CAPS"/>
+    <keyword type="constant" name="GNOME_RR_DPMS_UNKNOWN" link="gnome-desktop3-gnome-rr.html#GNOME-RR-DPMS-UNKNOWN:CAPS"/>
+    <keyword type="constant" name="GNOME_RR_ROTATION_NEXT" link="gnome-desktop3-gnome-rr.html#GNOME-RR-ROTATION-NEXT:CAPS"/>
+    <keyword type="constant" name="GNOME_RR_ROTATION_0" link="gnome-desktop3-gnome-rr.html#GNOME-RR-ROTATION-0:CAPS"/>
+    <keyword type="constant" name="GNOME_RR_ROTATION_90" link="gnome-desktop3-gnome-rr.html#GNOME-RR-ROTATION-90:CAPS"/>
+    <keyword type="constant" name="GNOME_RR_ROTATION_180" link="gnome-desktop3-gnome-rr.html#GNOME-RR-ROTATION-180:CAPS"/>
+    <keyword type="constant" name="GNOME_RR_ROTATION_270" link="gnome-desktop3-gnome-rr.html#GNOME-RR-ROTATION-270:CAPS"/>
+    <keyword type="constant" name="GNOME_RR_REFLECT_X" link="gnome-desktop3-gnome-rr.html#GNOME-RR-REFLECT-X:CAPS"/>
+    <keyword type="constant" name="GNOME_RR_REFLECT_Y" link="gnome-desktop3-gnome-rr.html#GNOME-RR-REFLECT-Y:CAPS"/>
+    <keyword type="constant" name="GNOME_RR_ERROR_UNKNOWN" link="gnome-desktop3-gnome-rr.html#GNOME-RR-ERROR-UNKNOWN:CAPS"/>
+    <keyword type="constant" name="GNOME_RR_ERROR_NO_RANDR_EXTENSION" link="gnome-desktop3-gnome-rr.html#GNOME-RR-ERROR-NO-RANDR-EXTENSION:CAPS"/>
+    <keyword type="constant" name="GNOME_RR_ERROR_RANDR_ERROR" link="gnome-desktop3-gnome-rr.html#GNOME-RR-ERROR-RANDR-ERROR:CAPS"/>
+    <keyword type="constant" name="GNOME_RR_ERROR_BOUNDS_ERROR" link="gnome-desktop3-gnome-rr.html#GNOME-RR-ERROR-BOUNDS-ERROR:CAPS"/>
+    <keyword type="constant" name="GNOME_RR_ERROR_CRTC_ASSIGNMENT" link="gnome-desktop3-gnome-rr.html#GNOME-RR-ERROR-CRTC-ASSIGNMENT:CAPS"/>
+    <keyword type="constant" name="GNOME_RR_ERROR_NO_MATCHING_CONFIG" link="gnome-desktop3-gnome-rr.html#GNOME-RR-ERROR-NO-MATCHING-CONFIG:CAPS"/>
+    <keyword type="constant" name="GNOME_RR_ERROR_NO_DPMS_EXTENSION" link="gnome-desktop3-gnome-rr.html#GNOME-RR-ERROR-NO-DPMS-EXTENSION:CAPS"/>
+    <keyword type="constant" name="GNOME_DESKTOP_THUMBNAIL_SIZE_NORMAL" link="GnomeDesktopThumbnailFactory.html#GNOME-DESKTOP-THUMBNAIL-SIZE-NORMAL:CAPS"/>
+    <keyword type="constant" name="GNOME_DESKTOP_THUMBNAIL_SIZE_LARGE" link="GnomeDesktopThumbnailFactory.html#GNOME-DESKTOP-THUMBNAIL-SIZE-LARGE:CAPS"/>
   </functions>
 </book>

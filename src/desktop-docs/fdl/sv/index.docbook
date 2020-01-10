@@ -37,6 +37,19 @@
     
     <othercredit class="translator">
       <personname>
+        <firstname>Anders Jonsson</firstname>
+      </personname>
+      <email>anders.jonsson@norsjovallen.se</email>
+    </othercredit>
+    <copyright>
+      
+        <year>2015</year>
+      
+      <holder>Anders Jonsson</holder>
+    </copyright>
+  
+    <othercredit class="translator">
+      <personname>
         <firstname>Sebastian Rasmussen</firstname>
       </personname>
       <email>sebras@gmail.com</email>
@@ -235,11 +248,11 @@
     <para>För att använda GNU Free Documentation License för ett dokument du har skrivit, inkludera en kopia av licensen [det engelska originalet] i dokumentet och placera följande copyrightklausul omedelbart efter titelsidan:</para>
     
     <blockquote>
-      <para>Copyright © ÅRTAL DITT NAMN.</para>
-      <para>Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.1 or any later version published by the Free Software Foundation; with the <link linkend="fdl-invariant">Invariant Sections</link> being LISTA DERAS TITLAR, with the <link linkend="fdl-cover-texts">Front-Cover Texts</link> being LISTA, and with the <link linkend="fdl-cover-texts">Back-Cover Texts</link> being LISTA. A copy of the license is included in the section entitled <quote>GNU Free Documentation License</quote>.</para>
+      <para>Copyright © YEAR YOUR NAME.</para>
+      <para>Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.1 or any later version published by the Free Software Foundation; with the <link linkend="fdl-invariant">Invariant Sections</link> being LIST THEIR TITLES, with the <link linkend="fdl-cover-texts">Front-Cover Texts</link> being LIST, and with the <link linkend="fdl-cover-texts">Back-Cover Texts</link> being LIST. A copy of the license is included in the section entitled <quote>GNU Free Documentation License</quote>.</para>
     </blockquote>
       
-    <para>Om du inte har några <link linkend="fdl-invariant">oföränderliga avsnitt</link>, skriv <quote>with no Invariant Sections</quote> istället för att ange vilka som är oföränderliga. Om du inte har några <link linkend="fdl-cover-texts">framsidestexter</link>, skriv <quote>no Front-Cover Texts</quote> istället för <quote>Front-Cover Texts being LISTA</quote>; såväl som för <link linkend="fdl-cover-texts">baksidestexter</link>.</para>
+    <para>Om du inte har några <link linkend="fdl-invariant">oföränderliga avsnitt</link>, skriv <quote>with no Invariant Sections</quote> istället för att ange vilka som är oföränderliga. Om du inte har några <link linkend="fdl-cover-texts">framsidestexter</link>, skriv <quote>no Front-Cover Texts</quote> istället för <quote>Front-Cover Texts being LIST</quote>; såväl som för <link linkend="fdl-cover-texts">baksidestexter</link>.</para>
     
     <para>Om ditt dokument innehåller icke-triviala exempel med programkod, så rekommenderar vi att du släpper dessa exempel parallellt under en, av dig vald, fri programvarulicens, som till exempel <ulink type="http" url="http://www.gnu.org/copyleft/gpl.html">GNU General Public License</ulink>, för att möjliggöra deras användning i fri programvara.</para>
   </sect1>

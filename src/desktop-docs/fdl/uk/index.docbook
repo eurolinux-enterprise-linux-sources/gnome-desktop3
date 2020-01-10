@@ -177,7 +177,13 @@
     <title>ЗБІРНИКИ ДОКУМЕНТІВ</title>
     <para>Ви маєте право створити збірник з <link linkend="fdl-document">Документу</link> та інших документів, які розповсюджуються на умовах даної Ліцензії, і включити в нього лише одну копію даної Ліцензії при умові дотримання вимог, зазначених в ній, щодо дослівного копіювання кожного документу.</para>
     
-    <para>Ви маєте право виділити окремий документ з такого збірника і розповсюджувати його окремо, в відповідності з даною Ліцензією та при умові, що текст даної Ліцензії включено в виділений документ і дотримані всі інші умови даної Ліцензії щодо дослівного копіювання документу.</para>
+    <para>
+      You may extract a single document from such a collection, and
+      distribute it individually under this License, provided you
+      insert a copy of this License into the extracted document, and
+      follow this License in all other respects regarding verbatim
+      copying of that document.
+    </para>
     </sect1>
     
   <sect1 id="fdl-section7" label="7">

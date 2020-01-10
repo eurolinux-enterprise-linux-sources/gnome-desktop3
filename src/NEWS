@@ -1,8 +1,232 @@
+================
+Version  3.22.2
+================
+
+- Translation updates
+
+================
+Version  3.22.1
+================
+
+- Translation updates
+
+================
+Version  3.22.0
+================
+
+- No changes
+
+================
+Version  3.21.92
+================
+
+- Fix a crash on non-udev platforms (#770686)
+- Translation updates
+
+================
+Version  3.21.90
+================
+
+- No changes
+
+================
+Version   3.21.4
+================
+
+- Use udev's hwdb to query PNP IDs (--disable-udev to disable this)
+- Remove dependencies on xrandr and xext
+
+================
+Version   3.21.3
+================
+
+- Translation updates
+
+================
+Version   3.21.2
+================
+
+- Add API to know if a GnomeRRMode is interlaced
+
+================
+Version   3.21.1
+================
+
+- No changes
+
+================
+Version   3.20.1
+================
+
+- No changes
+
+================
+Version   3.20.0
+================
+
+- No changes
+
+================
+Version  3.19.93
+================
+
+- Add a way to get the frequency for a mode as a floating number
+
+================
+Version  3.19.92
+================
+
+- No changes
+
+================
+Version  3.19.91
+================
+
+- Reduce log spam in thumbnailing
+- Translation updates
+
+================
+Version  3.19.90
+================
+
+- No changes
+
+================
+Version  3.19.4
+================
+
+- Capitalize language and territory names
+- Add default keyboard layout for Mexico and Guatemala
+- Avoid a crash when thumbnailing
+- Be more careful when parsing locales
+- Translation updates
+
+================
+Version  3.19.3
+================
+
+- Fix a compiler warning in gnome-rr
+
+================
+Version  3.19.2
+================
+
+- Translation updates
+
+================
+Version  3.19.1
+================
+
+- Fix turning off tiled monitors
+- Fix thumbnailing of animations
+- Translation updates
+
+================
+Version  3.18.0
+================
+
+- Translation updates
+
+================
+Version  3.17.92
+================
+
+- Support g_autoptr() for all libgnome-desktop object types
+
+================
+Version  3.17.90
+================
+
+- Translation updates
+
+================
+Version   3.17.4
+================
+
+- Remove unused EDID parsing code
+- Support underscanning
+- Export dpms information
+- Add support for tiled monitors
+- Translation updates
+
+================
+Version   3.17.3
+================
+
+- Fix build of installed-tests
+- Translation updates
+
+================
+Version   3.17.2
+================
+
+- Add support for overscan compensation in displays (#748560)
+
+================
+Version   3.16.1
+================
+
+- No changes
+
+================
+Version   3.16.0
+================
+
+- Translation updates
+
+================
+Version  3.15.92
+================
+
+- Translation updates
+
+================
+Version  3.15.91
+================
+
+ - No changes
+
+================
+Version  3.15.90
+================
+
+- Drop libgsystem dependency (#680326)
+- Translation updates
+
 ===============
-Version  3.14.2
+Version  3.15.4
 ===============
 
-- tests: Remove unused code in gtk-reftest (#737123)
+- Modernize gtk-doc use (#742479)
+- Fix memory handling in GnomeRR and language code (#742111, #742569)
+
+===============
+Version  3.15.3
+===============
+
+- Fix mutex handling in thumbnailing code (#740666)
+
+=================
+Version  3.15.2.1
+=================
+
+- Fix thumbnailing failures due to internal cleanups (#684026)
+
+===============
+Version  3.15.2
+===============
+
+- Add installed tests (#737140)
+- Recognize builtin monitors in Dell machines (#740289)
+- Improve thumbnail handling (#684026)
+- Translation updates
+
+===============
+Version  3.15.1
+===============
+
+- languages: Use a more broadly compatible locale codeset suffix (#710412)
+- Remove unused code in gtk-reftest (#737123)
 - Translation updates
 
 ===============

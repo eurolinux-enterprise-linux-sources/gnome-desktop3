@@ -66,7 +66,6 @@ typedef enum {
 	GNOME_RR_DPMS_STANDBY,
 	GNOME_RR_DPMS_SUSPEND,
 	GNOME_RR_DPMS_OFF,
-	GNOME_RR_DPMS_DISABLED,
 	GNOME_RR_DPMS_UNKNOWN
 } GnomeRRDpmsMode;
 
@@ -98,11 +97,15 @@ typedef enum {
 #define GNOME_TYPE_RR_OUTPUT (gnome_rr_output_get_type())
 #define GNOME_TYPE_RR_CRTC   (gnome_rr_crtc_get_type())
 #define GNOME_TYPE_RR_MODE   (gnome_rr_mode_get_type())
+#define GNOME_TYPE_RR_DPMS_MODE (gnome_rr_dpms_mode_get_type())
+
+G_DEFINE_AUTOPTR_CLEANUP_FUNC(GnomeRRScreen, g_object_unref)
 
 GType gnome_rr_screen_get_type (void);
 GType gnome_rr_output_get_type (void);
 GType gnome_rr_crtc_get_type (void);
 GType gnome_rr_mode_get_type (void);
+GType gnome_rr_dpms_mode_get_type (void);
 
 /* GnomeRRScreen */
 GnomeRRScreen * gnome_rr_screen_new                (GdkScreen             *screen,
@@ -171,12 +174,17 @@ GnomeRRMode *   gnome_rr_output_get_preferred_mode (GnomeRROutput         *outpu
 gboolean        gnome_rr_output_supports_mode      (GnomeRROutput         *output,
 						    GnomeRRMode           *mode);
 gboolean        gnome_rr_output_get_is_primary     (GnomeRROutput         *output);
+gboolean        gnome_rr_output_get_is_underscanning (GnomeRROutput       *output);
+gboolean        gnome_rr_output_supports_underscanning (GnomeRROutput       *output);
 
 /* GnomeRRMode */
 guint32         gnome_rr_mode_get_id               (GnomeRRMode           *mode);
 guint           gnome_rr_mode_get_width            (GnomeRRMode           *mode);
 guint           gnome_rr_mode_get_height           (GnomeRRMode           *mode);
 int             gnome_rr_mode_get_freq             (GnomeRRMode           *mode);
+double          gnome_rr_mode_get_freq_f           (GnomeRRMode           *mode);
+gboolean        gnome_rr_mode_get_is_tiled         (GnomeRRMode           *mode);
+gboolean        gnome_rr_mode_get_is_interlaced    (GnomeRRMode           *mode);
 
 /* GnomeRRCrtc */
 guint32         gnome_rr_crtc_get_id               (GnomeRRCrtc           *crtc);

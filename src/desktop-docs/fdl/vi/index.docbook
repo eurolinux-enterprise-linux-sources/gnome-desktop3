@@ -177,7 +177,13 @@
     <title>TẬP HỢP TÀI LIỆU</title>
     <para>Cho phép bạn tạo một tập hợp chứa <link linkend="fdl-document">Tài liệu</link> và các tài liệu khác nhau cũng được phát hành dưới Giấy phép này, và thay thế những bản sao riêng của Giấy phép này trong nhửng tài liệu khác nhau bằng cùng một bản sao được bao gồm trong tập hợp đó, miễn là bạn theo những quy tắc của Giấy phép này mọi phương diện khác đối với việc sao chép đúng nguyên văn mỗi tài liệu.</para>
     
-    <para>Cho phép bạn trích một tài liệu riêng lẻ ra tập hợp như vậy, và phát hành nó một cách riêng dưới Giấy phép này, miễn là bạn chèn một bản sao của Giấy phép này vào tài liệu đã trích ra, và theo Giấy phép này mọi phương diện khác đối với việc sao chép đúng nguyên văn tài liệu đó.</para>
+    <para>
+      You may extract a single document from such a collection, and
+      distribute it individually under this License, provided you
+      insert a copy of this License into the extracted document, and
+      follow this License in all other respects regarding verbatim
+      copying of that document.
+    </para>
     </sect1>
     
   <sect1 id="fdl-section7" label="7">

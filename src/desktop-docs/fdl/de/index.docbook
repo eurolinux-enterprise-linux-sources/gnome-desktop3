@@ -62,6 +62,19 @@
       
       <holder>Mario Blättermann</holder>
     </copyright>
+  
+    <othercredit class="translator">
+      <personname>
+        <firstname>Christian Kirbach</firstname>
+      </personname>
+      <email>Christian.Kirbach@gmail.com</email>
+    </othercredit>
+    <copyright>
+      
+        <year>2015</year>
+      
+      <holder>Christian Kirbach</holder>
+    </copyright>
   </articleinfo>
       
 
@@ -194,7 +207,7 @@
     <title>SAMMLUNGEN VON DOKUMENTEN</title>
     <para>Sie dürfen eine Sammlung erstellen, die aus dem <link linkend="fdl-document">Dokument</link> und anderen, unter dieser Lizenz veröffentlichten Dokumenten besteht, und die individuellen Kopien der Lizenz in den einzelnen Dokumenten durch eine einzige Kopie ersetzen, die sich in der Sammlung befindet, vorausgesetzt, Sie folgen den Regeln dieser Lizenz für wortwörtliches Kopieren jedes dieser Dokumente in jeglicher Hinsicht.</para>
     
-    <para>Sie dürfen ein einzelnes Dokument aus einer solchen Sammlung heraustrennen, und es individuell unter dieser Lizenz verteilen, vorausgesetzt, Sie fügen eine Kopie dieser Lizenz in das herausgetrennte Dokument ein und folgen der Lizenz in jeglicher Hinsicht bezüglich dem wortwörtlichen Kopieren des Dokuments.</para>
+    <para>Sie dürfen ein einzelnes Dokument aus einer solchen Sammlung heraustrennen und es individuell unter dieser Lizenz verteilen, vorausgesetzt, Sie fügen eine Kopie dieser Lizenz in das herausgetrennte Dokument ein und folgen der Lizenz in jeglicher Hinsicht bezüglich dem wortwörtlichen Kopieren des Dokuments.</para>
     </sect1>
     
   <sect1 id="fdl-section7" label="7">

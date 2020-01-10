@@ -30,19 +30,20 @@
 #include <string.h>
 
 #include <gtk/gtk.h>
-#include <gdk/gdkx.h>
 
 #undef GNOME_DISABLE_DEPRECATED
 #include "gnome-rr.h"
 #include "gnome-rr-config.h"
 
-#include "edid.h"
 #include "gnome-rr-private.h"
 
+/* From xf86drmMode.h: it's ABI so it won't change */
+#define DRM_MODE_FLAG_INTERLACE			(1<<4)
 
 enum {
     SCREEN_PROP_0,
     SCREEN_PROP_GDK_SCREEN,
+    SCREEN_PROP_DPMS_MODE,
     SCREEN_PROP_LAST,
 };
 
@@ -81,6 +82,10 @@ struct GnomeRROutput
 
     gboolean            is_primary;
     gboolean            is_presentation;
+    gboolean            is_underscanning;
+    gboolean            supports_underscanning;
+
+    GnomeRRTile         tile_info;
 };
 
 struct GnomeRRCrtc
@@ -100,6 +105,7 @@ struct GnomeRRCrtc
     int			gamma_size;
 };
 
+#define UNDEFINED_MODE_ID 0
 struct GnomeRRMode
 {
     ScreenInfo *	info;
@@ -108,6 +114,8 @@ struct GnomeRRMode
     int			width;
     int			height;
     int			freq;		/* in mHz */
+    gboolean		tiled;
+    guint32             flags;
 };
 
 /* GnomeRRCrtc */
@@ -280,6 +288,98 @@ has_similar_mode (GnomeRROutput *output, GnomeRRMode *mode)
     return FALSE;
 }
 
+gboolean
+_gnome_rr_output_get_tiled_display_size (GnomeRROutput *output,
+					 int *tile_w, int *tile_h,
+					 int *total_width, int *total_height)
+{
+    GnomeRRTile tile;
+    int ht, vt, i;
+    int total_h = 0, total_w = 0;
+
+    if (!_gnome_rr_output_get_tile_info (output, &tile))
+	return FALSE;
+
+    if (tile.loc_horiz != 0 ||
+	tile.loc_vert != 0)
+	return FALSE;
+
+    if (tile_w)
+	*tile_w = tile.width;
+    if (tile_h)
+	*tile_h = tile.height;
+
+    for (ht = 0; ht < tile.max_horiz_tiles; ht++)
+    {
+	for (vt = 0; vt < tile.max_vert_tiles; vt++)
+	{
+	    for (i = 0; output->info->outputs[i]; i++)
+	    {
+		GnomeRRTile this_tile;
+
+		if (!_gnome_rr_output_get_tile_info (output->info->outputs[i], &this_tile))
+		    continue;
+
+		if (this_tile.group_id != tile.group_id)
+		    continue;
+
+		if (this_tile.loc_horiz != ht ||
+		    this_tile.loc_vert != vt)
+		    continue;
+
+		if (this_tile.loc_horiz == 0)
+		    total_h += this_tile.height;
+
+		if (this_tile.loc_vert == 0)
+		    total_w += this_tile.width;
+	    }
+	}
+    }
+
+    *total_width = total_w;
+    *total_height = total_h;
+    return TRUE;
+}
+
+static void
+gather_tile_modes_output (ScreenInfo *info, GnomeRROutput *output)
+{
+    GPtrArray *a;
+    GnomeRRMode *mode;
+    int width, height;
+    int tile_w, tile_h;
+    int i;
+
+    if (!_gnome_rr_output_get_tiled_display_size (output, &tile_w, &tile_h,
+						  &width, &height))
+	return;
+
+    /* now stick the mode into the modelist */
+    a = g_ptr_array_new ();
+    mode = mode_new (info, UNDEFINED_MODE_ID);
+    mode->winsys_id = 0;
+    mode->width = width;
+    mode->height = height;
+    mode->freq = 0;
+    mode->tiled = TRUE;
+
+    g_ptr_array_add (a, mode);
+    for (i = 0; output->modes[i]; i++)
+	g_ptr_array_add (a, output->modes[i]);
+
+    g_ptr_array_add (a, NULL);
+    output->modes = (GnomeRRMode **)g_ptr_array_free (a, FALSE);
+}
+
+static void
+gather_tile_modes (ScreenInfo *info)
+{
+    int i;
+
+    for (i = 0; info->outputs[i]; i++)
+	gather_tile_modes_output (info, info->outputs[i]);
+}
+
 static void
 gather_clone_modes (ScreenInfo *info)
 {
@@ -385,7 +485,7 @@ fill_screen_info_from_resources (ScreenInfo *info,
 	GnomeRRMode *mode;
 
 	g_variant_get_child (modes, i, META_MONITOR_MODE_STRUCT, &id,
-			     NULL, NULL, NULL, NULL);
+			     NULL, NULL, NULL, NULL, NULL);
 	mode = mode_new (info, id);
 
 	g_ptr_array_add (a, mode);
@@ -410,6 +510,8 @@ fill_screen_info_from_resources (ScreenInfo *info,
     }
 
     gather_clone_modes (info);
+
+    gather_tile_modes (info);
 }
 
 static gboolean
@@ -575,6 +677,14 @@ name_owner_changed (GObject       *object,
     g_free (new_name_owner);
 }
 
+static void
+power_save_mode_changed (GObject       *object,
+                         GParamSpec    *pspec,
+                         GnomeRRScreen *self)
+{
+        g_object_notify (G_OBJECT (self), "dpms-mode");
+}
+
 static gboolean
 gnome_rr_screen_initable_init (GInitable *initable, GCancellable *canc, GError **error)
 {
@@ -600,6 +710,8 @@ gnome_rr_screen_initable_init (GInitable *initable, GCancellable *canc, GError *
 			     G_CALLBACK (name_owner_changed), self, 0);
     g_signal_connect_object (priv->proxy, "monitors-changed",
 			     G_CALLBACK (screen_on_monitors_changed), self, 0);
+    g_signal_connect_object (priv->proxy, "notify::power-save-mode",
+                             G_CALLBACK (power_save_mode_changed), self, 0);
     return TRUE;
 }
 
@@ -629,6 +741,8 @@ on_proxy_acquired (GObject      *object,
 			     G_CALLBACK (name_owner_changed), self, 0);
     g_signal_connect_object (priv->proxy, "monitors-changed",
 			     G_CALLBACK (screen_on_monitors_changed), self, 0);
+    g_signal_connect_object (priv->proxy, "notify::power-save-mode",
+                             G_CALLBACK (power_save_mode_changed), self, 0);
     g_task_return_boolean (task, TRUE);
 }
 
@@ -718,6 +832,9 @@ gnome_rr_screen_set_property (GObject *gobject, guint property_id, const GValue 
     case SCREEN_PROP_GDK_SCREEN:
         priv->gdk_screen = g_value_get_object (value);
         return;
+    case SCREEN_PROP_DPMS_MODE:
+        gnome_rr_screen_set_dpms_mode (self, g_value_get_enum (value), NULL);
+        return;
     default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (gobject, property_id, property);
         return;
@@ -734,6 +851,14 @@ gnome_rr_screen_get_property (GObject *gobject, guint property_id, GValue *value
     {
     case SCREEN_PROP_GDK_SCREEN:
         g_value_set_object (value, priv->gdk_screen);
+        return;
+    case SCREEN_PROP_DPMS_MODE: {
+        GnomeRRDpmsMode mode;
+        if (gnome_rr_screen_get_dpms_mode (self, &mode, NULL))
+                g_value_set_enum (value, mode);
+        else
+                g_value_set_enum (value, GNOME_RR_DPMS_UNKNOWN);
+        }
         return;
     default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (gobject, property_id, property);
@@ -765,6 +890,19 @@ gnome_rr_screen_class_init (GnomeRRScreenClass *klass)
                     G_PARAM_READWRITE |
 		    G_PARAM_CONSTRUCT_ONLY |
 		    G_PARAM_STATIC_STRINGS)
+            );
+
+    g_object_class_install_property(
+            gobject_class,
+            SCREEN_PROP_DPMS_MODE,
+            g_param_spec_enum (
+                    "dpms-mode",
+                    "DPMS Mode",
+                    "The DPMS mode for this GnomeRRScreen",
+                    GNOME_TYPE_RR_DPMS_MODE,
+                    GNOME_RR_DPMS_UNKNOWN,
+                    G_PARAM_READWRITE |
+                    G_PARAM_STATIC_STRINGS)
             );
 
     screen_signals[SCREEN_CHANGED] = g_signal_new("changed",
@@ -1197,7 +1335,7 @@ output_initialize (GnomeRROutput *output, GVariant *info)
 {
     GPtrArray *a;
     GVariantIter *crtcs, *clones, *modes;
-    GVariant *properties, *edid;
+    GVariant *properties, *edid, *tile;
     int current_crtc_id;
     guint id;
 
@@ -1266,6 +1404,8 @@ output_initialize (GnomeRROutput *output, GVariant *info)
     g_variant_lookup (properties, "min-backlight-step", "i", &output->min_backlight_step);
     g_variant_lookup (properties, "primary", "b", &output->is_primary);
     g_variant_lookup (properties, "presentation", "b", &output->is_presentation);
+    g_variant_lookup (properties, "underscanning", "b", &output->is_underscanning);
+    g_variant_lookup (properties, "supports-underscanning", "b", &output->supports_underscanning);
 
     if ((edid = g_variant_lookup_value (properties, "edid", G_VARIANT_TYPE ("ay"))))
       {
@@ -1274,6 +1414,18 @@ output_initialize (GnomeRROutput *output, GVariant *info)
       }
     else
       g_variant_lookup (properties, "edid-file", "s", &output->edid_file);
+
+    if ((tile = g_variant_lookup_value (properties, "tile", G_VARIANT_TYPE ("(uuuuuuuu)"))))
+      {
+	g_variant_get (tile, "(uuuuuuuu)",
+		       &output->tile_info.group_id, &output->tile_info.flags,
+		       &output->tile_info.max_horiz_tiles, &output->tile_info.max_vert_tiles,
+		       &output->tile_info.loc_horiz, &output->tile_info.loc_vert,
+		       &output->tile_info.width, &output->tile_info.height);
+	g_variant_unref (tile);
+      }
+    else
+      memset(&output->tile_info, 0, sizeof(output->tile_info));
 
     if (output->is_primary)
 	output->info->primary = output;
@@ -1531,7 +1683,8 @@ _gnome_rr_output_name_is_builtin_display (const char *name)
 	strstr (name, "LVDS") ||
 	strstr (name, "Lvds") ||
 	strstr (name, "LCD")  ||  /* ... but fglrx uses "LCD" in some versions.  Shoot me now, kthxbye. */
-	strstr (name, "eDP"))     /* eDP is for internal built-in panel connections */
+	strstr (name, "eDP")  ||    /* eDP is for internal built-in panel connections */
+	strstr (name, "DSI"))
         return TRUE;
 
     return FALSE;
@@ -1554,12 +1707,24 @@ GnomeRRMode *
 gnome_rr_output_get_current_mode (GnomeRROutput *output)
 {
     GnomeRRCrtc *crtc;
-    
+    GnomeRRMode *mode;
     g_return_val_if_fail (output != NULL, NULL);
     
     if ((crtc = gnome_rr_output_get_crtc (output)))
+    {
+	int total_w, total_h, tile_w, tile_h;
+	mode = gnome_rr_crtc_get_current_mode (crtc);
+
+	if (_gnome_rr_output_get_tiled_display_size (output, &tile_w, &tile_h, &total_w, &total_h))
+	{
+	    if (mode->width == tile_w &&
+		mode->height == tile_h) {
+		if (output->modes[0]->tiled)
+		    return output->modes[0];
+	    }
+	}
 	return gnome_rr_crtc_get_current_mode (crtc);
-    
+    }
     return NULL;
 }
 
@@ -1878,6 +2043,13 @@ gnome_rr_mode_get_freq (GnomeRRMode *mode)
     return (mode->freq) / 1000;
 }
 
+double
+gnome_rr_mode_get_freq_f (GnomeRRMode *mode)
+{
+    g_return_val_if_fail (mode != NULL, 0.0);
+    return (mode->freq) / 1000.0;
+}
+
 guint
 gnome_rr_mode_get_height (GnomeRRMode *mode)
 {
@@ -1885,15 +2057,36 @@ gnome_rr_mode_get_height (GnomeRRMode *mode)
     return mode->height;
 }
 
+/**
+ * gnome_rr_mode_get_is_tiled:
+ * @mode: a #GnomeRRMode
+ *
+ * Returns TRUE if this mode is a tiled
+ * mode created for span a tiled monitor.
+ */
+gboolean
+gnome_rr_mode_get_is_tiled (GnomeRRMode *mode)
+{
+    g_return_val_if_fail (mode != NULL, FALSE);
+    return mode->tiled;
+}
+
+gboolean
+gnome_rr_mode_get_is_interlaced (GnomeRRMode *mode)
+{
+    g_return_val_if_fail (mode != NULL, 0);
+    return (mode->flags & DRM_MODE_FLAG_INTERLACE) != 0;
+}
+
 static void
 mode_initialize (GnomeRRMode *mode, GVariant *info)
 {
     gdouble frequency;
 
-    g_variant_get (info, "(uxuud)",
+    g_variant_get (info, META_MONITOR_MODE_STRUCT,
 		   &mode->id, &mode->winsys_id,
 		   &mode->width, &mode->height,
-		   &frequency);
+		   &frequency, &mode->flags);
     
     mode->freq = frequency * 1000;
 }
@@ -2030,4 +2223,50 @@ gnome_rr_crtc_get_gamma (GnomeRRCrtc     *crtc,
     g_bytes_unref (blue_bytes);
 
   return TRUE;
+}
+
+gboolean
+gnome_rr_output_get_is_underscanning (GnomeRROutput *output)
+{
+    g_assert(output != NULL);
+    return output->is_underscanning;
+}
+
+gboolean
+gnome_rr_output_supports_underscanning (GnomeRROutput *output)
+{
+    g_assert (output != NULL);
+    return output->supports_underscanning;
+}
+
+gboolean
+_gnome_rr_output_get_tile_info (GnomeRROutput *output,
+				GnomeRRTile *tile)
+{
+    if (output->tile_info.group_id == UNDEFINED_GROUP_ID)
+        return FALSE;
+
+    if (!tile)
+        return FALSE;
+
+    *tile = output->tile_info;
+    return TRUE;
+}
+
+GType
+gnome_rr_dpms_mode_get_type (void)
+{
+  static GType etype = 0;
+  if (etype == 0) {
+    static const GEnumValue values[] = {
+      { GNOME_RR_DPMS_ON, "GNOME_RR_DPMS_ON", "on" },
+      { GNOME_RR_DPMS_STANDBY, "GNOME_RR_DPMS_STANDBY", "standby" },
+      { GNOME_RR_DPMS_SUSPEND, "GNOME_RR_DPMS_SUSPEND", "suspend" },
+      { GNOME_RR_DPMS_OFF, "GNOME_RR_DPMS_OFF", "off" },
+      { GNOME_RR_DPMS_UNKNOWN, "GNOME_RR_DPMS_UNKNOWN", "unknown" },
+      { 0, NULL, NULL }
+    };
+    etype = g_enum_register_static ("GnomeRRDpmsModeType", values);
+  }
+  return etype;
 }

@@ -7,7 +7,6 @@ lib_LTLIBRARIES = libgnome-desktop-3.la
 
 AM_CPPFLAGS =							\
 	-I$(top_srcdir)						\
-	-I$(srcdir)/libgsystem					\
 	$(GNOME_DESKTOP_CFLAGS)					\
 	$(XLIB_CFLAGS)						\
 	-DG_LOG_DOMAIN=\"GnomeDesktop\"				\
@@ -19,15 +18,6 @@ AM_CPPFLAGS =							\
 	$(DISABLE_DEPRECATED_CFLAGS)
 
 AM_CFLAGS = $(WARN_CFLAGS)
-
-if USE_LIBGSYSTEM
-libgsystem_srcpath := libgsystem
-libgsystem_cflags = $(GNOME_DESKTOP_CFLAGS)
-libgsystem_libs = $(GNOME_DESKTOP_LIBS)
-include libgsystem/Makefile-libgsystem.am
-
-noinst_LTLIBRARIES += libgsystem.la
-endif
 
 introspection_sources = 		\
 	gnome-desktop-thumbnail.c 	\
@@ -42,8 +32,7 @@ introspection_sources = 		\
 	gnome-wall-clock.c		\
 	gnome-xkb-info.c		\
 	gnome-idle-monitor.c		\
-	gnome-languages.c		\
-	edid-parse.c
+	gnome-languages.c
 
 libgnome_desktop_3_la_SOURCES = 	\
 	$(introspection_sources)	\
@@ -53,7 +42,6 @@ libgnome_desktop_3_la_SOURCES = 	\
 	gnome-datetime-source.c		\
 	gnome-rr-private.h		\
 	default-input-sources.h		\
-	edid.h				\
 	meta-xrandr-shared.h
 
 dbus_xrandr_built_sources = meta-dbus-xrandr.c meta-dbus-xrandr.h
@@ -84,10 +72,6 @@ libgnome_desktop_3_la_LIBADD =	\
 	$(LIBRT)		\
 	$(NULL)
 
-if USE_LIBGSYSTEM
-libgnome_desktop_3_la_LIBADD += libgsystem.la
-endif
-
 libgnome_desktop_3_la_LDFLAGS = \
 	-version-info $(LT_VERSION) \
 	-export-symbols-regex "^gnome_.*" \
@@ -109,18 +93,6 @@ libgnome_desktop_HEADERS = \
 	gnome-xkb-info.h		\
 	gnome-idle-monitor.h		\
 	gnome-languages.h
-
-if USE_INTERNAL_PNP_IDS
-pnpdatadir = $(datadir)/libgnome-desktop-3.0
-pnpdata_DATA = pnp.ids
-endif
-pnpdata_DATA_dist = pnp.ids
-
-update-pnp-ids:
-	wget -O $(top_srcdir)/libgnome-desktop/pnp.ids "http://git.fedorahosted.org/git/?p=hwdata.git;a=blob_plain;f=pnp.ids;hb=HEAD"
-
-check:
-	test -s $(top_srcdir)/libgnome-desktop/pnp.ids
 
 -include $(INTROSPECTION_MAKEFILE)
 INTROSPECTION_GIRS =
@@ -153,24 +125,20 @@ EXTRA_DIST += \
 	idle-monitor.xml			\
 	xrandr.xml				\
 	gnome-desktop-3.0.pc.in			\
-	gnome-desktop-3.0-uninstalled.pc.in	\
-	$(pnpdata_DATA_dist)
-
-MAINTAINERCLEANFILES = \
-	pnp.ids
-
-libexec_PROGRAMS =		\
-	gnome-rr-debug
+	gnome-desktop-3.0-uninstalled.pc.in
 
 gnome_rr_debug_SOURCES =	\
 	gnome-rr-debug.c
-
 gnome_rr_debug_LDADD =		\
 	$(GNOME_DESKTOP_LIBS)	\
 	$(lib_LTLIBRARIES)	\
 	$(XLIB_LIBS)
 
-noinst_PROGRAMS = test-xkb-info test-pnp-ids test-wall-clock test-desktop-thumbnail test-idle-monitor test-languages
+if DEBUG_TOOLS_ENABLED
+libexec_PROGRAMS = gnome-rr-debug
+endif
+
+noinst_PROGRAMS = test-xkb-info test-pnp-ids test-wall-clock test-desktop-thumbnail test-idle-monitor test-languages test-wallclock
 test_xkb_info_LDADD =		\
 	$(GNOME_DESKTOP_LIBS)	\
 	$(lib_LTLIBRARIES)
@@ -184,5 +152,7 @@ test_desktop_thumbnail_LDADD = $(test_xkb_info_LDADD)
 test_idle_monitor_LDADD = $(test_xkb_info_LDADD)
 
 test_languages_LDADD = $(test_xkb_info_LDADD)
+
+test_wallclock_LDADD = $(test_xkb_info_LDADD)
 
 -include $(top_srcdir)/git.mk

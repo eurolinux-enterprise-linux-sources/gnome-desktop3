@@ -55,6 +55,8 @@ struct _GnomeXkbInfoClass
   GObjectClass parent_class;
 };
 
+G_DEFINE_AUTOPTR_CLEANUP_FUNC(GnomeXkbInfo, g_object_unref)
+
 GType           gnome_xkb_info_get_type                         (void);
 GnomeXkbInfo   *gnome_xkb_info_new                              (void);
 GList          *gnome_xkb_info_get_all_layouts                  (GnomeXkbInfo *self);
@@ -76,6 +78,8 @@ GList          *gnome_xkb_info_get_layouts_for_language         (GnomeXkbInfo *s
                                                                  const gchar  *language_code);
 GList          *gnome_xkb_info_get_layouts_for_country          (GnomeXkbInfo *self,
                                                                  const gchar  *country_code);
+GList          *gnome_xkb_info_get_languages_for_layout         (GnomeXkbInfo *self,
+                                                                 const gchar  *layout_id);
 
 G_END_DECLS
 
